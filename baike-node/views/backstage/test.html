@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:wb="http://open.weibo.com/wb">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2708545225" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<wb:login-button type="6,2" onlogin="login" onlogout="logout">登录按钮</wb:login-button>
+<script>
+    WB2.anyWhere(function(W){
+        W.widget.connectButton({
+            id: "wb_connect_btn",
+            type:"6,2",
+            callback : {
+                login:function(o){	//登录后的回调函数
+                    console.log('1')
+                },
+                logout:function(){	//退出后的回调函数
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

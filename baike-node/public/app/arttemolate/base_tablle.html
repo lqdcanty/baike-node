@@ -1,0 +1,37 @@
+
+    <div class="base_table commom_css">
+        <h4 class="style_tltle">
+            <span class="bg_left"></span>
+            <i>{{title}}</i>
+        </h4>
+        <table class="base_news">
+            <tbody>
+                <% for (var i = 0; i < products.length; i ++) { %>
+                     <% var base_d =base[i]; %>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        var data = [{
+            title: '基本信息',
+            base:[
+                {name:"作品名称",text:"《鬼吹灯》"},
+                {name:"作者",text:"天下霸唱"},
+                {name:"创作年代",text:"21世纪"},
+                {name:"全册章数",text:"二百三十九章"},
+                {name:"文学体裁",text:"小说"},
+                {name:"字数",text:"约200万"}
+            ]
+        }];
+        /*$('#base_table').html(template('base_table_template', data));*/
+        var html = template('base_table_template',data);
+        //打印渲染结果
+        console.log(html);
+        //填充渲染结果到content
+        document.getElementById('base_table').innerHTML = html;
+    </script>

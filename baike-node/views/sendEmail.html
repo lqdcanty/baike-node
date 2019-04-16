@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>邮件</title>
+    <style>
+        html,body,*{
+            padding:0;
+            margin:0;
+            font-family: "微软雅黑";
+            box-sizing: border-box;
+            -webkit-box-sizing:border-box;
+            -ms-box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            -o-box-sizing:border-box;
+        }
+        .clearfix:after{
+            content: "";
+            display: block;
+            height:0;
+            line-height:0;
+            visibility: hidden;
+            clear: both;
+        }
+        .clearfix{
+            zoom: 1;
+        }
+        .email_box{
+            width:1020px;
+            margin:50px auto;
+        }
+        .head{
+            height:280px;
+            width:1020px;
+            background: url('http://tfdfs.banquanjia.com.cn/group1/M02/05/F8/CgoKJVl5tyOAMeZqAAB71-3cvCY050.png') no-repeat center center/cover;
+            padding-top:40px;
+        }
+        .head img{
+            display: block;
+            margin:0 auto;
+            margin-bottom:15px;
+        }
+        .email_headP{
+            width:100%;
+            color: #fff;
+            font-size:16px;
+            line-height:30px;
+            text-align: center;
+        }
+        .fl{
+            float: left;
+        }
+        .fr{
+            float: right;
+        }
+        .content{
+            width:1020px;
+            padding:0 40px;
+            padding-bottom:30px;
+            background:url("http://fdfs.microdci.cn/group1/M00/15/76/wKg4ZFl2-o2ASnvaAAAMSotOKTU288.png");
+        }
+        .content_title{
+            font-size:14px;
+            line-height:28px;
+            color:#333;
+        }
+        .content_p{
+            font-size:14px;
+            line-height:28px;
+            color: #2A2A2A;
+        }
+        .content_p_bottom{
+            font-size:14px;
+            line-height:20px;
+            color: #333;
+        }
+        .content_p_bottom span{
+            display: block;
+        }
+        .content_p_bottom a{
+            display: inline-block;
+            text-decoration: none;
+        }
+        .foot{
+            height:32px;
+            background: url("http://fdfs.microdci.cn/group1/M00/15/76/wKg4ZFl2-o6AFxXZAAANZdO2Dxg736.png") no-repeat center center/cover;
+        }
+        .img_span{
+            display: block;
+        }
+        .img_right{
+            display: block;
+            margin:0 auto;
+            max-width:100%;
+        }
+        a{
+            color:#1A8CDC
+        }
+        .dataTable{
+            cellpadding:0;
+            cellspacing:0;
+            border-collapse:collapse;
+            width: 100%;
+            font-size:12px;
+            margin-bottom:20px;
+            text-align: center;
+        }
+        .dataTable th{
+            line-height:28px;
+            background: #ECECEC ;
+        }
+        .dataTable{
+            border:1px solid #DEDEDE;
+        }
+        .dataTable td,.dataTable th{
+            border:1px solid #DEDEDE;
+        }
+        .dataTable td{
+            line-height:19px;
+            padding:8px;
+        }
+        .dataTable td a{
+            color: #1A8CDC;
+            text-decoration: none;
+        }
+        .dataTable td:nth-child(2){
+            text-align: center;
+        }
+
+        .sameBoxDetail .label a{
+            display: inline-block;
+            line-height:22px;
+            padding:0 8px;
+            text-decoration: none;
+            border: 1px solid #E2E2E2;
+            margin-bottom:20px;
+            font-size:12px;
+            border-radius: 10px;
+            color: #999;
+        }
+
+        .sameBoxDetail .label a:first-child{
+            background: #fff!important;
+            color: #1A8CDC!important;
+            border-color: #1A8CDC!important;
+        }
+        .sameBoxDetail .label a+a{
+            margin-left:10px;
+        }
+        .work_sub_name{
+            font-size: 12px;
+            color: #999;
+            line-height:16px;
+            margin-bottom:15px;
+        }
+        .clearfloat{
+            height:40px;
+            margin-bottom:15px;
+            font-size:24px;
+            color: #1A8CDC;
+            background: url("http://tfdfs.banquanjia.com.cn/group1/M01/05/F8/CgoKJVl5tyOATenvAAABpqQTSk4973.png") no-repeat left center;
+        }
+        .clearfloat .work_name{
+            font-size:24px;
+            color: #1A8CDC;
+            display: inline-block;
+            line-height:31px;
+            margin-top:12px;
+            margin-left:20px;
+            text-decoration: none;
+            padding-right:10px;
+        }
+        .clearfloat .clearfloat_b{
+            color: #1A8CDC;
+            display: inline-block;
+            padding-left:10px;
+            vertical-align: bottom;
+            font-size:12px;
+            font-weight:900;
+        }
+        .clearfloat .span_number{
+            background: #1A8CDC;
+            border-radius: 2px;
+            font-size:12px;
+            line-height:31px;
+            color: #fff;
+            width:142px;
+            float: right;
+            margin-top:9px;
+            text-align: center;
+        }
+        .sameBox{
+            width:100%;
+            height:160px;
+            margin-bottom:20px;
+        }
+        .sameBoxDetail{
+            width:780px;
+            margin-left:20px;
+        }
+        .sameBoxImg{
+            display: block;
+            width:120px;
+            height:160px;
+            background: #FFFFFF;
+            box-shadow: 0 4px 4px 0 rgba(0,0,0,0.20);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+        }
+        .textBox{
+            padding: 15px;
+            background: #F5F5F5;
+        }
+        .textBox p{
+            font-size: 14px;
+            color: #666666;
+            line-height: 28px;
+            text-indent: 2em;
+        }
+        .line_blue{
+            width:100%;
+            margin: 20px 0;
+        }
+        .music .sameBoxImg{
+            border-radius: 100%;
+            box-shadow: 0 2px 10px 0 rgba(0,0,0,0.50);
+            width:120px;
+            height:120px;
+        }
+        .music .sameBoxImg img{
+            border-radius: 100%;
+        }
+        .music .sameBox{
+            height:120px;
+        }
+        .content_p_bottom{
+            padding-top:25px;
+        }
+        .content_p_bottom span{
+            font-size:16px;
+            line-height: 30px;
+            color: #333;
+        }
+        .software .sameBox{
+            height:120px;
+        }
+        .software .sameBoxImg{
+            border-radius: 20px;
+            box-shadow: 0 2px 10px 0 rgba(0,0,0,0.50);
+            width:120px;
+            height:120px;
+        }
+        .software .sameBoxImg img {
+            border-radius: 20px;
+        }
+        .content_p_bottom {
+            font-size: 14px;
+            line-height: 20px;
+            color: #333;
+        }
+        .foot {
+            height: 32px;
+            background: url(http://fdfs.microdci.cn/group1/M00/15/76/wKg4ZFl2-o6AFxXZAAANZdO2Dxg736.png) no-repeat center center/cover;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="email_box" style="width:1020px;margin:50px auto;">
+    <div class="head">
+        <img src="http://fdfs.microdci.cn/group1/M00/15/76/wKg4ZFl2-w6ARlXUAAAb6Wn9bM4826.png" alt="">
+        <p class="email_headP">全网传播监听使用服务</p>
+    </div>
+    <div class="content">
+        <h1 class="content_title">尊敬的版权百科用户：</h1>
+        <p class="content_p">
+            欢迎您使用版权百科全网传播使用监听服务。您订阅的版权作品全网传播监听数据已准备完成，请查阅！
+        </p>
+        <!--电视剧的邮件模板-->
+        <div class="teleplay">
+            <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWAQynqAAAE0hl13Vk181.png" alt="" style="width: 100%;margin: 20px 0;">
+            <div class="sameBox clearfix">
+                <div class="sameBoxImg" style="background-image: url('../public/images/fm_1 (2).png');display: inline-block;width: 120px;heigt:160px;vertical-align: top;overflow: hidden;box-shadow: 0 4px 4px 0 rgba(0,0,0,0.20);background-repeat: no-repeat;background-position: center center;background-size: cover;"></div>
+                <div class="sameBoxDetail" style="display: inline-block;vertical-align: top">
+                    <p class="clearfloat">
+                        <a href="java_script:void(0)" class="work_name" style="color: #1A8CDC;">人民的名义</a>|<span class="clearfloat_b" style="font-weight: bold;">版权监听报告-<span>2017年08月31日</span></span>
+                        <a href="java_script:void(0)" class="work_name">人民的名义</a>|<b class="clearfloat_b">版权监听报告-<span>2017年08月31日</span></b>
+                        <a href="java_script:void(0)" class="work_name">人民的名义</a>|<b class="clearfloat_b">版权数据报告-<span>2017年08月31日</span></b>
+                    </p>
+                    <p class="work_sub_name" style="margin-bottom:15px;">
+                        2016年杨洋、郑爽主演电视剧
+                    </p>
+                    <p class="label">
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">电视剧</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">偶像</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">爱情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">剧情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">青春</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">都市</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">言情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">网络播放</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">青春</a>
+                    </p>
+                </div>
+            </div>
+            <div class="content_p">
+                <table class="dataTable" cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th rowspan="2" >百科指数</th>
+                        <th rowspan="2" >频道排行</th>
+                        <th colspan="2" >网络播放</th>
+                        <th colspan="2" >用户评测</th>
+                        <th colspan="4" >舆情洞察</th>
+                    </tr>
+                    <tr>
+                        <th >监控站点</th>
+                        <th>累计播放</th>
+                        <th >点赞总数</th>
+                        <th >踩总数</th>
+                        <th >资讯总数</th>
+                        <th >影响人数</th>
+                        <th >情感偏向</th>
+                        <th >情感指数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="width:80px;">9.7</td>
+                        <td style="width:80px;">2</td>
+                        <td style="width:80px;">5个</td>
+                        <td style="width:120px;">5亿</td>
+                        <td style="width:120px;">122341次</td>
+                        <td style="width:100px;">2865次</td>
+                        <td style="width:90px;">1.1亿</td>
+                        <td style="width:90px;">9亿</td>
+                        <td style="width:80px;">正面</td>
+                        <td style="width:80px;">2.5</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="textBox">
+                <p>
+                    《人民的名义》该电视剧作品通过版权百科全网传播使用监听服务监听到目前在芒果TV、优酷、腾讯视频、PPTV、搜狐视频、爱奇艺共6个平台上架。<br/>
+                    其中具有该作品版权的使用平台3个，分别 是芒果TV、优酷；疑似盗版2个，分别是腾讯视频、PPTV；版权情况未知2个，分别是搜狐视频、爱奇艺。<br/>
+                    截止2017年11月14日该作品在互联网中累计被使用272.46亿次。其中优酷平台92.51亿次，占比18%；腾讯视频43.6亿次，占比4%；PPTV34.5亿次，占比4%。<br/>
+                    目前我们在互联网中找到1.1亿条关于该作品报道的相关资讯，影响人数9亿。主要报道媒体分别是微博、微信。通过我们分析，该作品目前情感指数2.5，目前大部分媒体和网友对该作品持积极正面的评价。<br/>
+                </p>
+            </div>
+        </div>
+        <!--文学作品-->
+        <div class="literary">
+            <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWAQynqAAAE0hl13Vk181.png" alt="" style="width: 100%;margin: 20px 0;">
+            <div class="sameBox clearfix">
+                <div class="sameBoxImg" style="background-image: url('../public/images/fm_1 (2).png');display: inline-block;width: 120px;heigt:160px;vertical-align: top;overflow: hidden;box-shadow: 0 4px 4px 0 rgba(0,0,0,0.20);background-repeat: no-repeat;background-position: center center;background-size: cover;"></div>
+                <div class="sameBoxDetail" style="display: inline-block;vertical-align: top">
+                    <p class="clearfloat">
+                        <a href="java_script:void(0)" class="work_name" style="color: #1A8CDC;">天龙八部</a>|<span class="clearfloat_b" style="font-weight: bold">版权监听报告-<span>2017年08月31日</span></span>
+                        <a href="java_script:void(0)" class="work_name">天龙八部</a>|<b class="clearfloat_b">版权监听报告-<span>2017年08月31日</span></b>
+                        <a href="java_script:void(0)" class="work_name">天龙八部</a>|<b class="clearfloat_b">版权数据报告-<span>2017年08月31日</span></b>
+                    </p>
+                    <p class="work_sub_name" style="margin-bottom:15px;">
+                        著名作家金庸的武侠代表作
+                    </p>
+                    <p class="label">
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">文字</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">小说</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">爱情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">剧情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">青春</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">都市</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">言情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">网络播放</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">青春</a>
+                    </p>
+                </div>
+            </div>
+            <div class="content_p">
+                <table class="dataTable" cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th rowspan="2" >百科指数</th>
+                        <th rowspan="2" >频道排行</th>
+                        <th colspan="3" >网络播放</th>
+                        <th colspan="2" >平台榜单</th>
+                        <th colspan="4" >舆情洞察</th>
+                    </tr>
+                    <tr>
+                        <th >监控站点</th>
+                        <th >累计阅读次数</th>
+                        <th>累计阅读人数</th>
+                        <th >上榜网址</th>
+                        <th >累计上榜天数</th>
+                        <th >资讯总数</th>
+                        <th >影响人数</th>
+                        <th >情感偏向</th>
+                        <th >情感指数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="width:70px;">9.7</td>
+                        <td style="width:70px;">2</td>
+                        <td style="width:70px;">5个</td>
+                        <td style="width:105px;">5亿</td>
+                        <td style="width:105px;">1.24亿</td>
+                        <td style="width:70px;">2个</td>
+                        <td style="width:110px;">108天</td>
+                        <td style="width:80px;">1.1亿</td>
+                        <td style="width:80px;">9亿</td>
+                        <td style="width:80px;">正面</td>
+                        <td style="width:80px;">2.5</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="textBox">
+                <p>
+                    《天龙八部》该小说作品通过版权百科全网传播使用监听服务监听到目前在笔趣阁、搜狗阅读、起点中文网、咪咕阅读、QQ阅读共5个平台上架。<br/>
+                    其中具有该作品版权的使用平台3个，分别 是QQ阅读、咪咕动漫；疑似盗版2个，分别是笔趣阁、起点中文；版权情况未知2个，分别是QQ阅读、咪咕阅读。<br/>
+                    截止2017年11月14日该作品在互联网中累计被使用9.96万次。其中笔趣阁5000次，占比18%；起点中文2000次，占比15%。<br/>
+                    通过监听，我们发现该作品目前在起点中文网、咪咕阅读上榜。其中起点中文网榜单为VIP收藏榜（10天）、24小时热销榜（15天）；咪咕阅读榜榜单为TOP100（2天）。<br/>
+                    目前我们在互联网中找到1.1亿条关于该作品报道的相关资讯，影响人数9亿。主要报道媒体分别是微博、微信。通过我们分析，该作品目前情感指数2.5，目前大部分媒体和网友对该作品持积极正面的评价。<br/>
+                </p>
+            </div>
+        </div>
+        <!--动漫-->
+        <div class="animation">
+            <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWAQynqAAAE0hl13Vk181.png" alt="" style="width: 100%;margin: 20px 0;">
+            <div class="sameBox clearfix">
+                <div class="sameBoxImg" style="background-image: url('../public/images/fm_1 (2).png');display: inline-block;width: 120px;heigt:160px;vertical-align: top;overflow: hidden;box-shadow: 0 4px 4px 0 rgba(0,0,0,0.20);background-repeat: no-repeat;background-position: center center;background-size: cover;"></div>
+                <div class="sameBoxDetail" style="display: inline-block;vertical-align: top">
+                    <p class="clearfloat">
+                        <a href="java_script:void(0)" class="work_name" style="color: #1A8CDC;">一拳超人</a>|<span class="clearfloat_b" style="font-weight: bold">版权监听报告-<span>2017年08月31日</span></span>
+                        <a href="java_script:void(0)" class="work_name">一拳超人</a>|<b class="clearfloat_b">版权监听报告-<span>2017年08月31日</span></b>
+                        <a href="java_script:void(0)" class="work_name">一拳超人</a>|<b class="clearfloat_b">版权数据报告-<span>2017年08月31日</span></b>
+                    </p>
+                    <p class="work_sub_name" style="margin-bottom:15px;">
+                        桐华著清穿宫廷小说
+                    </p>
+                    <p class="label">
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">动漫</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">漫画</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">爱情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">剧情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">青春</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">都市</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">言情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">网络播放</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">青春</a>
+                    </p>
+                </div>
+            </div>
+            <div class="content_p">
+                <table class="dataTable" cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th rowspan="2" >百科指数</th>
+                        <th rowspan="2" >频道排行</th>
+                        <th colspan="3" >网络播放</th>
+                        <th colspan="2" >平台榜单</th>
+                        <th colspan="4" >舆情洞察</th>
+                    </tr>
+                    <tr>
+                        <th >监控站点</th>
+                        <th >累计阅读次数</th>
+                        <th>累计阅读人数</th>
+                        <th >上榜网址</th>
+                        <th >累计上榜天数</th>
+                        <th >资讯总数</th>
+                        <th >影响人数</th>
+                        <th >情感偏向</th>
+                        <th >情感指数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="width:70px;">9.7</td>
+                        <td style="width:70px;">2</td>
+                        <td style="width:70px;">5个</td>
+                        <td style="width:105px;">5亿</td>
+                        <td style="width:105px;">1.24亿</td>
+                        <td style="width:70px;">2个</td>
+                        <td style="width:110px;">108天</td>
+                        <td style="width:80px;">1.1亿</td>
+                        <td style="width:80px;">9亿</td>
+                        <td style="width:80px;">正面</td>
+                        <td style="width:80px;">2.5</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="textBox">
+                <p>
+                    《一拳超人》该漫画作品通过版权百科全网传播使用监听服务监听到目前在动漫之家、急速漫画、疯子漫画、漫画台、DM动漫共5个平台上架。
+                    其中具有该作品版权的使用平台3个，分别 是动漫之家、急速漫画；疑似盗版2个，分别是漫画台、DM动漫；版权情况未知2个，分别是疯子漫画、动漫之家。<br/>
+                    截止2017年11月14日该作品在互联网中累计被使用9.96万次。其中急速漫画5000次，占比18%；动漫之家2000次，占比15%。<br/>
+                    通过监听，我们发现该作品目前在急速漫画、DM动漫上榜。其中急速漫画榜单为VIP收藏榜（10天）、24小时热销榜（15天）；DM动漫榜榜单为TOP100（2天）。<br/>
+                    目前我们在互联网中找到1.1亿条关于该作品报道的相关资讯，影响人数9亿。主要报道媒体分别是微博、微信。通过我们分析，该作品目前情感指数2.5。目前大部分媒体和网友对该作品持积极正面的评价。
+                </p>
+            </div>
+        </div>
+        <!--电影-->
+        <div class="movies">
+            <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWAQynqAAAE0hl13Vk181.png" alt="" style="width: 100%;margin: 20px 0;">
+            <div class="sameBox clearfix">
+                <div class="sameBoxImg" style="background-image: url('../public/images/fm_1 (2).png');display: inline-block;width: 120px;heigt:160px;vertical-align: top;overflow: hidden;box-shadow: 0 4px 4px 0 rgba(0,0,0,0.20);background-repeat: no-repeat;background-position: center center;background-size: cover;"></div>
+                <div class="sameBoxDetail" style="display: inline-block;vertical-align: top">
+                    <p class="clearfloat">
+                        <a href="java_script:void(0)" class="work_name" style="color: #1A8CDC;">战狼2</a>|<span class="clearfloat_b" style="font-weight: bold">版权监听报告-<span>2017年08月31日</span></span>
+                        <a href="java_script:void(0)" class="work_name">战狼2</a>|<b class="clearfloat_b">版权监听报告-<span>2017年08月31日</span></b>
+                        <a href="java_script:void(0)" class="work_name">战狼2</a>|<b class="clearfloat_b">版权数据报告-<span>2017年08月31日</span></b>
+                    </p>
+                    <p class="work_sub_name" style="margin-bottom:15px;">
+                        2016年杨洋、郑爽主演电视剧
+                    </p>
+                    <p class="label">
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">影视</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">电影</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">爱情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">剧情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">青春</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">都市</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">言情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">网络播放</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">青春</a>
+                    </p>
+                </div>
+            </div>
+            <div class="content_p">
+                <table class="dataTable" cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th rowspan="2" >百科指数</th>
+                        <th rowspan="2" >频道排行</th>
+                        <th colspan="5" >院线票房</th>
+                        <th colspan="3" >网络阅读</th>
+                    </tr>
+                    <tr>
+                        <th >上映状态</th>
+                        <th>上映天数</th>
+                        <th >累计票房</th>
+                        <th >观影人数</th>
+                        <th >票房排名</th>
+                        <th >监控站点</th>
+                        <th >累计阅读次数</th>
+                        <th >累计阅读人数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="width:80px;">9.7</td>
+                        <td style="width:80px;">2</td>
+                        <td style="width:80px;">上映/下映</td>
+                        <td style="width:80px;">40天</td>
+                        <td style="width:100px;">56.79亿</td>
+                        <td style="width:100px;">1.03亿</td>
+                        <td style="width:80px;">1</td>
+                        <td style="width:80px;">2个</td>
+                        <td style="width:120px;">9.9亿</td>
+                        <td style="width:120px;">1.24亿</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="dataTable" cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th colspan="3" >专业评测</th>
+                        <th colspan="4" >舆情洞察</th>
+                    </tr>
+                    <tr>
+                        <th>豆瓣</th>
+                        <th>猫眼</th>
+                        <th>累计阅读人数</th>
+                        <th>资讯总数</th>
+                        <th>影响人数</th>
+                        <th>情感偏向</th>
+                        <th>情感指数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>9.7</td>
+                        <td>8.7</td>
+                        <td>7.7</td>
+                        <td>1.1亿</td>
+                        <td>9亿</td>
+                        <td>正面</td>
+                        <td>2.5</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="textBox">
+                <p>
+                    《战狼2》该电影作品通过版权百科院线票房监听服务监听到目前已经上映，上映40天约1.03亿人观影产生票房56.79亿。目前票房排名第1。<br/>
+                    通过版权百科全网传播使用监听服务监听到目前未开始网络播放（已经开始网络播放）。在芒果TV、优酷、腾讯视频、PPTV、搜狐视频、爱奇艺共6个平台上架。<br/>
+                    其中具有该作品版权的使用平台3个，分别 是芒果TV、优酷；疑似盗版2个，分别是腾讯视频、PPTV；版权情况未知2个，分别是搜狐视频、爱奇艺。<br/>
+                    截止2017年11月14日该作品在互联网中累计被使用272.46亿次。其中优酷平台92.51亿次，占比18%；腾讯视频43.6亿次，占比4%；PPTV34.5亿次，占比4%。<br/>
+                    经过我们监听，目前该电影作品在豆瓣、猫眼、时光网获得用户好评。其中豆瓣37万人参与评分，获得8.6分；猫眼374万人参与评分，获得8.7分；时光网1万人参与评分，获得7.7分。<br/>
+                    目前我们在互联网中找到1.1亿条关于该作品报道的相关资讯，影响人数9亿。主要报道媒体分别是微博、微信。通过我们分析，该作品目前情感指数2.5，目前大部分媒体和网友对该作品持积极正面的评价。<br/>
+                </p>
+            </div>
+        </div>
+        <!--音乐-->
+        <div class="music">
+            <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWAQynqAAAE0hl13Vk181.png" alt="" style="width: 100%;margin: 20px 0;">
+            <div class="sameBox clearfix">
+                <div class="sameBoxImg fl" style="background-image: url('../public/images/fm_1 (2).png')"></div>
+                <div class="fl sameBoxDetail">
+                    <p class="clearfloat">
+                        <a href="java_script:void(0)" class="work_name" style="color: #1A8CDC;">成都</a>|<span class="clearfloat_b" style="font-weight: bold">版权监听报告-<span>2017年08月31日</span></span>
+                        <a href="java_script:void(0)" class="work_name">成都</a>|<b class="clearfloat_b">版权监听报告-<span>2017年08月31日</span></b>
+                        <a href="java_script:void(0)" class="work_name">成都</a>|<b class="clearfloat_b">版权数据报告-<span>2017年08月31日</span></b>
+                    </p>
+                    <p class="work_sub_name" style="margin-bottom:15px;">
+                        2016年杨洋、郑爽主演电视剧
+                    </p>
+                    <p class="label">
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">音乐</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">录音制品</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">爱情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">剧情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">青春</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">都市</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">言情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">网络播放</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">青春</a>
+                    </p>
+                </div>
+            </div>
+            <div class="content_p">
+                <table class="dataTable" cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th rowspan="2" >百科指数</th>
+                        <th rowspan="2" >频道排行</th>
+                        <th colspan="3" >网络播放</th>
+                        <th colspan="2" >平台榜单</th>
+                        <th colspan="4" >舆情洞察</th>
+                    </tr>
+                    <tr>
+                        <th >监控站点</th>
+                        <th >累计播放</th>
+                        <th>累计上榜</th>
+                        <th >互联网平台</th>
+                        <th >电信运营商</th>
+                        <th >资讯总数</th>
+                        <th >影响人数</th>
+                        <th >情感偏向</th>
+                        <th >情感指数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="width:70px;">9.7</td>
+                        <td style="width:70px;">2</td>
+                        <td style="width:70px;">6个</td>
+                        <td style="width:105px;">7.84亿</td>
+                        <td style="width:70px;">3个</td>
+                        <td style="width:105px;">2个</td>
+                        <td style="width:110px;">1个</td>
+                        <td style="width:80px;">1.1亿</td>
+                        <td style="width:80px;">9亿</td>
+                        <td style="width:80px;">正面</td>
+                        <td style="width:80px;">2.5</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="textBox">
+                <p>
+                    《成都》该音乐作品通过版权百科全网传播使用监听服务监听到目前在网易云音乐、百度音乐、QQ音乐、虾米音乐、网易云音乐、酷我音乐共6个平台上架。<br/>
+                    其中具有该作品版权的使用平台3个，分别 是网易云音乐、QQ音乐；疑似盗版2个，分别是虾米音乐、酷狗音乐；版权情况未知2个，分别是酷我音乐、百度音乐。<br/>
+                    截止2017年11月14日该作品在互联网中累计被使用272.46亿次。其中酷狗音乐92.51亿次，占比18%；虾米音乐43.6亿次，占比4%；百度音乐34.5亿次，占比4%。<br/>
+                    该音乐作品目前累计在2个平台上榜，分别是百度音乐、QQ音乐。其中在百度音乐TOP100上榜10天；QQ音乐24小时热歌榜上榜10天。<br/>
+                    目前我们在互联网中找到1.1亿条关于该作品报道的相关资讯，影响人数9亿。主要报道媒体分别是微博、微信。通过我们分析，该作品目前情感指数2.5，目前大部分媒体和网友对该作品持积极正面的评价。<br/>
+                </p>
+            </div>
+        </div>
+        <!--软件-->
+        <div class="software">
+            <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWAQynqAAAE0hl13Vk181.png" alt="" style="width: 100%;margin: 20px 0;">
+            <div class="sameBox clearfix">
+                <div class="sameBoxImg fl" style="background-image: url('../public/images/fm_1 (2).png')"></div>
+                <div class="fl sameBoxDetail">
+                    <p class="clearfloat">
+                        <a href="java_script:void(0)" class="work_name" style="color: #1A8CDC;">QQ</a>|<span class="clearfloat_b" style="font-weight: bold">版权监听报告-<span>2017年08月31日</span></span>
+                        <a href="java_script:void(0)" class="work_name">QQ</a>|<b class="clearfloat_b">版权监听报告-<span>2017年08月31日</span></b>
+                        <a href="java_script:void(0)" class="work_name">QQ</a>|<b class="clearfloat_b">版权数据报告-<span>2017年08月31日</span></b>1
+                    </p>
+                    <p class="work_sub_name" style="margin-bottom:15px;">
+                        2016年杨洋、郑爽主演电视剧
+                    </p>
+                    <p class="label">
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">软件</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">移动APP</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">爱情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">剧情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">青春</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">都市</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">言情</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">网络播放</a>
+                        <a href="#" style="display: inline-block;line-height:22px;padding:0 8px;text-decoration: none;border: 1px solid #E2E2E2;margin-bottom:20px;font-size:12px;border-radius: 10px;color: #999;">青春</a>
+                    </p>
+                </div>
+            </div>
+            <div class="content_p">
+                <table class="dataTable" cellspacing="0" cellpadding="0">
+                    <thead>
+                    <tr>
+                        <th colspan="4" >舆情洞察</th>
+                    </tr>
+                    <tr>
+                        <th>资讯总数</th>
+                        <th>影响人数</th>
+                        <th>情感偏向</th>
+                        <th>情感指数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1.1亿</td>
+                        <td>9亿</td>
+                        <td>正面</td>
+                        <td>2.5</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="textBox">
+                <p>
+                    目前我们在互联网中找到1.1亿条关于该作品报道的相关资讯，影响人数9亿。主要报道媒体分别是微博、微信。通过我们分析，该作品目前情感指数2.5，目前大部分媒体和网友对该作品持积极正面的评价。<br/>
+                </p>
+            </div>
+        </div>
+        <p class="content_p_bottom">
+            <span>版权百科</span>
+            <a href="http://www.banquanbaike.com.cn/">banquanbaike.com.cn</a>
+        </p>
+    </div>
+
+    <!--</div>-->
+    <div class="foot">
+
+    </div>
+</div>
+</body>
+</html>

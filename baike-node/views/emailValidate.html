@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>版权百科</title>
+    <link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/common.css"/>
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <style>
+        .emailActivate-header{height: 80px;line-height: 80px;border-bottom: 1px #ccc solid;}
+        .emailActivate-foot{height: 60px;line-height: 60px;text-align: center;position: fixed;bottom: 0;color: #999999;font-size: 14px;background: #333333;width: 100%}
+        .emailActivate-header div{width: 1160px;margin: 0 auto;line-height: 7}
+        .emailActivate-body{width: 1160px;margin: 0 auto;padding: 140px}
+        .activate_result{font-size: 28px;color: #333333;line-height: 37px}
+        .activate_text{font-size: 14px;color: #666666;line-height: 28px;margin-top: 15px}
+        .activate_btn a{display: inline-block;border-radius: 2px;background: #1A8CDC;width: 160px;height: 36px;line-height: 36px;color: #FFFFFF;text-align: center;margin-top: 65px}
+    </style>
+    <% include('common/baidu_tj') %>
+</head>
+<body>
+    <div class="emailActivate-header">
+        <div><img src="/images/logo.png"></div>
+    </div>
+    <div class="emailActivate-body">
+        <% if(resultCode) {%>
+        <div class="activate-suc clearfix">
+            <div class="float_left">
+                <img src="/images/img-yzcg.png">
+            </div>
+            <div class="float_left">
+                <p class="activate_result">验证成功</p>
+                <p class="activate_text">恭喜您，邮箱验证成功！</p>
+                <p class="activate_btn">
+                    <a href="/">前往首页</a>
+                </p>
+            </div>
+        </div>
+        <%}else{%>
+        <div class="activate-false clearfix">
+            <div class="float_left">
+                <img src="/images/img-yzsb.png">
+            </div>
+            <div class="float_left">
+                <p class="activate_result">验证失败</p>
+                <p class="activate_text">  <%=resultMsg%></p>
+                <p class="activate_btn">
+                    <a href="/">前往首页</a>
+                </p>
+            </div>
+        </div>
+        <%}%>
+    </div>
+    <div class="emailActivate-foot">
+        Copyright 2017 北京畅远科技有限公司 版权所有 京ICP备09087229号-4
+    </div>
+</body>
+</html>

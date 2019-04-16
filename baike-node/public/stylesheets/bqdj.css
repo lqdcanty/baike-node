@@ -1,0 +1,175 @@
+body{
+    background: #ECECEC;
+}
+.details-top{
+    width: 100%;
+    height: 320px;
+    background: url("../images/bqdj/img_bg.png") no-repeat center;
+    background-size: cover;
+}
+.details-bottom{
+    width: 1160px;
+    margin: 0 auto;
+    text-align: center;
+    background: #FFFFFF;
+    padding-bottom: 60px;
+    padding-top: 30px;
+    margin-top: 20px;
+}
+.zbj-grid{
+    width: 1160px;
+    margin: 0 auto;
+    padding:60px 40px 0;
+}
+.zbj-grid h1{
+    font-size: 20px;
+    color: #333333;
+}
+.zbj-grid .desc{
+    font-size: 14px;
+    color: #333333;
+}
+.submit-box{
+    padding-top: 20px;
+    width: 400px;
+    position: relative;
+}
+.zbj-grid .note{
+    font-size: 12px;
+    color: #666666;
+    margin-top: 10px;
+}
+.submit-box .input-box{
+    position: relative;
+    width: 398px;
+    padding: 10px 0;
+    border: 1px solid #e9e9e9;
+    background: #fff;
+}
+.submit-box .input-box .label-phone{
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    color: #666;
+    padding: 0 8px 0 4px;
+    border-right: 1px solid #e8e8e8;
+}
+.submit-box .input-box input{
+    display: inline-block;
+    width: 190px;
+    height: 18px;
+    line-height: 18px;
+    border: 0;
+    margin-left: 8px;
+    font-size: 12px;
+}
+.submit-box .submit-btn{
+    display: inline-block;
+    position: absolute;
+    top: 20px;
+    right: 1px;
+    width: 105px;
+    height: 46px;
+    line-height: 41px;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    background: #ff7734;
+}
+.details-box-center .type{
+    position: relative;
+    margin-top: 15px;
+    border-bottom: 1px dashed #dedede;
+}
+.details-box-center .type span{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    margin-bottom: 15px;
+    line-height: 33px;
+    color: #444;
+    font-size: 14px;
+}
+.details-box-center .type .type-list {
+    max-width: 747px;
+    margin-left: 43px;
+}
+.details-box-center .type .type-list a.active {
+    position: relative;
+    background: #1A8CDC;
+    border: 1px solid #1A8CDC;
+    color: #fff;
+}
+.details-box-center .type .type-list a {
+    display: inline-block;
+    margin: 0 13px 15px 0;
+    padding: 5px 12px;
+    border: 1px solid #c8c8c8;
+    color: #aaa;
+    font-size: 14px;
+    border-radius: 2px;
+}
+
+.details-box-center .submit-box .input-box .icon-phone {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    background: url(../images/bqdj/icon_ph.png) center no-repeat;
+    position: relative;
+    top:-1px;
+}
+.details-box-center .type .type-list a.active:after {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    content: '';
+    width: 14px;
+    height: 13px;
+    background: url('../images/bqdj/icon_xz.png') center no-repeat;
+
+}
+.advantage-pannel .advantage-item .advantage-icon {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    vertical-align: middle;
+    background: url(../images/bqdj/bqdj-icon.png) center center no-repeat;
+}
+.advantage-pannel .advantage-item .advantage-info {
+    display: inline-block;
+    margin-left: 15px;
+    vertical-align: middle;
+}
+.advantage-pannel .advantage-item .advantage-info span {
+    display: block;
+    line-height: 30px;
+    color: #696d75;
+    font-size: 18px;
+}
+.advantage-pannel .advantage-item .advantage-info p {
+    width: 155px;
+    line-height: 18px;
+    color: #999;
+    font-size: 12px;
+}
+.advantage-pannel .advantage-item {
+    display: inline-block;
+    margin-right: 90px;
+}
+.advantage-pannel .advantage-item .icon-1 {
+    background-position: 0 0;
+}
+.advantage-pannel .advantage-item .icon-2 {
+    background-position: 0 -60px;
+}
+.advantage-pannel .advantage-item .icon-3 {
+    background-position: 0 -120px;
+}
+.advantage-pannel .advantage-item .icon-4 {
+    background-position: 0 -180px;
+}

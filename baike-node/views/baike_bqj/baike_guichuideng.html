@@ -1,0 +1,273 @@
+﻿<!DOCTYPE html><html><head>
+	<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">	<meta name="description" content="">
+	<title>一月趋势图</title>
+	<script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+	<style>
+	.nav-select{
+		position: absolute;
+		right: 0;
+		top: 3px;
+		text-align: left;
+	}
+	.nav-info{
+		position: absolute;
+		top: 3px;
+		width: 600px;
+		left: 5px;
+		text-align: left;
+	}
+	.span_app_info{
+		position: absolute;
+		left: 80px;
+	}
+	.span_app_store{
+		position: absolute;
+		left: 72px;
+		bottom: 0px;
+	}
+	.log_img{
+		width: 50px;
+		height: 50px;
+		float: left;
+	}
+	.nav-select .dropdown{float:left;position:relative;
+	margin-right: 43px;
+    border-color: red;
+    text-align:center;
+	}
+	.navbar-brand{
+		width:100%;
+		height:100%;
+		text-align:center;
+	}
+	
+	.nav-select:after{clear:both}
+	#react-container{height:100%}
+	#container{
+	min-width:400px;
+	height:400px;
+	margin-top: 70px
+	}
+	.title_font{
+		font-size: 14px;
+		color: #333333;
+		line-height: 26px;
+		float: left;
+		background: #FFFFFF;
+	}
+	</style>
+	
+</head>
+<body>
+<div class="title_font">
+手机应用类版权作品搜索指数跟踪
+</div>
+<div style="position: relative;top: 10px;font-size: 12px;color: #666;">
+<div class="nav-info">
+<img class="log_img" src="/bqj/logo_g.jpg" />
+<span class="span_app_info">鬼吹灯3D-正版古城降临</span><span class="span_app_store">【苹果应用商店】</span>
+</div>
+
+<div class="nav-select">
+
+<div id="pdiv" class="dropdown" >
+<div class="navbar-brand"><!-- react-text: 339 -->排名<!-- /react-text --></div>
+<button tabindex="0" type="button" style="-webkit-user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: inline-block; font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif; border: 10px; cursor: pointer; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; transform: translate3d(0px, 0px, 0px); box-sizing: border-box; height: 30px; line-height: 30px; min-width: auto; color: rgba(0, 0, 0, 0.870588); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; border-radius: 2px; position: relative; overflow: hidden; text-align: center; width: 100px; background-color: rgba(0, 0, 0, 0);"><div>
+<span style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; overflow: hidden;"></span>
+<span style="position: relative; padding-left: 16px; padding-right: 16px; vertical-align: middle; letter-spacing: 0px; text-transform: uppercase; font-weight: normal; font-size: 14px;">
+<span style="cursor:text;">第1名
+</span>
+</span>
+</div>
+</button>
+</div>
+
+<div id="pdiv" class="dropdown" >
+<div class="navbar-brand"><!-- react-text: 339 -->搜索指数<!-- /react-text --></div>
+<button id="btn1" onclick="chartView(1)"  onmouseover="over_btn(this)"  onmouseout="out_btn(this)" tabindex="0" type="button" style="-webkit-user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: inline-block; font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif; border: 10px; cursor: pointer; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; transform: translate3d(0px, 0px, 0px); box-sizing: border-box; height: 30px; line-height: 30px; min-width: auto; color: rgba(0, 0, 0, 0.870588); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; border-radius: 2px; position: relative; overflow: hidden; text-align: center; width: 100px; background-color: rgba(0, 0, 0, 0);"><div>
+<span style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; overflow: hidden;"></span>
+<span style="position: relative; padding-left: 16px; padding-right: 16px; vertical-align: middle; letter-spacing: 0px; text-transform: uppercase; font-weight: normal; font-size: 14px;">
+<span><!-- react-text: 345 -->73<!-- /react-text -->
+<img class="margin-right-xs" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAQCAYAAAD0xERiAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjMwNzM5NEI0QjJCMzExRTY4QjMyOUE4NUI4OTIyRjhBIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjMwNzM5NEI1QjJCMzExRTY4QjMyOUE4NUI4OTIyRjhBIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzA3Mzk0QjJCMkIzMTFFNjhCMzI5QTg1Qjg5MjJGOEEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MzA3Mzk0QjNCMkIzMTFFNjhCMzI5QTg1Qjg5MjJGOEEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7C3hOGAAAAfklEQVR42mJk2HOFAQtwBeJdQDwZiPMY8ID/ztpwNhMONdxQmo+BBMDEQEXAQg1DGPdeTQBSgixUclQDEMtT1ZukGlYAxOeB2JgahhlAsSzNY5PqhgUBsRu10tlaIH4IxAqDzpuD17CfQPwNTfwrlP6EJv4JTR4GQPp/AgQYAIlzE8DvgweYAAAAAElFTkSuQmCC" alt="">
+</span>
+</span>
+</div>
+</button>
+</div>
+
+<div id="rdiv" class="dropdown"  >
+<div class="navbar-brand"><!-- react-text: 349 -->搜索结果数<!-- /react-text --></div>
+<button  id="btn2" onclick="chartView(2)"  onmouseover="over_btn(this)"  onmouseout="out_btn(this)" tabindex="0" type="button" style="-webkit-user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: inline-block; font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif; border: 10px; cursor: pointer; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; transform: translate3d(0px, 0px, 0px); box-sizing: border-box; height: 30px; line-height: 30px; min-width: auto; color: rgba(0, 0, 0, 0.870588); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; border-radius: 2px; position: relative; overflow: hidden; text-align: center; width: 100px; background-color: rgba(0, 0, 0, 0);">
+<div>
+<span style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; overflow: hidden;"></span><span style="position: relative; padding-left: 16px; padding-right: 16px; vertical-align: middle; letter-spacing: 0px; text-transform: uppercase; font-weight: normal; font-size: 14px;">
+<span><!-- react-text: 355 -->18<!-- /react-text -->
+<img class="margin-right-xs" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAQCAYAAAD0xERiAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjMwNzM5NEI0QjJCMzExRTY4QjMyOUE4NUI4OTIyRjhBIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjMwNzM5NEI1QjJCMzExRTY4QjMyOUE4NUI4OTIyRjhBIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzA3Mzk0QjJCMkIzMTFFNjhCMzI5QTg1Qjg5MjJGOEEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MzA3Mzk0QjNCMkIzMTFFNjhCMzI5QTg1Qjg5MjJGOEEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7C3hOGAAAAfklEQVR42mJk2HOFAQtwBeJdQDwZiPMY8ID/ztpwNhMONdxQmo+BBMDEQEXAQg1DGPdeTQBSgixUclQDEMtT1ZukGlYAxOeB2JgahhlAsSzNY5PqhgUBsRu10tlaIH4IxAqDzpuD17CfQPwNTfwrlP6EJv4JTR4GQPp/AgQYAIlzE8DvgweYAAAAAElFTkSuQmCC" alt="">
+</span></span>
+</div>
+</button>
+</div>
+
+<div  id="tdiv" class="dropdown" >
+<div class="navbar-brand subtitle" ><!-- react-text: 359 -->近一周竞争趋势<!-- /react-text -->
+</div>
+<button  id="btn3" onclick="chartView(3)"  onmouseover="over_btn(this)"  onmouseout="out_btn(this)" tabindex="0" type="button" style="-webkit-user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); display: inline-block; font-family: 'Microsoft Yahei', 'Helvetica Neue', Helvetica, Arial, sans-serif; border: 10px; cursor: pointer; text-decoration: none; margin: 0px; padding: 0px; outline: none; font-size: inherit; font-weight: inherit; transform: translate3d(0px, 0px, 0px); box-sizing: border-box; height: 30px; line-height: 30px; min-width: auto; color: rgba(0, 0, 0, 0.870588); transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; border-radius: 2px; position: relative; overflow: hidden; text-align: center; width: 100px; background-color: rgba(0, 0, 0, 0);">
+<div>
+<span style="position: relative; padding-left: 16px; padding-right: 16px; vertical-align: middle; letter-spacing: 0px; text-transform: uppercase; font-weight: normal; font-size: 14px;"><span>
+<img class="margin-right-xs" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAPCAYAAAACsSQRAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjU3OERFRUIxRDY1MzExRTZCQzgxODJENjVDNTk3MDkzIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjU3OERFRUIyRDY1MzExRTZCQzgxODJENjVDNTk3MDkzIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NTc4REVFQUZENjUzMTFFNkJDODE4MkQ2NUM1OTcwOTMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NTc4REVFQjBENjUzMTFFNkJDODE4MkQ2NUM1OTcwOTMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz40zvFTAAABJklEQVR42qTTMUtCURjG8XNvEi2CBdESNDRJ0NAQTRU5RYNIY1vo2Odoa4jGlig3pwgiECsiEgwrqK2+QEhKQ0RD9n/hGS6HIyT3hR9633POc4/nXiNXf3ZD1AbOvF4vdsPVJYrYxKN6uUEhI+LXF+rYwjwa1gyF5HCLJ8x6Y1PazTpKOA6FTOJGi7NooaCxPJqYwTJO8YN+7AU09LmGRbzgAnu4wzeWcK81NSxEejrTOMc4VvGqSaM4QAXX+gnd5Nb7hTlnIRZwhbFEgO0mwrvm2t3b2n6yjlDN6KCsVvCm77s6r21dNwc8RVvzYBP3vQCrTODQbV45lGSTTzDxjxfN3ovf0IDdbQeHLkXFEqUNSV12Jj18ev1u4L/zgY7Xs+vOnwADAEAxOnblGDgJAAAAAElFTkSuQmCC" alt="">
+</span></span>
+</div>
+</button>
+</div>
+<div style="clear:both"></div>
+</div>
+<div style="clear:both"></div>
+<div id="container" style="min-width:400px;" ></div>
+</div>
+<div style="clear:both"></div>
+
+<!--
+*************************************************************************
+    Generated by HCODE at 2017-05-05 15:37:51
+    From: https://code.hcharts.cn/demos/hhhhxL
+*************************************************************************
+-->
+
+
+	<script>
+	/**
+  * Highcharts 在 4.2.0 开始已经不依赖 jQuery 了，直接用其构造函数既可创建图表
+ **/
+var btn1=document.getElementById("btn1");
+var btn2=document.getElementById("btn2");
+var btn3=document.getElementById("btn3");
+function chartView(viewObj){
+
+	if(viewObj==1){
+	clickObjInfo=btn1;
+	over_btn(btn1);
+	out_btn(btn2);
+	out_btn(btn3);
+	chart1();
+	}else if(viewObj==2){
+	clickObjInfo=btn2;
+		over_btn(btn2);
+	out_btn(btn1);
+	out_btn(btn3);
+		chart2();
+	}else if(viewObj==3){
+	clickObjInfo=btn3;
+			over_btn(btn3);
+	out_btn(btn2);
+	out_btn(btn1);
+		chart3();
+	}
+}
+function chart2(){
+
+var chart = new Highcharts.Chart('container', {
+    title: {
+        text: '近一月搜索结果数趋势图',
+        x: -20
+    },
+    subtitle: {
+        text: '数据来源: cqaso.com',
+        x: -20
+    },
+    xAxis: {
+        categories: ['13日','14日', '15日', '16日', '17日', '18日', '19日', '20日', '21日', '22日', '23日', '24日', '25日', '26日', '27日', '28日', '29日', '30日', '1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日']
+    },
+    yAxis: {
+        title: {
+            text: '搜索结果数'
+        },
+        plotLines: [{
+            value: 0,
+            width: 1,
+            color: '#808080'
+        }],
+		max:500,
+		min:0
+    },
+    tooltip: {
+        valueSuffix: ''
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'center',
+        verticalAlign: 'bottom',
+        borderWidth: 0
+    },
+    series: [{
+	 name: '搜索结果数',
+     data: [298,298,290,290,291,291,292,288,289,287,285,290,290,288,288,288,287,284,288,288,285,287,284,284,283,283,287,284,284,284,275]
+    }]
+});
+}
+
+function chart1(){
+
+var chart = new Highcharts.Chart('container', {
+    title: {
+        text: '近一月搜索指数趋势图',
+        x: -20
+    },
+    subtitle: {
+        text: '数据来源: cqaso.com',
+        x: -20
+    },
+    xAxis: {
+        categories: ['13日','14日', '15日', '16日', '17日', '18日', '19日', '20日', '21日', '22日', '23日', '24日', '25日', '26日', '27日', '28日', '29日', '30日', '1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日']
+    },
+    yAxis: {
+        title: {
+            text: '搜索指数'
+        },
+        plotLines: [{
+            value: 0,
+            width: 1,
+            color: '#808080'
+        }],
+		max:1530,
+		min:1512
+    },
+    tooltip: {
+        valueSuffix: ''
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'center',
+        verticalAlign: 'bottom',
+        borderWidth: 0
+    },
+    series: [{
+	 name: '搜索指数',
+     data: [1517,1517,1515,1515,1513,1513,1513,1513,1515,1515,1515,1515,1515,1515,1515,1514,1514,1519,1519,1519,1519,1520,1517,1517,1517,1523,1523,1523,1522,1522,1522]
+    }]
+});
+}
+function chart3(){
+    var imgPath="/bqj/demo_g.png";
+	document.getElementById("container").innerHTML='<img src="'+imgPath+'" style="min-width:400px;height:400px;" />';
+}
+
+function over_btn(obj){
+
+obj.style.backgroundColor.filter = "alpha(opacity=20%)";
+obj.style.backgroundColor.opacity = "0.2";
+obj.style.backgroundColor="#EBEBEB";
+}
+var clickObjInfo=btn1;
+function out_btn(obj){
+if(clickObjInfo==obj){
+	return ;
+}
+obj.style.backgroundColor.filter = "alpha(opacity=100%)";
+obj.style.backgroundColor.opacity = 1;
+obj.style.backgroundColor="#FFFFFF";
+}
+
+chartView(1);
+</script>
+
+</body></html>

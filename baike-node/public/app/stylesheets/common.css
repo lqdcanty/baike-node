@@ -1,0 +1,149 @@
+html *{
+    -webkit-box-sizing:border-box!important;
+    -moz-box-sizing:border-box!important;
+    -ms-box-sizing:border-box!important;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    outline: 0;
+    text-size-adjust: none;
+    font-family: "微软雅黑";
+}
+html,body{
+    background-color: #F3F5F8;
+}
+body{
+   /* line-height: 1.5;*/
+    margin:0 auto;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+a{
+    text-decoration: none;
+    cursor: pointer;
+}
+input[type="password"],input[type="text"],input[type="button"],input[type="submit"],input[type="reset"],input[type="file"]::-webkit-file-upload-button,button,select,textarea{
+    -webkit-appearance:none;
+    appearance:none;
+    border: none;
+    border-radius: 0;
+}
+input:-ms-input-placeholder,textarea:-ms-input-placeholder{
+    color:#9E9E9E;
+}
+input::-webkit-input-placeholder,textarea::-webkit-input-placeholder{
+    color:#9E9E9E;
+}
+input::-moz-placeholder,textarea::-moz-placeholder{
+    color: #9E9E9E;
+}
+img, embed, object, video, iframe {
+    max-width:100% !important;
+}
+.fixed{
+    position: fixed;
+    left: 0;
+    width: 100%;
+}
+.relative{
+    position: relative;
+}
+.bg_white{
+    background: #fff;
+}
+.pointer{
+    cursor:pointer;
+}
+.block{
+    display: block;
+}
+.none{
+    display: none;
+}
+.inline_block{
+    display: inline-block;
+}
+.cover{
+    background-size:cover !important;
+}
+.contain{
+    background-size:contain !important;
+}
+.clearfix:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.clearfix{
+    zoom: 1;
+}
+.float_left{
+    float:left;
+}
+.float_right{
+    float:right;
+}
+.text_center{
+    text-align: center;
+}
+.text_right{
+    text-align: right;
+}
+.text_left{
+    text-align: left;
+}
+.text_line{
+    text-decoration: underline;
+}
+.xoverflow_scroll{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.corlor_fff{
+    color: #fff;
+}
+.color_666{
+    color: #666666;
+}
+.modle-wrap{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3)!important;
+    background: #000;
+    filter: alpha(opacity=80); 	/*ie6/7/8*/
+}
+.modle-container{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+}
+/*我加的样式*/
+body,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fieldset,legend,input,button,textarea,article,aside,footer,header,hgroup,nav,section,menu,span{
+    margin:0;
+    padding:0;
+    -webkit-text-size-adjust:100%;
+    font-size: 0.14rem;
+    color: #666;
+}
+table{
+    border-collapse:collapse;border-spacing:0;
+}
+h1,h2,h3,h4,h5,h6{
+    font-weight: normal;
+}
+ul,li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+.bold{
+    font-weight: 900;
+}
+

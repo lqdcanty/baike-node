@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script type="text/javascript">
+        (function(){var phoneWidth=parseInt(window.screen.width),phoneScale=phoneWidth/750,ua=navigator.userAgent;if(/Android (\d+\.\d+)/.test(ua)){var version=parseFloat(RegExp.$1);if(version>2.3){document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+", maximum-scale = "+phoneScale+', target-densitydpi=device-dpi">')}else{document.write('<meta name="viewport" content="width=750, target-densitydpi=device-dpi">')}}else{document.write('<meta name="viewport" content="width=750, user-scalable=no, target-densitydpi=device-dpi">')};})();
+    </script>
+    <meta  name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="full-screen" content="true"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="360-fullscreen" content="true"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <title>版权百科</title>
+    <link rel="stylesheet" type="text/css" href="/app/stylesheets/index.css" />
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <% include('../common/baidu_tj') %>
+</head>
+
+<body>
+<div class="smContent_wrap">
+    <!--<div class="app-header" id="app-header">-->
+    <!--版权百科-->
+    <!--<a class="app-images icon_more"></a>-->
+    <!--</div>-->
+    <div class="smContent">
+        <div class="text_center">
+            <img src="/app/images/img_3.png">
+        </div>
+        <div style="margin-top: 50px">
+            <h2><i class="icon iconfont icon-yonghu"></i>尊敬的用户:</h2>
+            <p>版权百科暂未开放移动端【声明我的版权】功能服务，
+                请通过PC端 www.banquanbaike.com.cn完成版权声明。</p>
+        </div>
+    </div>
+</div>
+<a href="/" style="display: inline-block;width: 72px;height: 72px;background: url('../app/images/icon_sy.png'); position: fixed;right: 10px;bottom:120px";></a>
+
+</body>
+<script>
+    function isWeiXin() {
+        var ua = window.navigator.userAgent.toLowerCase();
+        console.log(ua);//mozilla/5.0 (iphone; cpu iphone os 9_1 like mac os x) applewebkit/601.1.46 (khtml, like gecko)version/9.0 mobile/13b143 safari/601.1
+        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    if(isWeiXin()){
+        document.getElementById('app-header').style.display='none';
+    }else{
+        console.log("不是来自微信内置浏览器");
+    }
+</script>
+<script type="text/javascript" src="/app/lib/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/app/javascripts/authorization.js"></script>
+<script>
+    var share = {
+        title:"版权百科 - 声明版权",
+        imgUrl:"http://"+location.host+"/app/images/banner.png",
+        link:location.href,
+        desc:"版权数据服务专家",
+        success:function(){
+            //$(".share").hide();
+        },
+        cancel:function(){
+
+        }
+    };
+</script>
+
+<script type="text/javascript" src="/app/lib/wx.js"></script>
+<script type="text/javascript" src="/app/lib/wx.util.js"></script>
+</html>

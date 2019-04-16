@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>版权百科</title>
+    <link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="lib/swiper/swiper-3.4.2.min.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/common.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/person_center.css"/>
+    <link rel="stylesheet" href="lib/layer/skin/default/layer.css">
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <!--[if lt IE 9]>
+    <script src="lib/html5shiv.min.js"></script>
+    <![endif]-->
+    <% include('common/baidu_tj') %>
+</head>
+<body>
+<% include('common/header') %>
+<% var result=data.result%>
+<div class="wrap" id="warp_height">
+    <div class="person_center text_center">
+        <div class="pc_out">
+            <ul class="pc_nav inline_block">
+                <li class="inline_block">
+                    <a href="person_set">个人设置</a>
+                </li>
+                <li class="inline_block">
+                    <a href="entry">词条任务</a>
+                <li class="inline_block">
+                    <a href="my_editor">我的编辑</a>
+                </li>
+                <li class="inline_block">
+                    <a href="javascript:void(0)">消息通知</a>
+                </li>
+                <li class="inline_block">
+                    <a href="creatEntry">创建词条</a>
+                </li>
+                <li class="inline_block on">
+                    <a href="workAudit">作品词条审核</a>
+                </li>
+                <li class="inline_block">
+                    <a href="myAudit">我的审核</a>
+                </li>
+                <li class="inline_block">
+                    <a href="attentionWork">关注作品</a>
+                </li>
+            </ul>
+        </div>
+        <div class="pc_w950">
+            <div class="auditContent">
+                <div class="auditSearch clearfix">
+                    <input class="float_left" type="text" placeholder="输入作品名称可查询相关信息" id="AuditSearchName">
+                    <button class="float_left" id="AuditSearchBtn">查询</button>
+                </div>
+                <div class="pc_w950_audit">
+                    <span class="action" style="width:150px">修改时间</span>
+                    <span class="action" style="width:160px">申请用户</span>
+                    <span class="action" style="width:170px">作品名称</span>
+                    <span class="action" style="width:80px">作品类型</span>
+                    <span class="action" style="width:150px">修改描述</span>
+                    <span class="action" style="width:90px">修改详情</span>
+                    <span class="action">操作</span>
+                </div>
+                <div class="allNews_audit">
+                    <table class="message_audit" id="message_audit">
+                        <%if(result.list.length>0){%>
+                            <%for(i=0;i<result.list.length;i++){%>
+                                <tr>
+                                    <td style="display: none"><%=result.list[i].id%></td>
+                                    <td><%=result.list[i].datetime%></td>
+                                    <td><%=result.list[i].userName%></td>
+                                    <td><a href="/item/<%=result.list[i].workSeqNo%>" target="_blank" class="aColor"><%=result.list[i].workName%></a></td>
+                                    <td><%=result.list[i].workType%></td>
+                                    <td><%=result.list[i].remark%></td>
+                                    <td>
+                                        <a class="audit_a auditBrower">预览</a>
+                                    </td>
+                                    <td>
+                                        <a class="audit_a pd20 passAuditClick">通过</a>
+                                        <a class="audit_a rejectAuditClick">驳回</a>
+                                    </td>
+                                </tr>
+                            <%}%>
+                        <%}%>
+                    </table>
+                    <div class="newRegisterId" style="display: none"><%=useInfo.loginUser.useid%></div>
+                    <div class="hhiddenPage">
+                        <span class="html_totalPage"><%=result.totalPage%></span>
+                        <span class="html_currentPage"><%=result.currentPage%></span>
+                    </div>
+                    <div class="page text_center pd60" id="page1"></div>
+                    <div class="modle-wrap" id="AuditWrap">
+                        <div class="modle-container">
+
+                            <div class="reject_audit" id="rejectAuditWrap">
+                                <h1><img src="images/clole_icon.png" alt="" class="reject_close float_right NEWreject_close"></h1>
+                                <div class="reject_AduitContent">
+                                    <textarea name="" placeholder="请输入驳回原因" id="auditReajectReason"></textarea>
+                                    <button class="btnAudit on" id="rejectAuditBtn">确定</button>
+                                </div>
+                            </div>
+
+                            <div class="reject_audit" id="passAuditWrap">
+                                <h1><img src="images/clole_icon.png" alt="" class="reject_close float_right NEWreject_close"></h1>
+                                <div class="reject_AduitContent">
+                                    <div class="tipsPassContent">
+                                        请确认是否通过《<span class="span1"></span>》<span class="span2"></span><span class="span3"></span>的操作。
+                                    </div>
+                                    <div class="select_btn">
+                                        <button class="btnAudit on" id="passAuditBtn">确定</button>
+                                        <button class="btnAudit onRight NEWreject_close">取消</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="audit_see" id="seeAuditWrap">
+                                <h1 class="audit_h1"><img src="images/clole_icon.png" alt="" class="reject_close float_right NEWreject_close"></h1>
+                                <div class="temp_audit">
+                                    <!--<div class="pc_template" style="width:760px;">
+                                        <div class="pc_w800_content text_left" style="padding:0 20px 0 10px;">
+                                            &lt;!&ndash;最上面的相同部分start&ndash;&gt;
+                                            <div class="padLeft">
+                                                <h1 class="z_title bold">鬼吹灯之寻龙诀</h1>
+                                                <p class="h_title">由乌尔善执导的悬疑动作片、改编于天下霸唱所著盗墓小说《鬼吹灯》的后四部</p>
+                                                <p class="label_description">
+                                                    <span>电影</span>
+                                                    <span>天下霸唱</span>
+                                                    <span>盗墓</span>
+                                                    <span>恐怖</span>
+                                                    <span>刺激</span>
+                                                </p>
+                                                <div class="base_description">
+                                                    <p class="base_descriptionP">
+                                                        <span class="base_descriptionName">修改时间:</span>
+                                                        <span class="base_descriptionValue">2017-09-12 12:12:10</span>
+                                                    </p>
+                                                    <p class="base_descriptionP">
+                                                        <span class="base_descriptionName">修改描述:</span>
+                                                        <span class="base_descriptionValue">2017-09-12 12:12:10</span>
+                                                    </p>
+                                                    <p class="base_descriptionP">
+                                                        <span class="base_descriptionName">修改用户:</span>
+                                                        <span class="base_descriptionValue">2017-09-12 12:12:10</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            &lt;!&ndash;最上面的相同部分end&ndash;&gt;
+                                            &lt;!&ndash;基本信息start&ndash;&gt;
+                                            <div class="baseNews text_left">
+                                                <div class="baseNews_ago clearfix">
+                                                    <p class="alter bold">
+                                                        基本信息  <span class="alter_span">（ <i>修改前</i>）</span>
+                                                        <span class="blue_border"></span>
+                                                    </p>
+                                                    <table class="baseNews_table fs14">
+                                                        <tr>
+                                                            <td class="quality">作品名称:</td>
+                                                            <td class="result">《三生三世十里桃花》</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="quality">全册章数</td>
+                                                            <td class="result">二百三十九章</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="quality">文学体裁:</td>
+                                                            <td class="result">小说</td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="baseNews_table fs14">
+                                                        <tr>
+                                                            <td class="quality">作品名称:</td>
+                                                            <td class="result">《三生三世十里桃花》</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="quality">全册章数</td>
+                                                            <td class="result">二百三十九章</td>
+                                                        </tr>
+                                                        <tr>
+
+                                                            <td class="quality">字数</td>
+                                                            <td class="result">约200万</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="baseNews_after clearfix">
+                                                    <p class="alter bold">
+                                                        基本信息  <span class="alter_span">（ <i>修改后</i>）</span>
+                                                        <span class="blue_border"></span>
+                                                    </p>
+                                                    <table class="baseNews_table fs14">
+                                                        <tr>
+                                                            <td class="quality">作品名称:</td>
+                                                            <td class="result">《三生三世十里桃花》</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="quality">全册章数</td>
+                                                            <td class="result">二百三十九章</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="quality">字数</td>
+                                                            <td class="result">约200万</td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="baseNews_table fs14">
+                                                        <tr>
+                                                            <td class="quality">作品名称:</td>
+                                                            <td class="result">《三生三世十里桃花》</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="quality">创作年代:</td>
+                                                            <td class="result">21世纪</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="quality">文学体裁:</td>
+                                                            <td class="result">小说</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%include ('common/bottom')%>
+<%include ('common/foot_script')%>
+<script>
+    var share = {
+        title:"版权百科",
+        imgUrl:"http://"+location.host+"/app/images/img_fm.png",
+        link:location.href,
+        desc:"版权数据服务专家",
+        success:function(){
+            //$(".share").hide();
+        },
+        cancel:function(){
+
+        }
+    };
+</script>
+<script type="text/javascript" src="/app/lib/wx.js"></script>
+<script type="text/javascript" src="/app/lib/wx.util.js"></script>
+<script src="lib/swiper/swiper-3.4.2.jquery.min.js"></script>
+<script type="text/javascript" src="/lib/laypage.js"></script>
+<script type="text/javascript" src="lib/layer/layer.js"></script>
+<script type="text/javascript" src="javascripts/person_center.js"></script>
+<script type="text/javascript" src="javascripts/audit.js"></script>
+<script src="lib/shade_layer/shadeLayer.js"></script>
+<script id="test1" type="text/html">
+    <%include ('common/person_baseNews')%>
+</script>
+<script id="test2" type="text/html">
+    <%include ('common/refuse')%>
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:wb="http://open.weibo.com/wb">
+<head>
+    <meta charset="UTF-8">
+    <title>版权百科</title>
+    <link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="stylesheets/common.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/detail.css"/>
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/swiper/swiper-3.4.2.min.css" />
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2708545225" type="text/javascript" charset="utf-8"></script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+        .content-nav{font-size: 14px;color: #666666;background:#ECECEC;height: 40px;}
+        .content-nav a{color: #666666;text-decoration: underline;}
+        .content-nav a:hover{color: #1A8CDC}
+        .content-nav .nav-wrap{width: 1160px;margin: 0 auto;line-height: 40px;position: relative}
+        .content-nav .nav-item{position: absolute;left: 0}
+        .history-wrap{width: 860px;margin: 0 auto;margin-top: 40px}
+        table{border-top: solid 1px #DEDEDE; border-left: solid 1px #DEDEDE;}
+        td:first-child{text-indent: 30px}
+        td{height: 40px;font-size: 14px;border-bottom: solid 1px #DEDEDE;border-right: solid 1px #DEDEDE;}
+        thead td{color: #333333;background:#ECECEC}
+        tbody td{color: #666666}
+        tbody tr:nth-of-type(even){background:rgba(236,236,236,0.5)}
+        #search_content{margin-top: 80px}
+    </style>
+    <% include('common/baidu_tj') %>
+</head>
+<body>
+<% include('./common/header') %>
+<% var lists=data.chapterBaks %>
+<!-- content -->
+<div id="search_content">
+    <div class="content-nav">
+        <div class="nav-wrap"><div class="nav-item"><a href="/item/<%=workID%>"><%=data.workName%></a>  >  编辑详情</div></div>
+    </div>
+    <table class="history-wrap"  border="0" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <td align="left">用户</td>
+                <td align="center">创建时间</td>
+                <td align="center">版本号</td>
+                <td align="center">操作</td>
+            </tr>
+        </thead>
+        <tbody>
+            <%if(lists&&lists.length>0){%>
+                <% lists.forEach(function(x,index){ %>
+                <tr>
+                    <td><%=x.lastModfiedName%></td>
+                    <td align="center"><%=x.createTime%></td>
+                    <td align="center">V <%=index+1%>.0</td>
+                    <td align="center">
+                        <%if(index>0){%>
+                        <a class="showInfo"  data-id="<%=x.id%>" data-type="<%=x.type%>">查询详情</a>
+                        <%}else{%>
+                        <span>创建</span>
+                        <%}%>
+                    </td>
+                </tr>
+                <%})%>
+            <%}else{%>
+                <tr>
+                    <td colspan="4">暂无记录</td>
+                </tr>
+            <%}%>
+        </tbody>
+    </table>
+    <div id="layerPage" style="margin-top: 80px;text-align: center"></div>
+    <div>
+        <input type="hidden" class="urlInfo" value="<%=url%>">
+    </div>
+
+    <div class="modle-wrap" id="historyModule" v-show="openStatus" v-cloak>
+        <div class="modle-container">
+            <div class="modle-detail copyright-modle">
+                <P class="modle-head">
+                    {{moduleName}}
+                    <i class="close_btn" @click="close"></i>
+                </P>
+                <div class="modle-body" style="padding: 20px">
+                    <div class="para-item" v-show="moduleCode=='essential_info'">
+                        <div class="basicInfo-form">
+                            <div class="basicInfo-wrap clearfix" v-if="moduleInfo.length>0">
+                                <ul class="basicInfo-block basicInfo-left">
+                                    <li v-for="(item,index) in moduleInfo" v-if="index%2==0">
+                                        <span class="basicInfo-item name" style="width: 110px">{{item.key}}：</span>
+                                        <span class="basicInfo-item value">
+                                            {{item.val}}
+                                        </span>
+                                    </li>
+                                </ul>
+                                <ul class="basicInfo-block basicInfo-right">
+                                    <li v-for="(item,index) in moduleInfo" v-if="index%2!=0">
+                                        <span class="basicInfo-item name" style="width: 110px">{{item.key}}：</span>
+                                        <span class="basicInfo-item value">
+                                            {{item.val}}
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="color_999 f14" v-else>
+                                暂无编辑信息
+                            </div>
+                        </div>
+                    </div>
+                    <div class="para-item" v-show="moduleCode=='synopsis'">
+                        <div class="para para-synopsis">
+                            <p v-for="(item,index) in moduleInfo">{{item.text}}</p>
+                        </div>
+                    </div>
+                    <!--<div class="para-item" v-if="moduleCode=='copyright'">-->
+                        <!--<div class="para para-copyright">-->
+                            <!--<ul>-->
+                                <!--<li v-for="(item,index) in moduleInfo">-->
+                                    <!--<a class="yz" v-if="item.isOrigin==true">原著</a>-->
+                                    <!--<a class="zs" v-else>转授</a>-->
+                                    <!--<span class="copy-name">{{item.name}}</span>-->
+                                    <!--<span>{{item.obligee}}</span>-->
+                                    <!--<span class="float_right">{{item.registrationTime}}</span>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="para-item" style="padding:0 20px" v-show="moduleCode=='cover'">
+                        <div class="para para-coverImg">
+                            <div class="swiper-container coverImg-container">
+                                <div class="swiper-wrapper">
+                                    <div v-for="(item,index) in moduleInfo" class="swiper-slide">
+                                        <a><img :src="item.url"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 如果需要导航按钮 -->
+                            <div class="next-coverImg"></div>
+                            <div class="prev-coverImg"></div>
+                        </div>
+                    </div>
+                    <div class="para-item" style="padding:0 20px" v-show="moduleCode=='website'">
+                        <ul class="otherWeb-container clearfix">
+                            <li v-for="(item,index) in moduleInfo">
+                                <a :href="item.url" target="_blank">{{item.webSiteName}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="para-item" v-show="moduleCode=='other'">
+                        <div class="para para-other">
+                            <div v-for="(item,index) in moduleInfo" v-html="item.text"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% include('./common/bottom') %>
+<% include('./common/foot_script') %>
+<script>
+    var share = {
+        title:"版权百科",
+        imgUrl:"http://"+location.host+"/app/images/img_fm.png",
+        link:location.href,
+        desc:"版权数据服务专家",
+        success:function(){
+            //$(".share").hide();
+        },
+        cancel:function(){
+
+        }
+    };
+</script>
+<script type="text/javascript" src="/app/lib/wx.js"></script>
+<script type="text/javascript" src="/app/lib/wx.util.js"></script>
+<script type="text/javascript" src="/lib/autoIMG/jQuery.autoIMG.min.js"></script>
+<script>
+    jQuery(function ($) {
+        $('img').autoIMG();
+    });
+</script>
+<script type="text/javascript" src="lib/laypage/laypage.js"></script>
+<script src="lib/vue/vue.js"></script>
+<script>
+    $(function () {
+        var _height=parseInt(window.innerHeight);
+        if(_height-80-60>document.getElementById("search_content").offsetHeight){
+            $('.bottom ').css({
+                'position':'fixed',
+                'bottom':0,
+                'left':0
+            })
+        }
+    })
+</script>
+<script type="text/javascript" src="lib/laypage/laypage.js"></script>
+<script src="lib/swiper/swiper-3.4.2.jquery.min.js"></script>
+<script>
+    $(function () {
+        function getColor(params) {
+            // build a color map as your need.
+            console.log(params)
+            var r=Math.floor(Math.random()*256);
+            var g=Math.floor(Math.random()*256);
+            var b=Math.floor(Math.random()*256);
+            return "rgb("+r+','+g+','+b+")";//所有方法的拼接都可以用ES6新特性`其他字符串{$变量名}`替换
+        };
+
+        $('.showInfo').click(function () {
+            $.ajax({
+                url: 'api/work/chapter/history/detail?id='+$(this).data('id')+'&type='+$(this).data('type'),
+                type: 'get',
+                success: function(data){
+                    historyVue.moduleInfo=data.data.result.content;
+                    historyVue.moduleName=data.data.result.name;
+                    historyVue.moduleCode=data.data.result.code;
+                    historyVue.openStatus=true;
+                }
+            });
+        });
+
+
+        var historyVue=new Vue({
+            el:'#historyModule',
+            data:{
+                moduleCode:'',
+                moduleName:'',
+                moduleInfo:[],
+                otherInfo:'',
+                openStatus:false
+            },
+            updated:function () {
+                console.log(this.moduleCode);
+                if(this.moduleCode=='synopsis'){
+//                    $('.htmlText').html(this.moduleInfo[0].text)
+//                    console.log($('.htmlText').html())
+                }
+                if(this.moduleCode=='cover'){
+
+                    var mySwiper1 = new Swiper ('.coverImg-container', {
+                        slidesPerView : 4,
+                        spaceBetween : 30,
+                        nextButton: '.next-coverImg',
+                        prevButton: '.prev-coverImg'
+                    });
+                }
+                if(this.moduleCode=='website'){
+                    var mySwiper2 = new Swiper ('.otherWeb-container', {
+                        slidesPerView :3,
+                        spaceBetween : 20,
+                        nextButton: '.next-otherWeb',
+                        prevButton: '.prev-otherWeb'
+                    });
+                    this.allotColor()
+                }
+            },
+            methods:{
+                close : function () {
+                    this.openStatus=false;
+                },
+                allotColor: function () {
+                    var _this=this;
+                    $('.otherWeb-container').find(".swiper-slide").each(function () {
+                        $(this).css({"background-color":_this.getColor()})
+                    });
+                },
+                getColor : function(params) {
+                    var r=Math.floor(Math.random()*256);
+                    var g=Math.floor(Math.random()*256);
+                    var b=Math.floor(Math.random()*256);
+                    return "rgb("+r+','+g+','+b+")";//所有方法的拼接都可以用ES6新特性`其他字符串{$变量名}`替换
+                }
+            }
+        });
+    });
+
+
+</script>
+</body>
+</html>

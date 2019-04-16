@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:wb="http://open.weibo.com/wb">
+<head>
+    <meta charset="UTF-8">
+    <title><%=data.workDetail.name%>_<%=data.workDetail.tags[0]%>_版权百科</title>
+    <link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/common.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/detail.css"/>
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/webuploader.css"/>
+    <link rel="stylesheet" type="text/css" href="/lib/liMarquee/liMarquee.css" />
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2708545225" type="text/javascript" charset="utf-8"></script>
+    <style>
+        body{background:#ECECEC;}
+    </style>
+    <% include('common/baidu_tj') %>
+</head>
+<body>
+    <% include('./common/header') %>
+    <% var workDetail=data.workDetail %>
+    <%if(workID){%>
+        <input type="hidden" id="workItemID" value="<%=workID%>">
+    <%}%>
+    <div class="wrap detail-wrap clearfix" id="detailModle">
+        <div class="l-wrap float_left">
+            <div class="main-info para-item" style="padding-bottom: 0">
+                <div class="clearfix name-wrap">
+                    <!--<h1 class="workName"><%=workDetail.name%></h1>-->
+                    <input class="updateNameVal" type="text" value="<%=workDetail.name%>" style="display: block">
+                    <input class="updateWorkTitleVal" type="text" value="<%=workDetail.workTitle%>">
+                </div>
+                <div class="workTitle-wrap">
+                    <input class="workTitle-input" type="text" placeholder="编辑作品副标题" value="<%=workDetail.workTitle%>">
+                </div>
+                <div class="tips" >
+                    <div class="maxLabel-wrap label-wrap">
+                        <i class="icon iconfont icon-xiajiantou bottom-icon"></i>
+                        <a class="maxLabel-val label-btn"></a>
+
+                        <div class="maxLabel" value="1"></div>
+                    </div>
+                    <div class="smallLabel-wrap label-wrap">
+                        <i class="icon iconfont icon-xiajiantou bottom-icon"></i>
+                        <a class="smallLabel-val  label-btn"></a>
+                        <div class="smallLabel" value="1"></div>
+                        <input class="elseLabel" type="text">
+                    </div>
+                    <div class="tips-div" style="display: inline-block ">
+                        <% if( workDetail.tags.length>0) { %>
+                        <% workDetail.tags.forEach(function(u,index){ %>
+                        <% if(index==0) { %>
+                        <a class="active"><%=u%></a>
+                        <%}else{%>
+                        <a><%=u%></a>
+                        <%}%>
+                        <% })%>
+                        <%}%>
+                    </div>
+                    <span class="addTip-wrap"></span>
+                    <span class="addTip-input">+打标签（已有标签点击修改）</span>
+
+                </div>
+            </div>
+            <% workDetail.chapters.forEach(function(x,index){ %>
+            <%if(x.code=='synopsis'){%>
+            <div class="para-item mt20">
+                <div class="para para-synopsis">
+                    <textarea class="eSynopsisInfo" style="display: block" placeholder="编辑作品简介"><%=x.content[0].text%></textarea>
+                </div>
+            </div>
+            <%}%>
+            <%if(x.code=='essential_info'){%>
+            <div class="para-item">
+                <div class="basicInfo-form">
+                    <div class="para-title clearfix">
+                        <h2>基本信息</h2>
+                    </div>
+                    <ul class="addInfo-ulWrap clearfix">
+                        <% x.content.forEach(function(u,index){ %>
+                        <li>
+                            <input type="text" class="basicInfo-item addName" value="<%=u.key%>">：
+                            <input type="text" class="basicInfo-item addValue" value="<%=u.val%>">
+                        </li>
+                        <% })%>
+                    </ul>
+                    <div class="clearfix">
+                        <a class="add-basicIfo" @click="addBasicInfo"><span>+</span>增加</a>
+                    </div>
+                </div>
+            </div>
+            <%}%>
+            <% })%>
+            <div class="para add-infoBtn">
+                <a>保存</a>
+            </div>
+        </div>
+        <div class="r-wrap float_right">
+            <%if(useInfo.islogin&& (data.baseInfoStatus || data.synopsisStatus)){%>
+            <div class="info_box">
+                <p class="title_t"><span></span>尊敬的用户：</p>
+                <div class="aside_txt">
+                    <%if(data.baseInfoStatus){%>
+                    <p>您上次编辑的基本信息已
+                        <%if(data.baseInfoStatus=='submit'){%>
+                         <span>【提交】！</span>
+                        <%}else if(data.baseInfoStatus=='audit' ){%>
+                        <span>【审核中】！</span>
+                        <%}else if(data.baseInfoStatus=='adopt' ){%>
+                        <span>【通过】！</span>
+                        <%}else if(data.baseInfoStatus=='reject' ){%>
+                            <span>【驳回】！</span>
+                        <%}%>
+                    </p>
+                    <%}%>
+                    <%if(data.synopsisStatus){%>
+                    <p>您上次编辑的作品简介已
+                        <%if(data.synopsisStatus=='submit'){%>
+                        <span>【提交】！</span>
+                        <%}else if(data.synopsisStatus=='audit' ){%>
+                        <span>【审核中】！</span>
+                        <%}else if(data.synopsisStatus=='adopt' ){%>
+                        <span>【通过】！</span>
+                        <%}else if(data.synopsisStatus=='reject' ){%>
+                        <span>【驳回】！</span>
+                        <%}%>
+                    </p>
+                    <%}%>
+                </div>
+            </div>
+            <%}%>
+            <div class="side-box">
+                <div class="side-item">
+                    <p class="title_t">请完善作品词条</p>
+                    <p class="aside_txt">
+                        版权百科为版权创作者或被授权方提供版权作品全网监听，包括跟踪作品在什么地方有传播、阅读数、播放量、评论数以及作品热点话题追踪。版权百科为版权需求者获取版权授权提供帮助，包括提供真实有价值的作品版权资讯，协助您寻找版权人、根据您的需求制定版权采购交易方案，最终帮助您完成版权授权的获取。
+                    </p>
+                </div>
+            </div>
+            <div class="side-box">
+                <div class="side-item">
+                    <% workDetail.chapters.forEach(function(x,index){ %>
+                    <%if(x.code=="cover"){%>
+                    <%if(x.content&&x.content.length>0){%>
+                    <p class="title_t">作品封面</p>
+                    <p class="aside_txt">
+                        <div id="works-cover" class="text_center">
+                            <% x.content.forEach(function(u,index){ %>
+                                 <a style='background-image: url(<%=u.url%>)'></a>
+                            <% })%>
+                        </div>
+                    </p>
+                    <%}else{%>
+                    <p class="title_t">作品封面<a id="filePicker" class="filePicker float_right" data-name="<%=x.name%>" data-id="<%=x.id%>">上传作品封面</a></p>
+                    <p class="aside_txt">
+                        <div id="works-cover" class="text_center">
+                        </div>
+                    <%}%>
+                    <%}%>
+                    <% })%>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modle-wrap tips-module">
+        <div class="modle-container">
+            <div class="modle-detail modle-tips">
+                <div class="modle-head">修改标签<i class="close_btn"></i></div>
+                <div class="modle-body">
+                    <input type="text" class="update-tips">
+                    <div class="text-center">
+                        <a class="save-tips">保存</a>
+                        <a class="detail-tips">删除</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modle-wrap dy-module">
+        <div class="modle-container">
+            <div class="modle-detail modle-dy">
+                <div class="modle-head">版权百科版权作品全网使用监听关注服务<i class="close_btn"></i></div>
+                <div class="modle-body">
+                    <p class="c-title">欢迎您使用版权百科版权作品全网使用监听关注服务！</p>
+                    <div>
+                        <p class="p-title">【关注范围】</p>
+                        <p>1.版权作品使用报告</p>
+                        <p>2.版权作品全网使用7日监听数据报告</p>
+                        <p>3、版权作品社会关注度报告</p>
+                        <p class="p-title">【声明】</p>
+                        <p>本网站作品内容由社群协作用户提供，作品传播使用数据由版权百科大数据平台提供。任何媒体、互联网站和商业机构不得利用本网站发布的内容进行商业性的原版原式地转载，也不得歪曲和篡改本网站所发布的内容。如无特殊版权声明，方可转载，转摘请注明出处并做回链。</p>
+                        <p class="p-title">【个人隐私】</p>
+                        <p>1.版权百科为了更好地为用户提供版权作品全网使用监听服务，需要绑定您的邮箱账户。</p>
+                        <p>2. 我们将保护您的隐私权并保证您所提供的个人资料的保密性。我们所收集的个人资料仅用于为您提供服务并尽力满足您的要求。除此之外，我们只在您允许的情况下才使用您的个人资料。除非为了满足您的需要，否则决不会出售或与第三方共享您的个人资料。</p>
+                        <p class="p-title">【免责条款】</p>
+                        <p>1. 根据司法机关之要求公开特定用户个人资料。</p>
+                        <p>2. 为维护本网站版权、著作权及紧急情况下的公众隐私安全而透露特定用户个人资料。</p>
+                        <p>3. 由于您将用户密码告知他人或与他人共享注册帐户，由此导致的个人资料和客户信息的泄露。</p>
+                        <p>4. 由于黑客攻击、计算机病毒发作等影响网络正常经营之不可抗力所造成的个人资料泄露、丢失、被盗用或被篡改。</p>
+                        <p>5. 由于与本网站链接的其它网站所造成个人资料泄露及由此而导致的任何法律争议和后果。</p>
+                    </div>
+                    <div class="get-dyBtn">关注</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% include('./common/bottom') %>
+    <% include('./common/foot_script') %>
+    <script>
+        var share = {
+            title:"版权百科",
+            imgUrl:"http://"+location.host+"/app/images/img_fm.png",
+            link:location.href,
+            desc:"版权数据服务专家",
+            success:function(){
+                //$(".share").hide();
+            },
+            cancel:function(){
+
+            }
+        };
+    </script>
+    <script type="text/javascript" src="/app/lib/wx.js"></script>
+    <script type="text/javascript" src="/app/lib/wx.util.js"></script>
+    <script src="/lib/jquery.md5.js"></script>
+    <script src="/lib/webuploader.js"></script>
+    <script src="/lib/vue/vue.js"></script>
+    <script src="/lib/shade_layer/shadeLayer.js"></script>
+    <script src="/javascripts/detail-echarts-isInit.js"></script>
+    <script>
+        $(function () {
+            var _height=parseInt(window.innerHeight);
+            if(_height-80-80-30>document.getElementById("detailModle").offsetHeight){
+                $('.bottom ').css({
+                    'position':'fixed',
+                    'bottom':0,
+                    'left':0
+                })
+            }
+//            document.getElementsByClassName("index_footer")[0].style.display="block";
+        })
+    </script>
+</body>
+</html>

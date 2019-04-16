@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>版权百科</title>
+    <link rel="icon" href="../../images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../../stylesheets/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../stylesheets/copyright.css"/>
+    <link rel="stylesheet" type="text/css" href="../../font/iconfont.css"/>
+    <link rel="stylesheet" href="../../lib/address/chosen.min.css">
+
+    <script type="text/javascript">
+
+        var areaObj = [];
+        function initLocation(e){
+            var a = 0;
+            for (var m in e){
+                areaObj[a] = e[m];
+                a++;
+            }
+        }
+    </script>
+    <script type="text/javascript" src="../../lib/address/location_chs.js"></script>
+    <% include('../common/baidu_tj') %>
+</head>
+<body>
+<% include('../common/header') %>
+<% var copyrightDetail=data.result.copyrightDetail %>
+<!-- content -->
+<div class="content-nav1">
+    <div><a href="/item/<%=copyrightDetail.workSeqNo%>"><%=copyrightDetail.name%></a>  >  <a href="/copyRight/bql/<%=copyrightDetail.workSeqNo%>">版权链</a>>  版权详情</div>
+</div>
+<div class="copyRight-wrap">
+    <div class="wrap">
+        <div class="copy-item">
+            <div class="style_pp"  style="display:none"><%=copyrightDetail.category%></div>
+            <div class="copy-title">
+                <h2><%=copyrightDetail.name%><span>（原始著作权）</span></h2>
+            </div>
+            <div class="copy copy-synopsis">
+                原始著作权人为作者，即《著作权法》规定的直接享有著作权的创作作品的公民；由法人或者其他组织主持，代表法人或者其他组织意志创作，并由法人或者其他组织承担责任的作品，法人或者其他组织视为作者。
+            </div>
+            <form action="" medthod="post" class="xg_form">
+                <input type="hidden" name="id" value="<%=workSeqNo%>">
+                <div class="copy-basicInfo clearfix">
+                    <dl class="basicInfo-block basicInfo-left">
+                        <div class="xg_div">
+                            <dt class="basicInfo-item name">原始著作权人:</dt>
+                            <dd class="basicInfo-item value" id="obllige_dd">
+                                <span class="old1_value"><%=copyrightDetail.obllige%></span>
+                                <input type="text" value="<%=copyrightDetail.obllige%>" class="new1_value" name="obllige">
+                            </dd>
+                        </div>
+                    </dl>
+                    <dl class="basicInfo-block basicInfo-right">
+                        <div class="xg_div">
+                            <dt class="basicInfo-item name">创作完成时间:</dt>
+                            <dd class="basicInfo-item value" id="time_dd">
+                                <span class="old1_value creationTime0"><%=copyrightDetail.creationTime%></span>
+                                <div class="time-wrap creationTime1">
+                                    <input placeholder="年/月/日" name="time" id="pledge-creationTime"  class="dateTime-s">
+                                </div>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+                <dl class="border_dl">
+                    <div class="xg_div clearfix">
+                        <dt class="basicInfo-item name" style="vertical-align: top">版权信息备注:</dt>
+                        <dd class="basicInfo-item value" id="remark_dd">
+                            <span class="old1_value" style="width:100%;"><%=copyrightDetail.remark%></span>
+                            <textarea type="text" value="" class="new1_value new_textarea" name="remark"><%=copyrightDetail.remark%></textarea>
+                    </div>
+                    </dd>
+                </dl>
+                <div class="save_sq_div">
+                    <input type="button" class="save_sq" value="保存" >
+                </div>
+            </form>
+            <div class="copy-title">
+                <h2>侵权申诉描述内容</h2>
+            </div>
+            <div class="empower-statement">
+                <textarea class="empower-text border_all" name="" id="state_textarea"><%=copyrightDetail.statements%></textarea>
+            </div>
+            <div class="copy-title">
+                <h2>实名信息</h2>
+            </div>
+            <div class="empower-realMessage mt20">
+
+                <div class="realNameStyle em_lineBox">
+                    <b class="em_style">选择实名信息</b>
+                    <div class="em_right">
+                        <select name="" id="realNameStyleSelect">
+                            <option value="新增" name="0">新增</option>
+                            <option value="新增" name="">新增</option>
+                            <%if(copyrightDetail.statementPo){%>
+                            <%for(i=0;i<copyrightDetail.statementPo.length;i++){%>
+                            <option value="<%=copyrightDetail.statementPo[i].name%>" name="<%=copyrightDetail.statementPo[i].id%>"><%=copyrightDetail.statementPo[i].name%></option>
+                            <%}%>
+                            <%}%>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="add_real">
+                    <div class="em_lineBox">
+                        <b class="em_style">
+                            <span class="em_colorSpan">*</span>
+                            <span calss="em_nameStyle">证件类型</span>
+                        </b>
+                        <div class="em_right">
+                            <select class="news_select" id="smIds">
+                                <option value="1">身份证</option>
+                                <option value="2">营业执照</option>
+                                <option value="3">护照</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="em_lineBox">
+                        <b class="em_style">
+                            <span class="em_colorSpan">*</span>
+                            <span calss="em_nameStyle">证件照</span>
+                        </b>
+                        <div class="em_right">
+                            <div class="em_photo box_photo_left" id="uploader-demo1">
+                                <div class="id_photo id_photo_qian" style="width:160px;height:100px;" id="filez">
+                                    <img class="" alt="点击图片上传" src="../../images/img_sff.png" >
+                                </div>
+                                <label class="" id="filePicker1"></label>
+                            </div>
+                            <div class="em_photo box_photo_right" id="uploader-demo2">
+                                <div class="id_photo id_photo_hou" style="width:160px;height:100px;" id="filef">
+                                    <img class="" alt="点击图片上传" src="../../images/img_sff.png" >
+                                </div>
+                                <label class="" id="filePicker2"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="em_lineBox">
+                        <b class="em_style">
+                            <span class="em_colorSpan">*</span>
+                            <span calss="em_nameStyle">姓名</span>
+                        </b>
+                        <div class="em_right">
+                            <input class="em_input" type="text" placeholder="请输入姓名" id="nameReal">
+                        </div>
+                    </div>
+                    <div class="em_lineBox">
+                        <b class="em_style">
+                            <span class="em_colorSpan">*</span>
+                            <span calss="em_nameStyle">证件号</span>
+                        </b>
+                        <div class="em_right">
+                            <input class="em_input" type="text" placeholder="请输入证件号" id="careId">
+                        </div>
+                    </div>
+                    <div class="em_lineBox">
+                        <b class="em_style">
+                            <span class="em_colorSpan">*</span>
+                            <span calss="em_nameStyle">国家省市</span>
+                        </b>
+                        <div class="em_right">
+                            <select name="" id="country" class="news_select dept_select"></select>
+                            <select name="" id="province" class="news_select dept_select"></select>
+                            <select name="" id="city" class="news_select dept_select"></select>
+                        </div>
+                    </div>
+                    <div class="em_lineBox">
+                        <b class="em_style">
+                            <span class="em_colorSpan">*</span>
+                            <span class="em_nameStyle">联系方式</span>
+                        </b>
+                        <div class="em_right bg_gragy">
+                            <em >
+                                <span>联系人</span>
+                                <input id="contactName" type="text" placeholder="请输入联系人" value="<%if(useInfo.islogin){%><%=useInfo.loginUser.name%><%}%>" style="width: 150px;" class="contactName">
+                            </em>
+                            <em>
+                                <span>联系电话</span>
+                                <input type="text" placeholder="请输入联系电话"  value="<%if(useInfo.islogin){%><%=useInfo.loginUser.telephone%><%}%>" style="width: 160px;" class="contactTele">
+                            </em>
+                            <em>
+                                <span>联系邮箱</span>
+                                <input type="text" placeholder="请输入联系邮箱" value="<%if(useInfo.islogin){%><%=useInfo.loginUser.account%><%}%>" style="width: 200px;" class="contactEmail">
+                            </em>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="selectReal">
+                    <div class="em_lineBox">
+                        <b class="em_style">
+                            <span calss="em_nameStyle">证件类型</span>
+                        </b>
+                        <div class="em_right">
+                            <span class="real_carStyle" id="real_carStyle"></span>
+                        </div>
+                    </div>
+                    <div class="em_lineBox">
+                        <b class="em_style">
+                            <span calss="em_nameStyle">证件照</span>
+                        </b>
+                        <div class="em_right">
+                            <div class="em_photo box_photo_left width600" id="real_photo">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="em_lineBox">
+                        <b class="em_style">
+                            <span calss="em_nameStyle" id="em_nameStyle">姓名</span>
+                        </b>
+                        <div class="em_right">
+                            <span id="real_name"></span>
+                        </div>
+                    </div>
+                    <div class="em_lineBox">
+                        <b class="em_style">
+                            <span calss="em_nameStyle">证件号</span>
+                        </b>
+                        <div class="em_right">
+                            <span id="real_carno"></span>
+                        </div>
+                    </div>
+                    <div class="em_lineBox">
+                        <b class="em_style">
+                            <span calss="em_nameStyle">国家省市</span>
+                        </b>
+                        <div class="em_right">
+                            <span class="pad_5" id="real_country"></span>
+                            <span class="pad_5" id="real_province"></span>
+                            <span class="pad_5" id="real_city"></span>
+                        </div>
+                    </div>
+                    <div class="em_lineBox">
+                        <b class="em_style">
+                            <span class="em_nameStyle">联系方式</span>
+                        </b>
+                        <div class="em_right bg_gragy">
+                            <em >
+                                <span>联系人</span>
+                                <input type="text" placeholder="请输入联系人" value="<%if(useInfo.islogin){%><%=copyrightDetail.contacts%><%}%>" style="width: 150px;" class="contactName">
+                            </em>
+                            <em>
+                                <span>联系电话</span>
+                                <input type="text" placeholder="请输入联系电话"  value="<%if(useInfo.islogin){%><%=copyrightDetail.contactsPhone%><%}%>" style="width: 160px;" class="contactTele">
+                            </em>
+                            <em>
+                                <span>联系邮箱</span>
+                                <input type="text" placeholder="请输入联系邮箱" value="<%if(useInfo.islogin){%><%=copyrightDetail.contactsEmail%><%}%>" style="width: 200px;" class="contactEmail">
+                            </em>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="copyrightId"  style="display:none"><%=copyrightDetail.id%></div>
+                <div class="copyrighttype"  style="display:none"><%=copyrightDetail.type%></div>
+                <%if(!useInfo.islogin){%>
+                <div class="workSeqNoId1" style="display:none">false</div>
+                <%}else{%>
+                <div class="workSeqNoId1" style="display:none">true</div>
+                <%}%>
+                <%if(copyrightDetail.po){%>
+                <div class="name_pandu" style="display:none">true</div>
+                <%}else{%>
+                <div class="name_pandu" style="display:none">false</div>
+                <%}%>
+                <div class="em_lineBox">
+                    <b class="em_style"></b>
+                    <div class="em_right">
+                        <a href="javascript:void(0)" class="notice_a" id="news_btn">声明该版权权利</a>
+                    </div>
+                </div>
+
+                <div class="modle-wrap" id="message_tis">
+                    <div class="modle-container">
+                        <div class="passwork">
+                            <div class="tishi">
+                                尊敬的权利人，你声明的版权信息我们已经收到。我们将在24内审核该声明信息，结果将通过邮件发送通知。感谢您使用版权百科声明服务！<a href="/copyRight/bql/<%=copyrightDetail.workSeqNo%>">确定</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<% include('../common/bottom') %>
+<% include('../common/foot_script') %>
+<input type="hidden" class="share_name" value="<%=copyrightDetail.name%>_版权详情_版权百科">
+<script>
+    var share = {
+        title:$('.share_name').val(),
+        imgUrl:"http://"+location.host+"/app/images/img_fm.png",
+        link:location.href,
+        desc:"版权数据服务专家",
+        success:function(){
+            //$(".share").hide();
+        },
+        cancel:function(){
+
+        }
+    };
+</script>
+<script type="text/javascript" src="/app/lib/wx.js"></script>
+<script type="text/javascript" src="/app/lib/wx.util.js"></script>
+<script src="../../lib/webuploader.js"></script>
+<script src="../../lib/laydate/laydate.js"></script>
+<script src="../../lib/shade_layer/shadeLayer.js"></script>
+<script type="text/javascript" src="../../lib/address/area_chs.js"></script>
+
+<script type="text/javascript" src="../../lib/address/chosen.jquery.min.js"></script>
+
+<script type="text/javascript" src="../../javascripts/copyrightDetailTc.js"></script>
+
+</body>
+</html>

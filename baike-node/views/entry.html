@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>版权百科</title>
+	<link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+	<link rel="stylesheet" type="text/css" href="stylesheets/common.css"/>
+	<link rel="stylesheet" href="lib/layer/skin/default/layer.css">
+	<link rel="stylesheet" type="text/css" href="stylesheets/person_center.css"/>
+	<link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+	<% include('common/baidu_tj') %>
+</head>
+<body>
+<% include('common/header') %>
+<% var result=data.result %>
+<div class="wrap" id="warp_height">
+	<div class="person_center text_center">
+		<div class="pc_out">
+			<ul class="pc_nav inline_block">
+				<li class="inline_block">
+					<a href="person_set">个人设置</a>
+				</li>
+				<li class="inline_block on">
+					<a href="javascript:void(0)">词条任务</a>
+				<li class="inline_block">
+					<a href="my_editor">我的编辑</a>
+				</li>
+				<li class="inline_block">
+					<a href="all_news">消息通知</a>
+				</li>
+				<li class="inline_block">
+					<a href="creatEntry">创建词条</a>
+				</li>
+				<%if(useInfo.loginUser.isCommunity=='2'){%>
+					<li class="inline_block">
+						<a href="workAudit">作品词条审核</a>
+					</li>
+					<li class="inline_block">
+						<a href="myAudit">我的审核</a>
+					</li>
+				<%}%>
+				<li class="inline_block">
+					<a href="attentionWork">关注作品</a>
+				</li>
+			</ul>
+		</div>
+		<div class="pc_nav_div">
+			<div class="pc_w800">
+				<p class="auto_recommom">
+					<select class="auto_recommom_select">
+						<option value="录音制品">录音制品</option>
+						<option value="小说">小说</option>
+						<option value="漫画">漫画</option>
+						<option value="动漫">软件</option>
+						<option value="电影">电影</option>
+						<option value="电视剧">电视剧</option>
+					</select>
+					<a href="#" class="float_right hyp">
+						<img src="images/img_hyp.png" class="">
+						<span class="" style=" font-size: 14px;font-weight: 500;">换一批</span>
+					</a>
+				</p>
+				<div class="entry_sit">
+					<%for(var i=0;i<result.length;i++){%>
+						<a href="/item/<%=result[i].seqNo%>"><%=result[i].name%></a>
+					<%}%>
+				</div>
+				<div class="editorNone1"><%=result.length%></div>
+			</div>
+		</div>
+	</div>
+</div>
+<%include ('common/bottom')%>
+<%include ('common/foot_script')%>
+<script>
+    var share = {
+        title:"版权百科",
+        imgUrl:"http://"+location.host+"/app/images/img_fm.png",
+        link:location.href,
+        desc:"版权数据服务专家",
+        success:function(){
+            //$(".share").hide();
+        },
+        cancel:function(){
+
+        }
+    };
+</script>
+<script type="text/javascript" src="/app/lib/wx.js"></script>
+<script type="text/javascript" src="/app/lib/wx.util.js"></script>
+<script type="text/javascript" src="javascripts/person_center.js"></script>
+<script type="text/javascript" src="/lib/laypage.js"></script>
+<script type="text/javascript" src="lib/layer/layer.js"></script>
+<script src="lib/shade_layer/shadeLayer.js"></script>
+<script>
+	$(function(){
+	    $('.entry_sit').find('a').hover(function () {
+			$(this).animate({top:parseInt($(this).css('top'))-15})
+        },function(){
+            $(this).animate({top:parseInt($(this).css('top'))+15})
+        })
+		if($(".editorNone1").text()==0){
+            $hint.open("暂时还没有数据");
+        }
+	    var likeStyle;
+        var pagenumber=1;
+		$(".auto_recommom_select").change(function (){
+            pagenumber=1;
+            likeStyle = $(".auto_recommom_select  option:selected").val();
+			var data1={
+                registerId:1,
+                type:likeStyle,
+                pagenumber:1
+			}
+			ajax(data1);
+		})
+        $(".float_right").on('click',function(){
+            pagenumber+=1;
+            var data2={
+                registerId:1,
+                type:likeStyle,
+                pagenumber:pagenumber
+			}
+            ajax(data2);
+        })
+		function ajax(data){
+            $.ajax({
+                type: "post",
+                url: "api/query/entry",
+                data:data,
+                success: function (data) {
+                    if(data.status){
+                        var _data=data.data;
+                        if(_data.resultCode == 200) {
+                            var data0 = _data.result;
+                            if(data0.length>0){
+                                var html;
+                                for (var i = 0; i < data0.length; i++) {
+                                    html += '<a href="/item/'+data0[i].seqNo+'">' + data0[i].name + '</a>'
+                                }
+                                $(".entry_sit").html(html);
+                            }else{
+                                var html="<p>没有数据了</p>";
+                                $(".entry_sit").html(html);
+                            }
+                        }
+					}else{
+                        $hint.open(data.resultMsg);
+					}
+                }
+            })
+		}
+    })
+</script>
+</body>
+</html>
+

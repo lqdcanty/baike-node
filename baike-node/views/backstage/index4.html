@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin: 0;padding: 0;font-family: '微软雅黑'}
+        .main{width: 900px;margin:100px auto}
+        .table-content{border-top: solid 1px #DEDEDE; border-left: solid 1px #DEDEDE;width: 900px;margin:20px auto 0}
+        .table-content td:first-child{text-indent: 30px}
+        .table-content td{height: 40px;font-size: 14px;border-bottom: solid 1px #DEDEDE;border-right: solid 1px #DEDEDE;text-align: center}
+        .table-content thead td{color: #333333;background:#ECECEC}
+        .table-content tbody td{color: #666666}
+        td p{margin: 5px;text-align: left;padding-left: 10px}
+        .table-content tbody tr:nth-of-type(even){background:rgba(236,236,236,0.5)}
+        .btn{padding: 5px 10px;color: #FFFFFF;cursor: pointer;border-radius: 4px;font-size: 12px;}
+        .btn-success{background: #1A8CDC}
+    </style>
+</head>
+<body>
+<div class="main">
+    <div>
+        <select>
+            <option>待处理订阅作品</option>
+        </select>
+    </div>
+    <table class="table-content" border="0" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <td>处理单号</td>
+            <td>作品名称</td>
+            <td>订阅用户数</td>
+            <td>状态</td>
+            <td>问题单描述</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>456126546</td>
+            <td>《人民的名义》</td>
+            <td>36</td>
+            <td>待处理数据单</td>
+            <td align="left">
+                <p>1、请大数据组对人民的名义和人民的名义DVD进行数据合并</p>
+                <p>2、请大数据组抓取PPTV该作品相关数据</p>
+            </td>
+            <td><a class="btn btn-success">完成处理</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

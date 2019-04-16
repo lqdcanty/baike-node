@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>版权百科</title>
+    <link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="lib/swiper/swiper-3.4.2.min.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/common.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/person_center.css"/>
+    <link rel="stylesheet" href="lib/layer/skin/default/layer.css">
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <!--[if lt IE 9]>
+    <script src="lib/html5shiv.min.js"></script>
+    <![endif]-->
+    <% include('common/baidu_tj') %>
+</head>
+<body>
+<% include('common/header') %>
+<% var result=data.result %>
+<div class="wrap" id="warp_height">
+    <div class="person_center text_center">
+        <div class="pc_out">
+            <ul class="pc_nav inline_block">
+                <li class="inline_block">
+                    <a href="person_set">个人设置</a>
+                </li>
+                <li class="inline_block">
+                    <a href="entry">词条任务</a>
+                <li class="inline_block">
+                    <a href="my_editor">我的编辑</a>
+                </li>
+                <li class="inline_block on">
+                    <a href="javascript:void(0)">消息通知</a>
+                </li>
+                <li class="inline_block">
+                    <a href="creatEntry">创建词条</a>
+                </li>
+                <%if(useInfo.loginUser.isCommunity=='2'){%>
+                    <li class="inline_block">
+                        <a href="workAudit">作品词条审核</a>
+                    </li>
+                    <li class="inline_block">
+                        <a href="myAudit">我的审核</a>
+                    </li>
+                <%}%>
+                <li class="inline_block">
+                    <a href="attentionWork">关注作品</a>
+                </li>
+            </ul>
+        </div>
+        <div class="pc_w800">
+            <div class="pc_w800_nav" id="news-atyle">
+                <div class="on"><a href="#">未读消息</a></div>
+                <div><a href="#">全部消息</a></div>
+            </div>
+            <div class="change">
+                <div class="pc_w800_nav pc_back pc_list_tableHead">
+                    <span class="action">时间</span>
+                    <span class="action">标题</span>
+                    <span class="action">操作</span>
+                </div>
+                <div class="allNews_style">
+                    <div class="pc_list_table unread">
+                        <table class="messageStyle_w">
+                            <%for(i=0;i<result.list.length;i++){%>
+                            <tr>
+                                <td><%=result.list[i].id%></td>
+                                <td><%=result.list[i].sendTime%></td>
+                                <td><%=result.list[i].title%></td>
+                                <td><a class="base1_detail_news">查看</a></td>
+                            </tr>
+                            <%}%>
+                        </table>
+                        <div class="hhiddenPage">
+                            <span class="html_totalPage"><%=result.totalPage%></span>
+                            <span class="html_currentPage"><%=result.currentPage%></span>
+                        </div>
+                        <div class="page text_center pd60" id="page1"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="pc_template1">
+                <div class="un_click_out">
+                    <div class="un_click_in">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%include ('common/bottom')%>
+<%include ('common/foot_script')%>
+<script>
+    var share = {
+        title:"版权百科-消息通知",
+        imgUrl:"http://"+location.host+"/app/images/img_fm.png",
+        link:location.href,
+        desc:"版权数据服务专家",
+        success:function(){
+            //$(".share").hide();
+        },
+        cancel:function(){
+
+        }
+    };
+</script>
+<script type="text/javascript" src="/app/lib/wx.js"></script>
+<script type="text/javascript" src="/app/lib/wx.util.js"></script>
+<script src="lib/swiper/swiper-3.4.2.jquery.min.js"></script>
+<script type="text/javascript" src="/lib/laypage.js"></script>
+<script type="text/javascript" src="lib/layer/layer.js"></script>
+<script type="text/javascript" src="javascripts/person_center.js"></script>
+<script src="lib/shade_layer/shadeLayer.js"></script>
+
+<script id="test1" type="text/html">
+    <%include ('common/person_baseNews')%>
+</script>
+<script id="test2" type="text/html">
+    <%include ('common/refuse')%>
+</script>
+<script>
+
+    $(function(){
+        var reviewTips,allPage,curPage,type=0,flage=false,registerIdDetail;
+        function pageGet(){
+            allPage=$(".html_totalPage").text();
+            curPage=parseInt($(".html_currentPage").text());
+            console.log(allPage,curPage);
+            if(allPage==0||allPage==1){
+                $("#page1").css("display","none")
+                $(".bottom").addClass("pc_fixed")
+            }else{
+                $("#page1").css("display","block")
+            }
+            page(allPage,curPage);
+            if(allPage==curPage){
+                $(".bottom").addClass("pc_fixed")
+            }
+        }
+        pageGet();
+        $(".messageStyle_w").on('click','.base1_detail_news',function(){
+            $(".pc_template1").show();//事件委托；
+            $(".change").hide();
+        })
+        var messageStyle;
+        var pagenumber=1;
+        var type;
+        $("#news-atyle div:nth-child(1)").click(function(){
+            type=0;
+            /* pagenumber=1;*/
+            messageList({ type:type,pagenumber:pagenumber});
+            pageGet()
+        });
+        $("#news-atyle div:nth-child(2)").click(function(){
+            type=1;
+            /*pagenumber=1;*/
+            messageList({type:type,pagenumber:pagenumber});
+            pageGet()
+        });
+        //node层第一次加载数据的查看详情
+        $(".base1_detail_news").on("click",function(){
+            var no1_Id=$(this).parent("td").parent("tr").children("td:nth-child(1)").text();
+            var dataId={id:no1_Id}
+            messageDetail(dataId);
+        });
+        function messageList(data){
+            $.ajax({
+                type: "post",
+                url: "api/message/query",
+                data:data,
+                success: function (data) {
+                    var _data=data.data;
+                    if(data.status){
+                        if(_data.resultCode == 200) {
+                            var data0 = _data.result;
+                            console.log(data0);
+                            if(data0.list.length>0){
+                                console.log(data0.list.length)
+                                var html="";
+                                for (var i = 0; i < data0.list.length; i++) {
+                                    html += '<tr><td>'+data0.list[i].id+'</td><td>'+ data0.list[i].sendTime+'</td><td>'+data0.list[i].title+'</td> <td><a class="base1_detail_news">查看</a></td></tr>';
+                                }
+                                var span='<span class="html_totalPage">'+data0.totalPage+'</span><span class="html_currentPage">'+data0.currentPage+'</span>';
+
+                                $(".messageStyle_w").html(html);
+                                $(".hhiddenPage").html(span);
+                                pageGet();
+
+                                //消息详情
+                                $(".messageStyle_w tr").each(function(index,element){
+                                    $(this).children("td:last-child").children(".base1_detail_news").on("click",function(){
+                                        var newsId=$(this).parent("td").parent("tr").children("td:first-child").text();
+                                        console.log(newsId);
+                                        var dataId={id:newsId}
+                                        messageDetail(dataId);
+                                    })
+                                    var applyId_html= $(this).children("td:nth-child(2)").text();
+                                    var applytype_html=$(this).children("td:nth-child(3)").text();
+                                    console.log(applyId_html,applytype_html);
+                                })
+                            }else{
+                                $(".messageStyle_w").html(" ");
+                                $("#page1").css("display","none");
+                                $(".bottom").addClass("pc_fixed")
+                            }
+                        }
+                    }else{
+                        $hint.open(data.resultMsg);
+                    }
+                }
+            })
+        }
+
+        //分页问题
+        function page(){
+            laypage({
+                cont: $('#page1'), //容器。值支持id名、原生dom对象，jquery对象。
+                pages: allPage, //通过后台拿到的总页数
+                curr: curPage || 1, //当前页
+                jump: function(obj, first){ //触发分页后的回调
+                    if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                        console.log({type:type,pagenumber:obj.curr});
+                        messageList({type:type,pagenumber:obj.curr});
+                    }
+                }
+            });
+        }
+        //查看消息详细
+        function messageDetail(data){
+            $.ajax({
+                url:"api/message/detail",
+                type:"post",
+                data:data,
+                success:function (data){
+                    console.log(data,"cehsi1");
+                    var _data=data.data;
+                    if(data.status){
+                        if(_data.resultCode == 200){
+                            console.log(_data.result.content);
+                            registerIdDetail=_data.result.registerId;
+                            console.log(_data.result.registerId,"ceshiid")
+                            console.log(_data);
+                            console.log(_data.result.content);
+                            $(".un_click_in").html(_data.result.content);
+                            $("#div1").html($("#test1").html());
+                            $("#div2").html($("#test2").html());
+                            reviewTips=_data.result.status;
+
+                            reviewRefuse();
+                            guiz();
+                            var mySwiper1 = new Swiper ('#swiper_coverImg1', {
+                                slidesPerView : 'auto',
+                                spaceBetween : 32,
+                                nextButton: '.next-coverImg.coverImg1',
+                                prevButton: '.prev-coverImg.coverImg1'
+                            });
+                            var mySwiper2 = new Swiper ('#swiper_coverImg2', {
+                                slidesPerView : 'auto',
+                                spaceBetween : 32,
+                                nextButton: '.next-coverImg.coverImg2',
+                                prevButton: '.prev-coverImg.coverImg2'
+                            });
+                            var mySwiper3 = new Swiper ('#swiper_otherWeb1', {
+                                loop: true,
+                                slidesPerView :'auto',
+                                /* loopedSlides :4,*/
+                                spaceBetween : 12,
+                                nextButton: '.next-otherWeb.otherWeb1',
+                                prevButton: '.prev-otherWeb.otherWeb1'
+                            });
+                            var mySwiper4 = new Swiper ('#swiper_otherWeb2', {
+                                loop: true,
+                                slidesPerView :'auto',
+                                spaceBetween : 12,
+                                nextButton: '.next-otherWeb.otherWeb2',
+                                prevButton: '.prev-otherWeb.otherWeb2'
+                            });
+                            var body_height=$('body').height();
+                            var window_height=$(window).height();
+
+                            if(body_height<window_height){
+                                $('.bottom').addClass("pc_fixed");
+                            }else{
+                                $('.bottom').removeClass("pc_fixed");
+                            }
+                        }
+                    }else{
+                        $hint.open(data.resultMsg);
+                    }
+                }
+            })
+        }
+        //查看消息详细结束;
+
+        /*关于拒绝原因的填写*/
+        $(".pc_template1").on("click",".close",function(){
+            $(".modle-wrap").hide();
+        })
+        function staus(){
+            $(".pc_no").css({"background":"#ccc","borderColor":"#ccc","color":"#666"});
+            $(".pc_yes").css({"background":"#ccc","borderColor":"#ccc","color":"#666"});
+            $(".audit_status1").text("(已审核)")
+            $(".un_click_in").on("click",".pc_no",function(){
+                console.log("qqqq1");
+                $hint.open("已经审核过该申请,重复操作");
+            })
+            $(".un_click_out").on("click",".pc_yes",function(){
+                console.log("qqqq2");
+                $hint.open("已经审核过该申请,重复操作");
+            })
+        }
+      function guiz(){
+            console.log(reviewTips,"kankan")
+          if(reviewTips){
+              staus();
+          }else{
+              reviewRefuse();
+              messageType();
+          }
+      }
+        function reviewRefuse(){
+            $(".un_click_in").unbind("click").on("click",".pc_no",function(){
+                if(!reviewTips){
+                    $(".refuse_box").show();
+                }
+            })
+
+            var refuse_word;
+            var focus=0;
+            $(".pc_template1").on("focus","#refuse_word",function(){
+                focus+=1;
+                console.log(focus);
+                if(focus==1){
+                    $("#refuse_word").text("");
+                }
+            });
+           /* agreed_refuseMessage();*/
+        }
+        function agreed_refuseMessage(yes){
+            focus = 0;
+            refuse_word=$(".refuse_word").val();
+           $(".refuse_word").blur(function(){
+               refuse_word=$(this).val();
+               console.log(refuse_word,"neibu")
+           })
+            console.log(refuse_word,"waibu")
+            if(refuse_word==""||refuse_word=="请输入拒绝原因"){
+                $hint.open("拒绝理由不能为空");
+                refuse_word="";
+            }else if(refuse_word!==" "&&refuse_word!=="请输入拒绝原因"){
+                $(".refuse_box").hide();
+                var rewritRefuse_word="请输入拒绝原因";
+                $("#refuse_word").val(rewritRefuse_word);
+                yes(refuse_word);
+            }
+        }
+        //查看个人消息
+        $(".pc_template1").on("click",".see_baseNews",function(){
+            console.log(registerIdDetail,"用用")
+            $("#person_baseNews_out").show();
+            $.ajax({
+               /* url:"api/user/detail",*/
+                url:"userdetaily/userDetail",
+                type:"post",
+                data:{registerId:registerIdDetail},
+                success:function(data){
+                    console.log(data,"测试");
+                    var _data=data.data;
+                    if(data.status){
+                        if(_data.resultCode == 200){
+                            var isCommunity,time;
+                            var data=_data.result;
+                            if(data.isCommunity=="0"){
+                                isCommunity="非社群成员";
+                            }else if(data.isCommunity=="1"){
+                                isCommunity="社群成员提交审核中";
+                            }else if(data.isCommunity=="3"){
+                                isCommunity="审核通过";
+                            }else{
+                                isCommunity="审核驳回";
+                            }
+                            //喜欢的类型
+                            var likes=data.likeType;
+                            $(".margin_right20").each(function(){
+                                var i=$(this).index();
+                                var like = $(".margin_right20").eq(i).children(".vertial_middle").attr("class").split(" ")[1];
+                                for(var j=0;j<likes.length;j++){
+                                    if(likes[j]==like){
+                                        $(".margin_right20").eq(i).addClass("on");
+                                    }
+                                }
+                            })
+                            $(".head_photo").attr("src",data.photo);
+                            $("#accountId").text(data.id);
+                            $("#accountMail").text(data.account);
+                            $("#accountTime").text(data.regTime);
+                            $("#accountNickname").text(data.nickName);
+                            $("#accountRange").text(data.userGrade);
+                            $("#accountperson").text(isCommunity);
+                            $("#accountRealName").text(data.po.name);
+                            $("#accountSelf").text(data.po.cardNo);
+                            $("#accountCountry").text(data.po.country);
+                            $("#accountProvince").text(data.po.province);
+                            $("#accountCity").text(data.po.city);
+                        }
+                    }else{
+                        $hint.open(data.resultMsg);
+                    }
+                }
+            })
+        })
+        /*关于拒绝原因的填写完成*/
+        //详细消息的拒绝跟申请类型跟内容
+        function messageType(){
+            var applyType=$("#applyType").val();
+            var applyId=$("#applyId").val();
+            console.log(applyType,applyId,"消息类型");
+            if(applyType=="community_apply"){
+                $(".un_click_out").unbind("click").on("click",".pc_yes",function(){
+                   /* flage=!flage;*/
+                    var url="api/community/audit";
+                    var datan={applyOrderId:applyId,status:"adopt"};
+                        ajax(url,datan,function (data){
+                            console.log(data);
+                            $hint.open(data.resultMsg);
+                            staus();
+                        },function (data) {
+                            $hint.open(data.resultMsg);
+                        })
+                });
+                $(".pc_template1").on("click",".yes",function(){
+                    agreed_refuseMessage(function(refuse_word){
+                        if(refuse_word){
+                            var url="api/community/audit";
+                            var datan={applyOrderId:applyId,status:"reject",reason:refuse_word};
+                            ajax(url,datan,function (data) {
+                                console.log(data);
+                                $hint.open(data.resultMsg);
+                                staus();
+                            },function (data) {
+                                $hint.open(data.resultMsg);
+                            })
+                        }
+                    });
+                });
+            }else if(applyType=="editWork"){
+                $(".un_click_out").unbind("click").on("click",".pc_yes",function(){
+                    var url="api/work/edit/audit";
+                    var datan={applyOrderId:applyId,status:"adopt"};
+                    ajax(url,datan,function (data) {
+                        console.log(data);
+                        $hint.open(data.resultMsg);
+                        staus();
+                    },function (data) {
+                        $hint.open(data.resultMsg);
+                    });
+                });
+                $(".pc_template1").on("click",".yes",function(){
+                    agreed_refuseMessage(function(refuse_word){
+                        if(refuse_word){
+                            /*reject_z({applyOrderId:applyId,status:"reject",reason:refuse_word})*/
+                            var url="api/work/edit/audit";
+
+                            var datan={applyOrderId:applyId,status:"reject",reason:refuse_word};
+                            ajax(url,datan,function (data) {
+                                console.log(data);
+                                $hint.open(data.resultMsg);
+                                staus();
+                            },function (data) {
+                                $hint.open(data.resultMsg);
+                            });
+                        }
+                    });
+                });
+            }else if(applyType=="real_name_apply"){
+                $(".un_click_out").unbind("click").on("click",".pc_yes",function(){
+                    var url="api/user/realName/audit";
+                    var datan={applyOrderId:applyId,status:"adopt"};
+                    ajax(url,datan,function (data) {
+                        console.log(data);
+                        $hint.open(data.resultMsg);
+                        staus();
+                    },function (data) {
+                        $hint.open(data.resultMsg);
+                    });
+                });
+                $(".pc_template1").on("click",".yes",function(){
+                    agreed_refuseMessage(function(refuse_word){
+                        if(refuse_word){
+                            /*reject_z({applyOrderId:applyId,status:"reject",reason:refuse_word})*/
+                            var url="api/user/realName/audit";
+                            var datan={applyOrderId:applyId,status:"reject",reason:refuse_word};
+                            ajax(url,datan,function (data) {
+                                console.log(data);
+                                $hint.open(data.resultMsg);
+                                staus();
+                            },function (data) {
+                                $hint.open(data.resultMsg);
+                            });
+                        }
+                    });
+                });
+            }else if(applyType=="copyright_apply"){
+                $(".un_click_out").unbind("click").on("click",".pc_yes",function(){
+                    var url="api/copyright/audit";
+                    var datan={applyOrderId:applyId,status:"adopt"};
+                    ajax(url,datan,function (data) {
+                        console.log(data);
+                        $hint.open(data.resultMsg);
+                        staus();
+                    },function (data) {
+                        $hint.open(data.resultMsg);
+                    });
+                });
+                $(".pc_template1").on("click",".yes",function(){
+                    agreed_refuseMessage(function(refuse_word){
+                        if(refuse_word){
+                            /*reject_z({applyOrderId:applyId,status:"reject",reason:refuse_word})*/
+                            var url="api/copyright/audit";
+                            var datan={applyOrderId:applyId,status:"reject",reason:refuse_word};
+                            ajax(url,datan,function (data) {
+                                console.log(data);
+                                $hint.open(data.resultMsg);
+                                staus();
+                            },function (data) {
+                                $hint.open(data.resultMsg);
+                            });
+                        }
+                    });
+                });
+            }
+        }
+        var ajax_flag=false;
+        function ajax(url,data,succCallback,errorCallback){
+            if(ajax_flag){
+                return
+            }
+            ajax_flag=true;
+            $.ajax({
+                url:url,
+                type:"post",
+                data:data,
+                success:function(data){
+                    if(data.status){
+                        if(data.data.resultCode==200){
+                            if(succCallback){
+                                succCallback(data.data);
+                            }
+                        }else{
+                            if(errorCallback){
+                                errorCallback(data.data)
+                            }
+                        }
+                        ajax_flag =false;
+                    }else{
+                        $hint.open(data.resultMsg);
+                        ajax_flag =false;
+                    }
+                }
+            })
+        }
+    })
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:wb="http://open.weibo.com/wb">
+<head>
+    <meta charset="UTF-8">
+    <title><%=search_word%>_版权百科</title>
+    <meta name="description" content="版权百科"/>
+    <meta name="description" content="版权数据服务专家"/>
+    <link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="stylesheets/common.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style1.css"/>
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2708545225" type="text/javascript" charset="utf-8"></script>
+    <% include('common/baidu_tj') %>
+</head>
+<body>
+<% include('./common/header') %>
+<!-- content -->
+<div class="search_content custom_width" id="search_content">
+    <div class="left_content">
+        <% if(data.resultCode==200&&data.result.workList.length>0) {%>
+        <div class="data_show">
+            <%if(seqType==0){%>
+            尊敬的用户，通过您提供的关键字共找到了
+            <% if(data.resultCode==200) {%>
+            <span class="color_main"><%=data.result.total%></span>
+            <%}else{%>
+            0
+            <%}%>作品。请从以下作品中找到您的版权作品，并关注【作品词条】，版权百科将协助你提供作品相关的版权服务。如果以下作品任然没有您要查找的作品，您可以通过创建关注的【作品词条】，开启版权百科的【版权链服务】追踪与发现版权。请您<a class="text_bline createC color_main">创建【作品词条】</a>。
+            <%}%>
+            <%if(seqType==2){%>
+            尊敬的版权持有者，通过您提供的关键字共找到了
+            <% if(data.resultCode==200) {%>
+            <span class="color_main"><%=data.result.total%></span>
+            <%}else{%>
+            0
+            <%}%>作品。请从以下作品中找到您的版权作品，并关注关注<span class="text_bline color_main">【版权作品全网传播使用监听数据服务】 </span>。如果以下作品任然没有您要查找的内容，请您<a class="text_bline createC color_main">创建【作品词条】</a>。
+            <%}%>
+            <%if(seqType==3){%>
+            尊敬的版权需求者，通过您提供的关键字共找到了
+            <% if(data.resultCode==200) {%>
+            <span class="color_main"><%=data.result.total%></span>
+            <%}else{%>
+            0
+            <%}%>作品。请从以下作品中找到您关注的版权作品，并关注【<span class="text_bline">作品词条</span>】，开启版权百科的【<span class="text_bline">版权链服务</span>】追踪与发现版权。立刻<a class="text_bline createC color_main">创建【作品词条】</a>
+            <%}%>
+        </div>
+        <% data.result.workList.forEach(function(u,index){ %>
+        <div class="works_information">
+            <div class="works_top clearfix">
+                <% if(u.cover && u.cover!='') { %>
+                <% if(u.tags[0]=='音乐'){%>
+                <a class="works_img" target="_blank" href="/item/<%=u.seqNo%>" style='background-image: url(<%=u.cover%>);display: inline-block;height: 120px;border-radius: 100%'></a>
+                <%}else if(u.tags[0]=='软件'){%>
+                <a class="works_img" target="_blank" href="/item/<%=u.seqNo%>" style='background-image: url(<%=u.cover%>);display: inline-block;height: 120px;border-radius: 20px;'></a>
+                <%}else{%>
+                <a class="works_img" target="_blank" href="/item/<%=u.seqNo%>" style='background-image: url(<%=u.cover%>);display: inline-block'></a>
+                <%}%>
+
+                <%}else{%>
+                <a class="works_img mrImg" target="_blank" href="/item/<%=u.seqNo%>"></a>
+                <%}%>
+                <div class="works_describe">
+                    <p class="works_name">
+                        <a target="_blank" style="max-width: 488px;display: inline-block;" href="/item/<%=u.seqNo%>"><%=u.name %>
+                        <% if(u.workTitle!=''&&u.workTitle!=null) {%>
+                            <span>(<%=u.workTitle%>)</span>
+                        <%}%>
+                        </a>
+                        <%if(u.isSubscribe){%>
+                        <a class="float_right dy_btn" href="/item/<%=u.seqNo%>">已关注</a>
+                        <%}else{%>
+                        <a class="float_right dy_btn" href="/item/<%=u.seqNo%>?from='dy'">关注</a>
+                        <%}%>
+                    </p>
+                    <% if(u.essentialInfo.length>0) {%>
+                    <table class="works_baseInfo">
+                        <tr>
+                            <% u.essentialInfo.forEach(function(z,index){ %>
+                            <% if(index<3) {%>
+                            <td>
+                                <%=z.key%>:<%=z.val%>
+                            </td>
+                            <%}%>
+                            <%})%>
+                        </tr>
+                        <tr>
+                            <% u.essentialInfo.forEach(function(z,index){ %>
+                            <% if(index>2&&index<6) {%>
+                            <td>
+                                <%=z.key%>:<%=z.val%>
+                            </td>
+                            <%}%>
+                            <%})%>
+                        </tr>
+                    </table>
+                    <%}%>
+                    <p class="works_content">
+                        <%if(u.synopsis){%>
+                        <%=u.synopsis %>
+                        <%}else{%>
+                        <span class="color_999">暂无介绍</span>
+                        <%}%>
+                    </p>
+                    <% if(u.isrc) { %>
+                    <p class="works_m">
+                        ISBN <%=u.isrc %>
+                    </p>
+                    <% }%>
+                    <% if(u.isbn) { %>
+                    <p class="works_m">
+                        ISBN <%=u.isbn %>
+                    </p>
+                    <% }%>
+                </div>
+            </div>
+            <% if(u.copyrights) {%>
+            <% if(u.type!='音乐'&&u.type!='软件'){%>
+            <div style="margin-top: -24px;">
+            <%}else{%>
+             <div>
+            <%}%>
+                 <div class="works_bottom">
+                    <a href="/copyRight/bql/<%=u.seqNo%>?from=smCopyRight" target="_blank"><img src="/images/workImg/icon_sm.png">声明我的版权</a>
+                    <a href="/copyRight/bql/<%=u.seqNo%>?from=getCopyRight" target="_blank"><img src="/images/workImg/icon_bq.png">获得版权授权</a>
+                    <a class="show-bql" target="_blank" href="/copyRight/bql/<%=u.seqNo%>">版权链</a>
+                 </div>
+            <% if(u.copyrights.length>0) {%>
+                <div class="works_lie">
+                <% u.copyrights.forEach(function(x,index){ %>
+                <%if(x.category=='yz'){%>
+                <p>
+
+                    <span class="class_n yz">原著</span>
+                    <%if(x.remark!=''&&x.remark!=null){%>
+                    <span class="lie_n1"><%=x.obligee%></span>
+                    <span class="lie_n2"><%=x.remark%></span>
+                    <%}else{%>
+                    <span class="lie_n1 over_lie_n1"><%=x.obligee%></span>
+                    <%}%>
+                    <a href="/copyRight/detail/<%=x.id%>" target="_blank" class="lie_n3">查看</a>
+                    <%if(x.isDeclared){%>
+                    <img class="sm_icon" src="/images/workImg/icon_v.png">
+                    <%}%>
+                </p>
+                <%}%>
+                <% })%>
+            </div>
+            <%}%>
+             </div>
+            <%}%>
+            <%if(u.type=='录音制品'){%>
+            <span class="listTags">音乐</span>
+            <%}else{%>
+            <span class="listTags"><%=u.type%></span>
+            <%}%>
+        </div>
+        <% }) %>
+        <%}else{%>
+            <%if(seqType==0){%>
+            <div class="noWorks_information color_999">尊敬的用户，通过您提供的关键词没有找到任何作品。版权百科可能暂未收录您的作品。无论您是版权持有者还是版权需求者，您都可以通过创建您所关注版权的【作品词条】，开启版权百科【版权链服务】追踪与发现版权。请您<a class="text_bline createC color_main">创建【作品词条】</a></div>
+            <%}%>
+            <%if(seqType==2){%>
+            <div class="noWorks_information color_999">尊敬的版权持有者，通过您提供的关键词没有找到任何作品。版权百科可能暂未收录您的作品。关注<span class="text_bline color_main">【版权作品全网传播使用监听数据服务】</span>需要首先<a class="text_bline createC color_main">创建【作品词条】</a></div>
+            <%}%>
+            <%if(seqType==3){%>
+            <div class="noWorks_information color_999">尊敬的版权需求者，通过您提供的关键词没有找到任何作品。版权百科可能暂未收录您关注的作品。为了帮助您得到作品相关的版权服务，您可以通过创建您所关注的【作品词条】追踪与发现版权，请您<a class="text_bline createC color_main">创建【作品词条】</a>
+                <p class="mt10">您可能是电影制片人，您需要寻找优秀的文字作品创作电影，或者为电影的背景音乐寻求授权；您可能是音乐演唱者，您需要寻找词曲授权；您可能是游戏开发者，您希望制作《海贼王》题材的游戏，而寻求集英社或者相关版权持有者的授权...</p>
+            </div>
+            <%}%>
+        <%}%>
+        <%if(data.resultCode!=200){%>
+            <div class="works_information color_999">查询失败</div>
+        <%}%>
+        <div id="layerPage" style="margin: 50px 0 20px;text-align: center"></div>
+    </div>
+    <div class="aside_content">
+        <div class="aside_item top-bg">
+            <p class="title_t">我是版权需求者</p>
+            <p  class="aside_txt">版权百科为版权需求者获取版权授权提供帮助，包括提供真实有价值的作品版权咨询，协助您寻找版权人、根据您的需求定制版权采购交易方案，最终帮您完成版权授权的获取。您通过点击【<span class="color_main">获得版权授权</span>】留下您的版权需求和联系方式即可获得【<span class="color_main">版权百科交易中介服务</span>】。</p>
+            <a class="get_copyright">获得版权授权</a>
+        </div>
+        <div class="aside_item top-bg">
+            <p class="title_t">我是版权持有者</p>
+            <p  class="aside_txt">版权百科为版权创作者或被授权方提供版权作品全网监听服务，包括跟踪作品在什么地方有传播、阅读书、播放量、评论数以及作品热点话题跟踪。，您通过订阅【作品词条】即可获得【<span class="color_main">版权作品全网传播使用数据服务</span>】。通过【作品词条】您还能向百科用户充分地展示您的版权作品。</p>
+            <a class="show_mycopy">查找我的作品</a>
+
+        </div>
+        <div class="aside_item">
+            <p class="title_t">相关推荐</p>
+            <% if(data.resultCode==200&&data.result.recommends&&data.result.recommends.length>0) {%>
+            <ul class="clearfix">
+                <% data.result.recommends.forEach(function(u,index){ %>
+                <li>
+                    <% if(u.cover) {%>
+                    <a target="_blank" href='/item/<%=u.seqNo%>' style='background-image: url(<%=u.cover%>)'></a>
+                    <%}else{%>
+                    <a target="_blank" href='/item/<%=u.seqNo%>' style='background: url("/images/workImg/img_mr_1.png")'> </a>
+                    <%}%>
+                    <a target="_blank" href='/item/<%=u.seqNo%>'><%=u.name%></a>
+                </li>
+                <% })%>
+            </ul>
+            <%}else{%>
+            <P class="color_999">暂无相关推荐</P>
+            <%}%>
+        </div>
+        <%if(data.result.unCompleteWorks && data.result.unCompleteWorks.length>0){%>
+        <div class="aside_item">
+            <p class="title_t">请帮助我们完善以下作品词条
+                <%if(data.result.unCompleteTotalPage>1){%>
+                <a class="perfect-btn" data-word="<%=search_word%>"><i class="icon iconfont icon-forabatch"></i>换一批</a>
+                <span class="none unCompleteCurrentPage"><%=data.result.unCompleteCurrentPage%></span>
+                <span class="none unCompleteTotalPage"><%=data.result.unCompleteTotalPage%></span>
+                <%}%>
+            </p>
+            <div class="perfect-wrap">
+                <div class="perfect-workC">
+                    <ul class="clearfix">
+                        <% data.result.unCompleteWorks.forEach(function(u,index){ %>
+                        <li>
+                            <%if(u.cover && u.cover!=''){%>
+                                <% if(u.tags[0]=='音乐'){%>
+                                <a href="/item/<%=u.seqNo%>" target="_blank" style='background-image: url(<%=u.cover%>);display: inline-block;height: 64px;border-radius: 100%'></a>
+                                <%}else if(u.tags[0]=='软件'){%>
+                                <a href="/item/<%=u.seqNo%>" target="_blank" style='background-image: url(<%=u.cover%>);display: inline-block;height: 64px;border-radius: 20px;'></a>
+                                <%}else{%>
+                                <a href="/item/<%=u.seqNo%>" target="_blank" style='background-image: url(<%=u.cover%>);display: inline-block'></a>
+                                <%}%>
+                            <%}else{%>
+                                <% if(u.tags[0]=='音乐'){%>
+                                <a href="/item/<%=u.seqNo%>" target="_blank" style='background-image: url("/images/workImg/img_mr.png");display: inline-block;height: 64px;border-radius: 100%'></a>
+                                <%}else if(u.tags[0]=='软件'){%>
+                                <a href="/item/<%=u.seqNo%>" target="_blank" style='background-image: url("/images/workImg/img_mr.png");display: inline-block;height: 64px;border-radius: 20px;'></a>
+                                <%}else{%>
+                                <a href="/item/<%=u.seqNo%>" target="_blank" style='background-image: url("/images/workImg/img_mr.png");display: inline-block'></a>
+                                <%}%>
+                            <%}%>
+                            <span class="perfect-workName"><%=u.name%></span>
+                            <div class="perfect-info">
+                                <i class="icon iconfont icon-sanjiaoxing"></i>
+                                <p><%=u.name%>
+                                    <% if(u.workTitle!=''&&u.workTitle!=null) {%>
+                                    <span class="perfect-workT">（<%=u.workTitle%>）</span>
+                                    <%}%>
+                                </p>
+                                <div>
+                                    <% u.tags.forEach(function(tag,index){ %>
+                                    <label><%=tag%></label>
+                                    <%})%>
+                                </div>
+                            </div>
+                        </li>
+                        <%})%>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <%}%>
+    </div>
+    <div style="clear: both;"></div>
+
+</div>
+<div>
+    <% if(data.resultCode==200) {%>
+    <input type="hidden" class="curPage" value="<%=data.result.currentPage%>">
+    <input type="hidden" class="totalPage" value="<%=data.result.totalPage%>">
+    <input type="hidden" class="keyword" value="<%=data.result.keyword%>">
+    <%}%>
+</div>
+<% include('./common/bottom') %>
+<% include('./common/foot_script') %>
+</div>
+<div class="modle-wrap module-getCopyRight">
+    <div class="modle-container">
+        <div class="modle-content getCopyRight-module">
+            <div class="module-head">获取使用授权<span class="module-minHead"></span><i class="close_btn"></i></div>
+            <div class="module-view">
+                <div class="module_content original-wrap" style="display: block">
+                    <form action="" method="post" class="getCopyRight-form">
+                        <input type="hidden" name="workSeqNo" value="<%=workSeqNo%>">
+                        <P class="getCopy-title"><span>*</span>填写该版权使用需求</P>
+                        <textarea class="getCopy-text" name="content" placeholder="版权百科为版权需求者获取版权授权提供帮助，包括提供真实有价值的作品版权资讯，协助您寻找版权人、根据您的需求制定版权采购交易方案，最终帮助您完成版权授权的获取。"></textarea>
+                        <div class="contact-wrap">
+                            <table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
+                                <tr>
+                                    <% if(useInfo.islogin) { %>
+                                    <td><span>联系人</span></td>
+                                    <td><input class="contact-man" name="contacts" type="text" placeholder="请输入姓名" value="<%=useInfo.loginUser.name %>"></td>
+                                    <td><span>联系电话</span></td>
+                                    <td><input class="contact-tel" name="contactsPhone" type="text" placeholder="请输入真实电话" value="<%=useInfo.loginUser.telephone %>"></td>
+                                    <td><span>联系邮箱</span></td>
+                                    <td><input class="contact-email" name="contactsEmail" type="text" placeholder="请输入邮箱地址" value="<%=useInfo.loginUser.account %>"></td>
+                                    <%}else{%>
+                                    <td><span>联系人</span></td>
+                                    <td><input class="contact-man" name="contacts" type="text" placeholder="请输入姓名"></td>
+                                    <td><span>联系电话</span></td>
+                                    <td><input class="contact-tel" name="contactsPhone" type="text" placeholder="请输入真实电话"></td>
+                                    <td><span>联系邮箱</span></td>
+                                    <td><input class="contact-email" name="contactsEmail" type="text" placeholder="请输入邮箱地址"></td>
+                                    <%}%>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="text_center">
+                            <a class="getCopy-btn create-btn">提交</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var share = {
+        title:"版权百科",
+        imgUrl:"http://"+location.host+"/app/images/img_fm.png",
+        link:location.href,
+        desc:"版权数据服务专家",
+        success:function(){
+            //$(".share").hide();
+        },
+        cancel:function(){
+
+        }
+    };
+</script>
+<script type="text/javascript" src="/app/lib/wx.js"></script>
+<script type="text/javascript" src="/app/lib/wx.util.js"></script>
+</body>
+<script>
+    $(function () {
+        var _height=parseInt(window.innerHeight);
+        if(_height-80-60>document.getElementById("search_content").offsetHeight){
+            $('.bottom ').css({
+                'position':'fixed',
+                'bottom':0,
+                'left':0
+            })
+        }
+//            document.getElementsByClassName("index_footer")[0].style.display="block";
+    })
+</script>
+<script type="text/javascript" src="lib/laypage/laypage.js"></script>
+<script src="/lib/shade_layer/shadeLayer.js"></script>
+<script>
+    $(function () {
+        laypage({
+            cont: $('#layerPage'), //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
+            pages:$('.totalPage').val(), //通过后台拿到的总页数
+            curr: $('.curPage').val(), //当前页
+            jump: function(obj, first){ //触发分页后的回调
+                if(!first){ //一定要加此判断，否则初始时会无限刷新
+                    location.href = '?keyword='+$('.keyword').val()+'&currentPage='+obj.curr;
+                }
+            }
+        });
+    })
+    $('.createC').click(function () {
+        if(!isLogin()){
+            $('.modle-login').show();
+            showLogin();
+            $('.loginStatus').val('1');
+            return;
+        }else{
+            window.location.href="./creatEntry";
+        };
+    })
+    function isLogin() {
+        if($('.is_login').find('.personalWrap').hasClass('login_true')){
+            return true
+        }else{
+            return false
+        }
+    }
+    function showLogin() {
+        $(".nav-tab").find("a").each(function (i) {
+            if($(this).data("type")=='login'){
+                $(this).addClass('active-tab');
+            }
+        });
+        $(".login-modle").find('.form-type').each(function () {
+            if($(this).data("type")=='login'){
+                $(this).addClass('active-wrap');
+            }
+        });
+    }
+    $('.show_mycopy').click(function () {
+        $(window).scrollTop(0);
+        $('.search_input')[0].focus();
+        $('.search_input').val('');
+        $('.search_input').attr('placeholder','请输入你的版权作品名称');
+        setCookie("seqType","2","d10");
+    });
+    $('.get_copyright').click(function () {
+            $('.module-getCopyRight').show();
+    });
+    function setCookie(name,value,time)
+    {
+        var strsec = getsec(time);
+        var exp = new Date();
+        exp.setTime(exp.getTime() + strsec*1);
+        document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    }
+    function getsec(str)
+    {
+        var str1=str.substring(1,str.length)*1;
+        var str2=str.substring(0,1);
+        if (str2=="s")
+        {
+            return str1*1000;
+        }
+        else if (str2=="h")
+        {
+            return str1*60*60*1000;
+        }
+        else if (str2=="d")
+        {
+            return str1*24*60*60*1000;
+        }
+    }
+
+    function isNull( str ){
+        if ( str == "" ) return true;
+        var regu = "^[ ]+$";
+        var re = new RegExp(regu);
+        return re.test(str);
+    }
+
+    $('.getCopy-btn').click(function () {
+        if(isNull($('.getCopy-text').val())){
+            $hint.open("请填写版权使用需求");
+            return;
+        }
+        $.ajax({
+            url: '/app/contact/copyright ',
+            type: 'POST',
+            data:$('.getCopyRight-form').serialize(),
+            success: function(data){
+                if(data.data.resultCode==200){
+                    $hint.open(data.data.resultMsg);
+                    $('.module-getCopyRight').hide();
+                }else{
+                    $hint.open(data.data.resultMsg);
+                }
+            }
+        })
+    });
+
+    $(".close_btn").click(function () {
+        $(this).parent().parent().parent().parent().hide();
+    });
+
+    $('.perfect-btn').click(function () {
+        var _this=this;
+        $(this).find('i').addClass('loadingR')
+        $.ajax({
+            url:'/api/work/search/uncomplete',
+            type:'get',
+            data:{keyword:$(this).data('word'),currentPage:parseInt($('.unCompleteCurrentPage').html())+1>parseInt($('.unCompleteTotalPage').html())?1:parseInt($('.unCompleteCurrentPage').html())+1},
+            success:function (data) {
+                if(data.data.resultCode==200) {
+                    var s = '';
+                    data.data.result.works.forEach(function (p1, p2) {
+                        var item,cover_a='';
+                        $('.unCompleteCurrentPage').html(data.data.result.currentPage);
+                        $('.unCompleteTotalPage').html(data.data.result.totalPage);
+                        if (p1.cover) {
+                            if(p1.tags[0]=='音乐'){
+                                cover_a+='<a target="_blank" href="/item/' + p1.seqNo + '" style="background-image: url(' + p1.cover + ');height: 64px;border-radius: 100%"></a>'
+                            }else if(p1.tags[0]=='软件'){
+                                cover_a+='<a target="_blank" href="/item/' + p1.seqNo + '" style="background-image: url(' + p1.cover + ');height: 64px;border-radius: 20px"></a>'
+                            }else{
+                                cover_a+='<a target="_blank" href="/item/' + p1.seqNo + '" style="background-image: url(' + p1.cover + ')"></a>'
+                            }
+                            if (p1.workTitle != '' && p1.workTitle != null) {
+                                item = '<li>' +cover_a+
+                                    '<span class="perfect-workName">' + p1.name + '</span>' +
+                                    '<div class="perfect-info"><i class="icon iconfont icon-sanjiaoxing"></i>' +
+                                    '<p>' + p1.name + '(' + p1.workTitle + ')' + '</p>';
+                            } else {
+                                item =  '<li>' +cover_a+
+                                    '<span class="perfect-workName">' + p1.name + '</span>' +
+                                    '<div class="perfect-info"><i class="icon iconfont icon-sanjiaoxing"></i>' +
+                                    '<p>' + p1.name + '</p>';
+                            }
+                        } else {
+                            if(p1.tags[0]=='音乐'){
+                                cover_a+='<a target="_blank" href="/item/' + p1.seqNo + '" style="background-image: url(/images/workImg/img_mr.png);height: 64px;border-radius: 100%"></a>'
+                            }else if(p1.tags[0]=='软件'){
+                                cover_a+='<a target="_blank" href="/item/' + p1.seqNo + '" style="background-image: url(/images/workImg/img_mr.png);height: 64px;border-radius: 20px"></a>'
+                            }else{
+                                cover_a+='<a target="_blank" href="/item/' + p1.seqNo + '" style="background-image: url(/images/workImg/img_mr.png)"></a>'
+                            }
+                            if (p1.workTitle != '' && p1.workTitle != null) {
+                                item = '<li>'+cover_a+
+                                    '<span class="perfect-workName">' + p1.name + '</span>' +
+                                    '<div class="perfect-info"><i class="icon iconfont icon-sanjiaoxing"></i>' +
+                                    '<p>' + p1.name + '(' + p1.workTitle + ')' + '</p>';
+                            } else {
+                                item = '<li>'+cover_a+
+                                    '<span class="perfect-workName">' + p1.name + '</span>' +
+                                    '<div class="perfect-info"><i class="icon iconfont icon-sanjiaoxing"></i>' +
+                                    '<p>' + p1.name + '</p>';
+                            }
+                        }
+                        var lables = ''
+                        p1.tags.forEach(function (u) {
+                            lables += '<label>' + u + '</label>';
+                        })
+                        var newItem = item + lables + '</div></li>';
+                        s += newItem;
+                    });
+                    $('.perfect-workC').find('ul').html(s);
+                    $(_this).find('i').removeClass('loadingR');
+                }else{
+                    $hint.open(data.data.resultMsg)
+                }
+            }
+        })
+    })
+</script>
+</html>

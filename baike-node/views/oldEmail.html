@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html,body,*{
+            padding:0;
+            margin:0;
+            font-family: "微软雅黑";
+            box-sizing: border-box;
+            -webkit-box-sizing:border-box;
+            -ms-box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            -o-box-sizing:border-box;
+        }
+        .email_box{
+            width:1020px;
+            margin:50px auto;
+        }
+        .head{
+            height:280px;
+            width:1020px;
+            background: url('http://tfdfs.banquanjia.com.cn/group1/M02/05/F8/CgoKJVl5tyOAMeZqAAB71-3cvCY050.png') no-repeat center center/cover;
+            padding-top:40px;
+        }
+        .head img{
+            display: block;
+            margin:0 auto;
+            margin-bottom:15px;
+        }
+        .email_headP{
+            width:100%;
+            color: #fff;
+            font-size:16px;
+            line-height:30px;
+            text-align: center;
+        }
+        .content{
+            width:1020px;
+            padding:0 40px;
+            padding-bottom:30px;
+            background:url("http://fdfs.microdci.cn/group1/M00/15/76/wKg4ZFl2-o2ASnvaAAAMSotOKTU288.png");
+        }
+        .content_title{
+            font-size:14px;
+            line-height:28px;
+            color:#333;
+        }
+        .content_p{
+            font-size:14px;
+            line-height:28px;
+            color: #2A2A2A;
+            margin-bottom:25px;
+        }
+        .content_p_bottom{
+            font-size:14px;
+            line-height:20px;
+            color: #333;
+        }
+        .content_p_bottom span{
+            display: block;
+        }
+        .content_p_bottom a{
+            display: inline-block;
+            text-decoration: none;
+        }
+        .foot{
+            height:32px;
+            background: url("http://fdfs.microdci.cn/group1/M00/15/76/wKg4ZFl2-o6AFxXZAAANZdO2Dxg736.png") no-repeat center center/cover;
+        }
+        .img_span{
+            display: block;
+        }
+        .img_right{
+            display: block;
+            margin:0 auto;
+            max-width:100%;
+        }
+        a{
+            color:#1A8CDC
+        }
+        .dataTable{
+            cellpadding:0;
+            cellspacing:0;
+            border-collapse:collapse;
+            width: 100%;
+            font-size:12px;
+            margin-bottom:25px;
+        }
+        .dataTable th{
+            line-height:28px;
+            background: #ECECEC ;
+        }
+        .dataTable{
+            border:1px solid #DEDEDE;
+        }
+        .dataTable td,.dataTable th{
+            border:1px solid #DEDEDE;
+        }
+        .dataTable td{
+            line-height:19px;
+            padding:8px;
+        }
+        .dataTable td a{
+            color: #1A8CDC;
+            text-decoration: none;
+        }
+        .dataTable td:nth-child(2){
+            text-align: center;
+        }
+
+        .content_box .label a{
+            display: inline-block;
+            line-height:26px;
+            padding:0 6px;
+            text-decoration: none;
+            border: 1px solid #E2E2E2;
+            margin-bottom:20px;
+            font-size:12px;
+        }
+
+        .content_box .label a:first-child{
+            background: #1A8CDC;
+            color: #fff;
+        }
+        .content_box .label a+a{
+            margin-left:10px;
+        }
+        .work_sub_name{
+            color: #999;
+            line-height:16px;
+            font-size:12px;
+            padding-bottom: 15px;
+        }
+        .clearfloat{
+            height:40px;
+            margin-bottom:15px;
+            font-size:24px;
+            color: #1A8CDC;
+            background: url("http://tfdfs.banquanjia.com.cn/group1/M01/05/F8/CgoKJVl5tyOATenvAAABpqQTSk4973.png") no-repeat left center;
+        }
+        .clearfloat .work_name{
+            font-size:24px;
+            color: #1A8CDC;
+            display: inline-block;
+            line-height:31px;
+            margin-top:12px;
+            margin-left:20px;
+            text-decoration: none;
+            padding-right:10px;
+        }
+        .clearfloat .clearfloat_b{
+            color: #1A8CDC;
+            display: inline-block;
+            padding-left:10px;
+            vertical-align: bottom;
+            font-size:12px;
+            font-weight:100;
+        }
+        .clearfloat .span_number{
+            background: #1A8CDC;
+            border-radius: 2px;
+            font-size:12px;
+            line-height:31px;
+            color: #fff;
+            width:142px;
+            float: right;
+            margin-top:9px;
+            text-align: center;
+        }
+        .line_blue{
+            width:100%;
+        }
+        .detail_work{
+            line-height: 24px;
+            color: #666;
+            background: #F5F5F5;
+            padding:15px;
+            margin-bottom:25px;
+        }
+        .photo_table_box{
+            width:100%;
+            height:360px;
+            padding:25px 0;
+        }
+        .content_box .photo_table:nth-child(2n+1) .photo_table_box .photo_table_inner:first-child{
+            height:310px;
+            width:420px;
+            float: left;
+        }
+        .content_box .photo_table:nth-child(2n+1) .photo_table_box .photo_table_inner:first-child img{
+            width:100%;
+            height:100%;
+        }
+        .content_box .photo_table:nth-child(2n+1) .photo_table_box .photo_table_inner:last-child{
+            float:right;
+            padding:0 30px;
+            width:460px;
+            height:310px;
+            display: table;
+        }
+        .content_box .photo_table:nth-child(2n) .photo_table_box .photo_table_inner:first-child{
+            height:310px;
+            width:460px;
+            float: left;
+        }
+        .content_box .photo_table:nth-child(2n) .photo_table_box .photo_table_inner:last-child img{
+            width:100%;
+            height:100%;
+        }
+        .content_box .photo_table:nth-child(2n) .photo_table_box .photo_table_inner:last-child{
+            float:right;
+            width:420px;
+            height:310px;
+            display: table;
+        }
+        .photo_table_innerWork{
+            width:100%;
+            height:310px;
+            display: table-cell;
+            vertical-align: middle;
+        }
+        .photo_table_innerWork p{
+            line-height:28px;
+            padding-top:14px;
+            padding-left: 20px;
+            background: url("http://tfdfs.banquanjia.com.cn/group1/M01/05/F8/CgoKJVl5tyOATenvAAABpqQTSk4973.png") no-repeat left top;
+        }
+        .photo_table_innerWork p .over{
+            font-size:24px;
+            color: #1A8CDC;
+            line-height:28px;
+        }
+        .photo_table_innerWork p .over_detail{
+            color: #666;
+            font-size:14px;
+            line-height:28px;
+            margin-top:12px;
+        }
+        .big_photo_tableBox{
+            padding:25px 0;
+        }
+        .big_photo_tableBox_img img{
+            width:100%;
+            magin-bottom:20px;
+            padding-top:25px;
+        }
+        .photo_table_inner_other img{
+            width:100%;
+        }
+        .photo_table_box_other{
+            padding:25px 0;
+        }
+        .photo_table_box_other .photo_table_innerWork{
+            height:auto;
+            padding-bottom:25px;
+        }
+    </style>
+</head>
+<body>
+<div class="email_box">
+    <div class="head">
+        <img src="http://fdfs.microdci.cn/group1/M00/15/76/wKg4ZFl2-w6ARlXUAAAb6Wn9bM4826.png" alt="">
+        <p class="email_headP">全网传播监听使用服务</p>
+    </div>
+    <div class="content">
+        <h1 class="content_title">尊敬的版权百科用户：</h1>
+        <p class="content_p">
+            欢迎您使用版权百科全网传播使用监听服务。您订阅的版权作品全网传播监听数据已准备完成，请查阅！
+        </p>
+        <div class="content_p">
+            <table class="dataTable" cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th rowspan="2" style="width: 250px;">作品名称</th>
+                    <th rowspan="2" style="width:90px;">在线站点</th>
+                    <th rowspan="2" style="width:90px;">当前热度</th>
+                    <th rowspan="2" style="width:90px;">累计用户数</th>
+                    <th colspan="2" style="width:160px;">播放/阅读量</th>
+                    <th colspan="2" style="width:160px;">评论数</th>
+                    <th rowspan="2">相关资讯</th>
+                </tr>
+                <tr>
+                    <th style="width:80px;">7日内</th>
+                    <th style="width:80px;">累计</th>
+                    <th style="width:80px;">7日内</th>
+                    <th style="width:80px;">累计</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><a href="#微微一笑很倾城" name="微微一笑很倾城">微微一笑很倾城</a></td>
+                    <td>5</td>
+                    <td>5969</td>
+                    <td>5亿</td>
+                    <td>2亿</td>
+                    <td>219.13亿</td>
+                    <td>8898</td>
+                    <td>1百万</td>
+                    <td>2万</td>
+                </tr>
+                <tr>
+                    <td><a href="#人民的名义" name="人民的名义">人民的名义</a></td>
+                    <td>6</td>
+                    <td>5608</td>
+                    <td>1.06亿</td>
+                    <td>1.42亿</td>
+                    <td>266.36亿</td>
+                    <td>741</td>
+                    <td>14万</td>
+                    <td>23万</td>
+                </tr>
+                <tr>
+                    <td><a href="#白毛女" name="白毛女">白毛女</a></td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>5320</td>
+                    <td>1372</td>
+                    <td>6.45万</td>
+                    <td>0</td>
+                    <td>13</td>
+                    <td>1万</td>
+                </tr>
+                </tbody>
+            </table>
+            <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWAQynqAAAE0hl13Vk181.png" alt="">
+        </div>
+        <div class="content_box" id="微微一笑很倾城" name="微微一笑很倾城">
+            <p class="clearfloat">
+                <a href="java_script:void(0)" class="work_name">微微一笑很倾城</a>|<b class="clearfloat_b">版权数据报告-<span>2017年08月31日</span></b>
+                <span class="span_number">使用总量：219.13亿</span>
+            </p>
+            <p class="work_sub_name">
+                2016年杨洋、郑爽主演电视剧
+            </p>
+            <p class="label">
+                <a href="#">电视剧</a>
+                <a href="#">偶像</a>
+                <a href="#">爱情</a>
+                <a href="#">剧情</a>
+                <a href="#">青春</a>
+                <a href="#">都市</a>
+                <a href="#">言情</a>
+                <a href="#">网络播放</a>
+                <a href="#">青春</a>
+            </p>
+            <div class="detail_work"><p>版权作品【微微一笑很倾城】由上海剧酷文化传播有限公司创作，截止2017-08-31，《微微一笑很倾城》该电视剧作品通过版权百科全网传播使用监听服务监听到目前在搜狐视频、爱奇艺、芒果TV、优酷、腾讯视频共5个平台上架。</p>
+                <span style="display: block;line-height: 24px;">上架跟踪明细请点击查看  <a href="http://www.banquanbaike.com.cn/item/201707041924325204">版权百科-微微一笑很倾城-作品详情页</a></span>
+            </div>
+            <div class="photo_tableOther">
+                <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWABzy3AAAEUiqg_FA061.png" alt="">
+                <div class="photo_table_box_other">
+                    <div class="photo_table_inner_other">
+                        <div class="photo_table_innerWork clearfix">
+                            <p><span class="over">截止</span><span class="over_detail">2017-08-31该作品在互联网中累计被使用219.13亿次，其中芒果TV平台1.1千万。如图所示：</span></p>
+                        </div>
+                    </div>
+                    <div class="photo_table_inner_other">
+                        <img src="http://tfdfs.banquanjia.com.cn/group1/M01/06/C3/CgoKJVmlG2yAbk_PAADFyWp4AkU106.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="photo_table">
+                <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWABzy3AAAEUiqg_FA061.png" alt="">
+                <div class="photo_table_box">
+                    <div class="photo_table_inner">
+                        <div class="photo_table_innerWork clearfix">
+                            <p><span class="over">最近</span><span class="over_detail">七日使用量2亿。分布在4家互联网平台，其中优酷使用量最高占96.78%，芒果TV最低占0.26%。详情如下图所示：</span></p>
+                        </div>
+                    </div>
+                    <div class="photo_table_inner">
+                        <img src="http://tfdfs.banquanjia.com.cn/group1/M01/06/C4/CgoKJVmm74mAachWAABmCWaxyHc627.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="photo_table">
+                <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWABzy3AAAEUiqg_FA061.png" alt="">
+                <div class="photo_table_box">
+                    <div class="photo_table_inner">
+                        <img src="http://tfdfs.banquanjia.com.cn/group1/M01/06/C4/CgoKJVmm74mAX3GyAABnkeCVHyo665.jpg" alt="">
+                    </div>
+                    <div class="photo_table_inner">
+                        <div class="photo_table_innerWork clearfix">
+                            <p>
+                                <span class="over">最近</span>
+                                <span class="over_detail">一个月该版权作品用户评论数1百万。综合走势如下图所示：</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="big_photo_table">
+                <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWABzy3AAAEUiqg_FA061.png" alt="">
+                <div class="big_photo_tableBox">
+                    <p class="clearfloat">
+                        <span href="java_script:void(0)" class="work_name">百科热度指数</span>
+                    </p>
+                    <div class="big_photo_tableBox_img">
+                        <img src="http://tmpfs.banquanbaike.com.cn/file/1b5d446e-a3a9-48b2-9177-7b49a7bd5923.png" alt="">
+                        <img src="http://tmpfs.banquanbaike.com.cn/file/a8960448-7bae-4608-bb66-7ccc8ddf8b7a.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content_box" id="人民的名义" name="人民的名义">
+            <p class="clearfloat">
+                <a href="java_script:void(0)" class="work_name">人民的名义</a>|<b class="clearfloat_b">版权数据报告-<span>2017年08月31日</span></b>
+                <span class="span_number">使用总量：266.36亿</span>
+            </p>
+            <p class="work_sub_name">
+                陆毅、吴刚、张丰毅主演的当代检察题材反腐电视剧
+            </p>
+            <p class="label">
+                <a href="#">电视剧</a>
+                <a href="#">陆毅</a>
+                <a href="#">张丰毅</a>
+                <a href="#">吴刚</a>
+                <a href="#">许亚军</a>
+                <a href="#">柯蓝</a>
+                <a href="#">张志坚</a>
+                <a href="#">胡静</a>
+                <a href="#">张凯丽</a>
+                <a href="#">李路</a>
+                <a href="#">周梅森</a>
+            </p>
+            <div class="detail_work"><p>版权作品【人民的名义】由凤凰传奇影业有限公司,最高人民检察院影视中心创作，截止2017-08-31，《人民的名义》该电视剧作品通过版权百科全网传播使用监听服务监听到目前在芒果TV、优酷、腾讯视频、PPTV、搜狐网、爱奇艺共6个平台上架。 疑似盗版使用该作品平台4个，分别 是芒果TV、腾讯视频、PPTV、爱奇艺 ;</p>
+                <span style="display: block;line-height: 24px;">上架跟踪明细请点击查看  <a href="http://www.banquanbaike.com.cn/item/201707041929352587">版权百科-人民的名义-作品详情页</a></span>
+            </div>
+            <div class="photo_tableOther">
+                <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWABzy3AAAEUiqg_FA061.png" alt="">
+                <div class="photo_table_box_other">
+                    <div class="photo_table_inner_other">
+                        <div class="photo_table_innerWork clearfix">
+                            <p><span class="over">截止</span><span class="over_detail">2017-08-31该作品在互联网中累计被使用266.36亿次，其中优酷平台90亿。如图所示：</span></p>
+                        </div>
+                    </div>
+                    <div class="photo_table_inner_other">
+                        <img src="http://tfdfs.banquanjia.com.cn/group1/M01/06/C3/CgoKJVmlG12ABy7pAACz9AieV2Y694.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="photo_table">
+                <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWABzy3AAAEUiqg_FA061.png" alt="">
+                <div class="photo_table_box">
+                    <div class="photo_table_inner">
+                        <div class="photo_table_innerWork clearfix">
+                            <p><span class="over">最近</span><span class="over_detail">七日使用量1.42亿。分布在4家互联网平台，其中优酷使用量最高占42.75%，芒果TV最低占0.38%。详情如下图所示：</span></p>
+                        </div>
+                    </div>
+                    <div class="photo_table_inner">
+                        <img src="http://tfdfs.banquanjia.com.cn/group1/M01/06/C4/CgoKJVmm7ymADxMgAABdcIyxVoA655.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="photo_table">
+                <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWABzy3AAAEUiqg_FA061.png" alt="">
+                <div class="photo_table_box">
+                    <div class="photo_table_inner">
+                        <img src="http://tfdfs.banquanjia.com.cn/group1/M01/06/C4/CgoKJVmm7yqAHIKhAABcnFT58SY837.jpg" alt="">
+                    </div>
+                    <div class="photo_table_inner">
+                        <div class="photo_table_innerWork clearfix">
+                            <p>
+                                <span class="over">最近</span>
+                                <span class="over_detail">一个月该版权作品用户评论数14万。综合走势如下图所示：</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="big_photo_table">
+                <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWABzy3AAAEUiqg_FA061.png" alt="">
+                <div class="big_photo_tableBox">
+                    <p class="clearfloat">
+                        <span href="java_script:void(0)" class="work_name">百科热度指数</span>
+                    </p>
+                    <div class="big_photo_tableBox_img">
+                        <img src="http://tmpfs.banquanbaike.com.cn/file/9e9c1c2e-ea68-41c5-9211-db298120d7f4.png" alt="">
+                        <img src="http://tmpfs.banquanbaike.com.cn/file/228a7a22-9d1c-4f94-bb3c-bb12371873ef.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content_box" id="白毛女" name="白毛女">
+            <p class="clearfloat">
+                <a href="java_script:void(0)" class="work_name">白毛女</a>|<b class="clearfloat_b">版权数据报告-<span>2017年08月31日</span></b>
+                <span class="span_number">使用总量：6.45万</span>
+            </p>
+            <p class="work_sub_name">
+                2016年雷佳主演的3D舞台艺术片
+            </p>
+            <p class="label">
+                <a href="#">电影</a>
+                <a href="#">雷佳</a>
+                <a href="#">张英席</a>
+                <a href="#">高鹏</a>
+                <a href="#">侯克明</a>
+            </p>
+            <div class="detail_work"><p>截止2017-08-31，《白毛女》该电影作品通过版权百科全网传播使用监听服务监听到目前在优酷、搜狐、腾讯视频共3个平台上架。 疑似盗版使用该作品平台1个，是优酷 ;</p>
+                <span style="display: block;line-height: 24px;">上架跟踪明细请点击查看  <a href="http://www.banquanbaike.com.cn/item/201707041925009717">版权百科-白毛女-作品详情页</a></span>
+            </div>
+            <div class="photo_tableOther">
+                <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWABzy3AAAEUiqg_FA061.png" alt="">
+                <div class="photo_table_box_other">
+                    <div class="photo_table_inner_other">
+                        <div class="photo_table_innerWork clearfix">
+                            <p><span class="over">截止</span><span class="over_detail">2017-08-31该作品在互联网中累计被使用6.45万次，其中优酷平台6.45万。如图所示：</span></p>
+                        </div>
+                    </div>
+                    <div class="photo_table_inner_other">
+                        <img src="http://tfdfs.banquanjia.com.cn/group1/M02/06/C3/CgoKJVmlG26ART6UAACReoB3Vaw401.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="photo_table">
+                <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWABzy3AAAEUiqg_FA061.png" alt="">
+                <div class="photo_table_box">
+                    <div class="photo_table_inner">
+                        <div class="photo_table_innerWork clearfix">
+                            <p><span class="over">最近</span><span class="over_detail">七日使用量1372。分布在1家互联网平台，其中优酷使用量最高占100.00%，优酷最低占100.00%。详情如下图所示：</span></p>
+                        </div>
+                    </div>
+                    <div class="photo_table_inner">
+                        <img src="http://tfdfs.banquanjia.com.cn/group1/M01/06/C4/CgoKJVmm77uAN1ZbAABiJlBhkmk465.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="photo_table">
+                <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWABzy3AAAEUiqg_FA061.png" alt="">
+                <div class="photo_table_box">
+                    <div class="photo_table_inner">
+                        <img src="http://tfdfs.banquanjia.com.cn/group1/M01/06/C4/CgoKJVmm77uAWJbDAABD-lCcI9Q551.jpg" alt="">
+                    </div>
+                    <div class="photo_table_inner">
+                        <div class="photo_table_innerWork clearfix">
+                            <p>
+                                <span class="over">最近</span>
+                                <span class="over_detail">一个月该版权作品用户评论数13。综合走势如下图所示：</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="big_photo_table">
+                <img class="line_blue" src="http://tfdfs.banquanjia.com.cn/group1/M01/05/D9/CgoKJll5vXWABzy3AAAEUiqg_FA061.png" alt="">
+                <div class="big_photo_tableBox">
+                    <p class="clearfloat">
+                        <span href="java_script:void(0)" class="work_name">百科热度指数</span>
+                    </p>
+                    <div class="big_photo_tableBox_img">
+                        <p style="margin-bottom:20px">数据正在整理中</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="content_p_bottom">
+            <span>版权百科</span>
+            <a href="http://www.banquanbaike.com.cn/">banquanbaike.com.cn</a>
+        </p>
+    </div>
+    <div class="foot">
+
+    </div>
+</div>
+</body>
+</html>

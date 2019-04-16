@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>芈月传_版权估值_版权百科</title>
+    <link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/common.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/report.css"/>
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <style>
+        body{background:#ECECEC;}
+    </style>
+    <% include('common/baidu_tj') %>
+</head>
+<body>
+<% include('./common/header') %>
+<div class="report-wrap">
+    <div class="report-head">
+        <div class="report-workT">
+            <span>芈月传</span><span>（蒋胜男原创小说）</span>
+        </div>
+        <div class="report-workM">目录&nbsp&nbsp|&nbsp《芈月传》版权价值报告</div>
+        <div class="report-nav">
+            <a href="#1"><span>1</span>作品简介</a>
+            <a href="#4"><span>4</span>作品社会关注度</a>
+            <a href="#7"><span>7</span>作品改编影视情况</a>
+            <a href="#2"><span>2</span>作品版权情况</a>
+            <a href="#5"><span>5</span>百度指数</a>
+            <a href="#8"><span>8</span>作品改编游戏情况</a>
+            <a href="#3"><span>3</span>作品版税收益分析</a>
+            <a href="#7"><span>6</span>版权价值挖掘</a>
+            <a href="#9"><span>9</span>综合结论</a>
+        </div>
+    </div>
+    <div class="report-content clearfix">
+        <ul>
+            <li id="1">
+                <img src="/images/report/img_1.png">
+            </li>
+            <li id="2">
+                <img src="/images/report/img_2.png">
+            </li>
+            <li id="3">
+                <img src="/images/report/img_3.png">
+            </li>
+            <li id="4">
+                <img src="/images/report/img_4.png">
+            </li>
+            <li id="5">
+                <img src="/images/report/img_5.png">
+            </li>
+            <li id="6">
+                <img src="/images/report/img_6.png">
+            </li>
+            <li id="7">
+                <img src="/images/report/img_7.png">
+            </li>
+            <li id="8">
+                <img src="/images/report/img_8.png">
+            </li>
+        </ul>
+        <div class="right_nav">
+            <div>
+                <a href="#1">作品简介</a>
+                <a href="#4">作品社会关注度</a>
+                <a href="#7">作品改编影视情况</a>
+                <a href="#2">作品版权情况</a>
+                <a href="#5">百度指数</a>
+                <a href="#8">作品改编游戏情况</a>
+                <a href="#3">作品版税收益分析</a>
+                <a href="#7">版权价值挖掘</a>
+                <a href="#9">综合结论</a>
+            </div>
+        </div>
+    </div>
+    <div id="9">
+        <img src="/images/report/img_9.png">
+    </div>
+
+</div>
+<% include('./common/bottom') %>
+<% include('./common/foot_script') %>
+<script>
+    $(document).ready(function () { //本人习惯这样写了
+        $(window).scroll(function () {
+            console.log($(window).scrollTop())
+            if($(window).scrollTop()>1000){
+                $('.right_nav div').show()
+            }else{
+                $('.right_nav div').hide()
+            }
+        });
+    });
+</script>
+</body>
+</html>

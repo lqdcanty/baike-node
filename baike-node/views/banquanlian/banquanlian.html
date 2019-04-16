@@ -1,0 +1,790 @@
+<html>
+ <head>
+   <meta charset="utf-8">
+     <title><%=data.workName%>_<%=data.type%>_版权链_版权百科</title>
+     <link rel="icon" href="../../images/font-logoIcon.png" type="image/x-icon">
+     <link rel="stylesheet" href="../../stylesheets/common.css">
+     <link rel="stylesheet" href="../../stylesheets/copyright.css">
+     <link rel="stylesheet" href="../../lib/tipso/tipso.min.css">
+      <!-- 引入 ECharts 文件 -->
+     <script src="../../lib/echarts.min.js"></script>
+     <script src="../../lib/jquery-1.9.1.min.js"></script>
+     <style>
+         .custom_width{width: 100% !important;padding: 0 30px}
+     </style>
+     <% include('../common/baidu_tj') %>
+ </head>
+ <body>
+ <% include('../common/header') %>
+ <input type="hidden" value="<%=from%>" class="fromType">
+ <div class="content-nav">
+     <span><%=data.workName%> > 版权链</span>
+     <a href="/item/<%=workSeqNo%>" class="float_right"><< 返回作品词条页 </a>
+ </div>
+    <div class="left_nav">
+        <a data-type="1" class="nav_btn">
+            <dl>
+                <dd><img src="../../images/banquanlian/icon_xx.png"></dd>
+                <dt>作品信息</dt>
+            </dl>
+        </a>
+        <a data-type="2" class="nav_btn">
+            <dl>
+                <dd><img src="../../images/banquanlian/icon_bql.png"></dd>
+                <dt>版权链</dt>
+            </dl>
+        </a>
+        <a data-type="3" class="nav_btn">
+            <dl>
+                <dd><img src="../../images/banquanlian/icon_ys.png"></dd>
+                <dt>原始创作</dt>
+            </dl>
+        </a>
+        <a data-type="4" class="nav_btn">
+            <dl>
+                <dd><img src="../../images/banquanlian/icon_zr.png"></dd>
+                <dt>授权转让</dt>
+            </dl>
+        </a>
+        <a data-type="5" class="nav_btn">
+            <dl>
+                <dd><img src="../../images/banquanlian/icon_sy.png"></dd>
+                <dt>授权使用</dt>
+            </dl>
+        </a>
+        <a data-type="6" class="nav_btn">
+            <dl>
+                <dd><img src="../../images/banquanlian/icon_zy.png"></dd>
+                <dt>版权质押</dt>
+            </dl>
+        </a>
+        <a data-type="7" class="nav_btn">
+            <dl>
+                <dd><img src="../../images/banquanlian/icon_zp.png"></dd>
+                <dt>关联作品</dt>
+            </dl>
+        </a>
+        <a data-type="8" class="nav_btn">
+            <dl>
+                <dd><img src="../../images/banquanlian/icon_gd.png"></dd>
+                <dt>更多</dt>
+            </dl>
+        </a>
+    </div>
+    <div class="nav_content">
+        <div data-type="1" class="nav_wrap">
+            <ul>
+                <% if(data.essentialInfo.content&&data.essentialInfo.content.length>0) {%>
+                <% data.essentialInfo.content.forEach(function(u,index){ %>
+                <li>
+                    <span><%=u.key%></span>
+                    <span><%=u.val%></span>
+                </li>
+                <%})%>
+                <%}else{%>
+                <li>暂无基本信息</li>
+                <%}%>
+            </ul>
+        </div>
+        <div data-type="2" class="nav_wrap">
+            <p><span>版权链：</span>是一款基于社会化协作的版权数据收集、整理、展示的产品。版权链以作品为中心，构建作品以及创作作品过程中使用到的其他作品所产生的版权数据，这些数据包括作品版权的原始创作、版权转授、版权转让、版权质押等数据。产品通过算法和图形向用户展示作品的版权情况以及创作作品过程中使用到的其他作品之间的版权转授关系。</p>
+        </div>
+        <div data-type="3" class="nav_wrap">
+            <p><span>原始创作：</span>《著作权法》规定的直接享有著作权的创作作品的公民；由法人或者其他组织主持，代表法人或者其他组织意志创作，并由法人或者其他组织承担责任的作品，法人或者其他组织视为作者。</p>
+            <p><span>如何添加原始创作：</span>点击作品图例，选择创建版权词条，在弹出的菜单中选择作品原始著作权，您需要填写必要的版权信息，点击创建词按钮条完成该词条的创建。</p>
+            <p><span>如何纠正或者完善原始著作版权信息：</span>通过点击作品与原始著作权人之间的连线可以进入该版权的详情页。点击详情页中纠正或者完善该版权信息进入版权编辑状态，您可以补充或者完善该版权信息。如果您是原始著作权人，您可以通过版权详情页上传自己的版权证书；如果还未取得证书，您可以通过中国版权保护中心登记获得证书，同时您可以对自己的原著作品进行版权声明，我们将公示您的版权申明信息。</p>
+        </div>
+        <div data-type="4" class="nav_wrap">
+            <p><span>授权转让：</span>是指著作权人将著作权中的全部或部分财产权有偿或无偿地移交给他人所有的法律行为。这种转让通常可以通过买卖、互易、赠与或遗赠等方式完成。转让著作权也只有著作权中的财产权可以转让，著作权中的人身权是不能转让。</p>
+            <p><span>如何添加版权转让：</span>点击作品图例或者点击原始著作权人，选择创建版权词条，在弹出的菜单中选择作品版权转让，您需要填写必要的版权信息，点击创建词按钮条完成该词条的创建。</p>
+            <p><span>如何纠正或者完善版权转让信息：</span>通过点击转让方和受让方之间的连线可以进入该版权的详情页。点击详情页中纠正或者完善该版权信息进入版权编辑状态，您可以补充或者完善该版权信息。如果您是受让方，您可以通过版权详情页上传自己的版权证书；如果还未取得证书，您可以通过中国版权保护中心登记获得证书，同时您可以对自己的权利进行版权声明，我们将公示您的版权申明信息。</p>
+            <p><span>转让和转授区别：</span>作品版权转让后，原版权所有者不再享有被转让的权利，受让人成为新的版权所有者；而在作品版权授权使用的情况下，版权仍归原版权所有者，被授权人只有按双方约定的使用方式和条件使用作品的权利。</p>
+        </div>
+        <div data-type="5" class="nav_wrap">
+            <p><span>作品版权授权使用：</span>指著作权转授该作品的使用权利。著作权转授的合同受到原授权合同的制约。原授权合同未约定受托人具有转授权的权利的，受托人不得再向第三人转授权。如确需要转授权，应当取得原授权人同意。未经同意，即为非法转授权。</p>
+            <p><span>如何添加作品版权授权使用：</span>点击作品图例或者点击转授关系上的节点，选择创建版权词条，在弹出的对话框中，您需要填写必要的版权信息，点击创建词按钮条完成该词条的创建。</p>
+            <p><span>如何纠正或者完善版权授权使用：</span>通过点击转让方和受让方之间的连线，可以进入该版权的详情页。点击详情页中纠正或者完善该版权信息进入版权编辑状态，您可以补充或者完善该版权信息。如果您是授权方或者被授权方，您可以通过版权详情页上传自己的版权证书；如果还未取得证书，您可以通过中国版权保护中心登记获得证书，同时您可以对自己的权利进行版权声明，我们将公示您的版权申明信息。</p>
+            <p><span>转让和转授区别：</span>作品版权转让后，原版权所有者不再享有被转让的权利，受让人成为新的版权所有者；而在作品版权授权使用的情况下，版权仍归原版权所有者，被授权人只有按双方约定的使用方式和条件使用作品的权利。</p>
+        </div>
+        <div data-type="6" class="nav_wrap">
+            <p><span>版权质押：</span>指债务人或者第三人依法将其著作权中的财产权出质，将该财产权作为债权的担保。债务人不履行债务时，债权人有权依法以该财产权折价或者以拍卖、变卖该财产权的价款优先受偿。其中债权人为质权人，债务人或者第三人为出质人。</p>
+            <p><span>如何添加版权质押：</span>点击作品图例或者点击版权著作权人，选择创建版权词条，在弹出的菜单中选择作品版权质押，您需要填写必要的版权信息，点击创建词按钮条完成该词条的创建。</p>
+            <p><span>如何纠正或者完善版权转让信息：</span>通过点击出质方和受质方之间的连线可以进入该版权的详情页。点击详情页中纠正或者完善该版权信息进入版权编辑状态，您可以补充或者完善该版权信息。同时您可以通过版权详情页查看该作品版权所发生的质押历史记录。</p>
+        </div>
+        <div data-type="7" class="nav_wrap">
+            <p><span>关联作品：</span>是指在创作作品的过程中所使用到的其他作品。</p>
+            <p><span>如何添加关联作品：</span>点击作品图例，选择建立关联作品。在弹出的对话框中输入关联作品名称，进行搜索，如找到您想添加的关联作品点击该作品，如果未找到你想要找的作品可以通过创建作品词条进行关联作品的创建。准备好关联作品后，选择作品之间正确的关系，点击完成。完成作品关联关系的建立。</p>
+            <p><span>如何修改关联作品：</span>点击作品之间的连线，在弹出的对话框中可以从新选择作品之间的关系，进行修改。如果两个作品之间已经建立了版权转授关系，则不能删除作品之间的关联关系，如果还未建立版权转授关系可以通过修改对话框删除作品之间的关联关系。</p>
+        </div>
+        <div data-type="8" class="nav_wrap">
+            <p><span>版权声明：</span>如果您是权利人，可以通过版权百科提供的版权声明服务对外公示您所拥有该作品版权的权利范围。我们将尽可能的为您寻找该作品版权使用客户创造版权交易机会，提升您的版税收益。</p>
+            <p><span>侵权申诉：</span>如果您是权利人，发现您所拥有的作品版权被他人登记或者占用，您可以通过我们提供的侵权申诉服务主张自己的权利。我们将协助您解决作品版权争议。</p>
+            <p><span>版权登记：</span>如果您的作品版权还未取得全球任何官方版权机构颁发的版权认证证书，在您创建版权词条的时候我们为您提供中国版权保护中心登记渠道。通过中国版权保护中心登记您可以获得官方版权机构版权的版权证书。</p>
+            <p><span>获取授权：</span>如果您在寻找作品的版权使用授权，通过我们提供的版权详情页获取授权入口，您可以填写您的版权使用需求和联系方式。我们将会尽快的联系相关权利人，为您快速得到作品版权授权使用提供帮助。</p>
+        </div>
+    </div>
+    <div class="prompt-wrap">
+        <ul class="clearfix">
+            <li>原始创作<img src="../../images/banquanlian/img_b.png"></li>
+            <li>版权质押<img src="../../images/banquanlian/img_g.png"></li>
+            <li>授权使用<img src="../../images/banquanlian/img_gr.png"></li>
+            <li>作品干系<img src="../../images/banquanlian/img_bg.png"></li>
+            <li>版权转让<img src="../../images/banquanlian/img_r.png"></li>
+        </ul>
+    </div>
+    <div id="main">
+        <canvas id="bql-map" width="1200" height="900"></canvas>
+    </div>
+    <div class="modle-wrap module-bql">
+        <div class="modle-container">
+            <div class="modle-content bql-module">
+                <div class="module-head">添加版权词条或关联作品<i class="close_btn"></i></div>
+                <div class="module-view">
+                <div class="module-body clearfix">
+                    <!--<table border="0" cellspacing="0" cellpadding="0" style="width: 100%">-->
+                        <ul class="clearfix ul_nav">
+                            <li class="clearfix" style="margin-right: 9px">
+                                <div  class="float_left typeTag cr_gaTag" style="margin-right: 10px ">
+                                    关联作品
+                                </div>
+                                <dl data-type="CR_GX" class="glwork-t float_left">
+                                    <dt><img src="../../images/banquanlian/icon_gl.png"></dt>
+                                    <dd>添加关联作品</dd>
+                                    <span></span>
+                                </dl>
+                            </li>
+                            <li class="typeTagLine" style="margin-right: 10px">
+                                <div class="float_left typeTag">
+                                    版权词条
+                                </div>
+                            </li>
+                            <li>
+                                <dl data-type="CR_YZ" class="original-t tips-o" data-tipso="原始著作权人为作者，即《著作权法》规定的直接享有著作权的创作作品的公民；由法人或者其他组织主持，代表法人或者其他组织意志创作，并由法人或者其他组织承担责任的作品，法人或者其他组织视为作者。">
+                                    <dt><img src="../../images/banquanlian/icon_cj.png"></dt>
+                                    <dd>作品原始著作权</dd>
+                                    <span></span>
+                                </dl>
+                            </li>
+                            <li>
+                            <!--<td align="center" style="padding-right: 12px;">-->
+                                <dl data-type="CR_ZS" class="authorize-t tips-o" data-tipso="作品版权授权使用：指著作权转授该作品的使用权利。著作权转授的合同受到原授权合同的制约。原授权合同未约定受托人具有转授权的权利的，受托人不得再向第三人转授权。如确需要 转授权，应当取得原授权人同意。未经同意，即为非法转授权。">
+                                    <dt><img src="../../images/banquanlian/icon_cj.png"></dt>
+                                    <dd>作品版权授权使用</dd>
+                                    <span></span>
+                                </dl>
+                            </li>
+                            <li>
+                            <!--<td align="center">-->
+                                <dl data-type="CR_ZR" class="assignment-t tips-o" data-tipso="是指著作权人将著作权中的全部或部分财产权有偿或无偿地移交给他人所有的法律行为。这种转让通常可以通过买卖、赠与或遗赠等方式完成。转让著作权也只有著作权中的财产权可以转让，著作权中的人身权是不能转让的。">
+                                    <dt><img src="../../images/banquanlian/icon_cj.png"></dt>
+                                    <dd>作品版权转让</dd>
+                                    <span></span>
+                                </dl>
+                            </li>
+                            <li>
+                            <!--<td align="right">-->
+                                <dl data-type="CR_ZY" class="pledge-t tips-o" data-tipso="版权质押即：版权所有人将其版权以质押的方式从债权人那取得贷款。">
+                                    <dt><img src="../../images/banquanlian/icon_cj.png"></dt>
+                                    <dd>作品版权质押</dd>
+                                    <span></span>
+                                </dl>
+                            </li>
+                        </ul>
+                    <!--</table>-->
+                </div>
+                <div data-type="CR_GX" class="module_content workGx-wrap">
+                        <div class="content-wrap">
+                        </div>
+                        <form action="" method="post" class="gx-form" style="padding-top: 0">
+                            <input type="hidden" class="workSeqNo-gx" name="workSeqNo" value="<%=workSeqNo%>">
+                            <input type="hidden" class="centerSeqNo" name="centerSeqNo" value="<%=workSeqNo%>">
+                            <div class="clearfix" style="margin-bottom: 10px">
+                                <label style="width: 65px"><span>*</span>作品关系</label>
+                                <div class="float_left" style="width: 615px">
+                                    <div class="clearfix gxTagType">
+                                        <div class="float_left">
+                                            <div class="select-btn">
+                                                <a class="copyType-btn gxTagType-btn" data-type="1"><i></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="float_left" >
+                                            <div class="gx-text">创建该作品使用到其他作品，请选择此项</div>
+                                            <div class="gx-tag clearfix">
+                                                <a>改编</a>
+                                                <a>词谱</a>
+                                                <a>曲谱</a>
+                                                <a>插曲</a>
+                                                <a>片尾曲</a>
+                                                <a>主题曲</a>
+                                                <a>背景音乐</a>
+                                                <a class="else-tag"><span>其他</span><input type='text' class="elseTagInput"></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="clearfix gxTagType" style="margin-top: 5px">
+                                        <div class="float_left">
+                                            <div class="select-btn" >
+                                                <a class="copyType-btn gxTagType-btn" data-type="2"><i></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="float_left">
+                                            <div class="gx-text">通过该作品创建出其他作品，请选择此项</div>
+                                            <div class="gx-tag clearfix">
+                                                <a>改编</a>
+                                                <a>衍生软件</a>
+                                                <a>衍生漫画</a>
+                                                <a>衍生游戏</a>
+                                                <a class="else-tag"><span>其他</span><input type='text' class="elseTagInput"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" name="tag" class="tagInput">
+                            </div>
+                            <div class="clearfix">
+                                <label style="width: 100px;line-height: 34px;"><span>*</span>关联作品名称</label>
+                                <div class="float_left">
+                                    <ul class="originalMan-list">
+                                        <li>
+                                            <input type="text" id="search-input" placeholder="请输入关联作品名称">
+                                            <a class="search-gx">查找</a>
+                                            <!--<a class="add-ppl">添加</a>-->
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div>
+                                <ul class="gx-table">
+
+                                </ul>
+                                <div id="layerPage" style="margin-bottom: 10px;text-align: center"></div>
+                                <input type="hidden" class="relationSeqNo" name="relationSeqNo">
+                            </div>
+                            <div class="no-works">
+                                无法找到作品，点击<a target="_blank" href="../../creatEntry">创建作品词条</a>
+                            </div>
+                            <div class="text_center">
+                                <a class="create-btn"  data-type="0">添加</a>
+                            </div>
+                        </form>
+                    </div>
+                <div data-type="CR_YZ" class="module_content original-wrap">
+                    <div class="content-wrap">
+                        <p class="head_t">创建版权词条（作品原始著作权）</p>
+                        <div class="head_c">原始著作权人为作者，即《著作权法》规定的直接享有著作权的创作作品的公民；由法人或者其他组织主持，代表法人或者其他组织意志创作，并由法人或者其他组织承担责任的作品，法人或者其他组织视为作者。</div>
+                    </div>
+                    <form action="" method="post" class="yz-form">
+                        <input type="hidden" name="workSeqNo" value="<%=workSeqNo%>">
+                        <div class="clearfix">
+                            <label><span>*</span>原始著作权人</label>
+                            <div class="float_left">
+                                <ul class="originalMan-list">
+                                    <li>
+                                        <input type="text" name="obllige" placeholder="多个著作权原始主体请'，'隔开">
+                                        <!--<a class="add-ppl">添加</a>-->
+                                    </li>
+                                </ul>
+                                <p class="f14 color_666">如果著作权原始主体由多个作者或者组织构成，请'，'隔开。</p>
+                            </div>
+                            <span class="error-msg">原始著作权人不能为空</span>
+                        </div>
+                        <div class="clearfix mt10">
+                            <label>创作完成时间</label>
+                            <div class="float_left">
+                                <input placeholder="年/月/日" id="registerTime" name="time" class="dateTime-s">
+                            </div>
+                        </div>
+                        <div class="clearfix remark-wrap mt10">
+                            <label>备注</label>
+                            <div>
+                                <textarea name="remark" placeholder="限50字以内"></textarea>
+                            </div>
+                        </div>
+                        <div class="contact-wrap">
+                            <table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
+                                <tr>
+                                    <% if(useInfo.islogin) { %>
+                                    <td><span>联系人</span></td>
+                                    <td><input class="contact-man" name="contacts" type="text" placeholder="请输入姓名" value="<%=useInfo.loginUser.name %>"></td>
+                                    <td><span>联系电话</span></td>
+                                    <td><input class="contact-tel" name="contactsPhone" type="text" placeholder="请输入真实电话" value="<%=useInfo.loginUser.telephone %>"></td>
+                                    <td><span>联系邮箱</span></td>
+                                    <td><input class="contact-email" name="contactsEmail" type="text" placeholder="请输入邮箱地址" value="<%=useInfo.loginUser.account %>"></td>
+                                    <%}else{%>
+                                    <td><span>联系人</span></td>
+                                    <td><input class="contact-man" name="contacts" type="text" placeholder="请输入姓名"></td>
+                                    <td><span>联系电话</span></td>
+                                    <td><input class="contact-tel" name="contactsPhone" type="text" placeholder="请输入真实电话"></td>
+                                    <td><span>联系邮箱</span></td>
+                                    <td><input class="contact-email" name="contactsEmail" type="text" placeholder="请输入邮箱地址"></td>
+                                    <%}%>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="text_center">
+                            <a class="create-btn"  data-type="1">创建词条</a>
+                        </div>
+                    </form>
+                </div>
+                <div data-type="CR_ZS" class="module_content authorize-wrap">
+                    <div class="content-wrap">
+                        <p class="head_t">创建版权词条（作品版权授权使用）</p>
+                        <div class="head_c"><span class="color_000">作品版权授权使用：</span>指著作权转授该作品的使用权利。著作权转授的合同受到原授权合同的制约。原授权合同未约定受托人具有转授权的权利的，受托人不得再向第三人转授权。</div>
+                    </div>
+                    <form style="padding-top: 0" action="" method="post" class="zs-form">
+                        <input type="hidden" name="workSeqNo" value="<%=workSeqNo%>">
+                        <div class="clearfix mt10">
+                            <label><span>*</span>授权方式</label>
+                            <ul class="clearfix float_left authorize-type-item empower-ul">
+                                <li><a data-type="独家授权"><i></i></a><span class="tips-o" data-tipso="独家授权：将著作权财产权独家许可给一家公司使用，不得再许可第三方。">独家授权</span></li>
+                                <li><a data-type="非独家授权"><i></i></a><span class="tips-o" data-tipso="非独家授权：将著作权财产权独家许可给一家公司使用，同时可以将全力再许可第三方。">非独家授权</span></li>
+                                <li><a data-type="历史传承"><i></i></a><span class="tips-o" data-tipso="历史传承：作品的作者为公民，其著作财产权的保护期为作者有生之年加死亡后50年。保护期届满后无需取得版权所有人的许可或者无需向其支付报酬。">历史传承</span></li>
+                                <li><a data-type="未知"><i></i></a><span>未知</span></li>
+                            </ul>
+                            <input type="text" style="display: none" name="tag" class="authorize-type">
+                            <span class="error-msg">授权方式不能为空</span>
+                        </div>
+                        <div class="clearfix mt10">
+                            <label><span>*</span>授权方</label>
+                            <div class="float_left">
+                                <ul class="originalMan-list">
+                                    <li>
+                                        <input type="text" name="grant"  placeholder="如果授权方由多个作者或者组织构成，请'，'隔开。">
+                                        <!--<a class="add-ppl">添加</a>-->
+                                    </li>
+                                </ul>
+                            </div>
+                            <span class="error-msg">授权方不能为空</span>
+                        </div>
+                        <div class="clearfix mt10">
+                            <label><span>*</span>被授权方</label>
+                            <div class="float_left">
+                                <ul class="originalMan-list">
+                                    <li>
+                                        <input type="text" name="obllige" placeholder="如果被授权方由多个作者或者组织构成，请'，'隔开。">
+                                        <!--<a class="add-ppl">添加</a>-->
+                                    </li>
+                                </ul>
+                            </div>
+                            <span class="error-msg">被授权方不能为空</span>
+                        </div>
+                        <div class="clearfix mt10 time-wrap">
+                            <label>有效期</label>
+                            <div class="float_left select-btn">
+                                <a class="copyType-btn"  data-time="forever"><i></i></a>
+                                <span>永久</span>
+                            </div>
+                            <div class="float_left select-btn">
+                                <a class="copyType-btn on"  data-time="other"><i></i></a>
+                                <span>未知</span>
+                            </div>
+                            <input type="hidden" name="validity" value="other">
+                            <div class="float_left time-wrap">
+                                <input placeholder="年/月/日" name="contractStart" id="authorize-startTime"  class="dateTime-s">
+                                <span>至</span>
+                                <input placeholder="年/月/日" name="contractEnd" id="authorize-endTime"  class="dateTime-s">
+                            </div>
+                        </div>
+                        <div class="clearfix mt10 money-wrap">
+                            <label>作品授权涉及金额</label>
+                            <div class="float_left">
+                                <input type="text" name="amount">
+                            </div>
+                            <div class="float_left select-btn">
+                                <a class="copyType-btn on"  data-time="永久"><i></i></a>
+                                <span>公开金额信息</span>
+                                <input name="isopen" type="hidden" value="true">
+                            </div>
+                        </div>
+                        <div class="clearfix remark-wrap mt10">
+                            <label>备注</label>
+                            <div>
+                                <textarea name="remark" placeholder="限50字以内"></textarea>
+                            </div>
+                        </div>
+                        <div class="contact-wrap">
+                            <table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
+                                <tr>
+                                    <% if(useInfo.islogin) { %>
+                                    <td><span>联系人</span></td>
+                                    <td><input class="contact-man" name="contacts" type="text" placeholder="请输入姓名" value="<%=useInfo.loginUser.name %>"></td>
+                                    <td><span>联系电话</span></td>
+                                    <td><input class="contact-tel" name="contactsPhone" type="text" placeholder="请输入真实电话" value="<%=useInfo.loginUser.telephone %>"></td>
+                                    <td><span>联系邮箱</span></td>
+                                    <td><input class="contact-email" name="contactsEmail" type="text" placeholder="请输入邮箱地址" value="<%=useInfo.loginUser.account %>"></td>
+                                    <%}else{%>
+                                    <td><span>联系人</span></td>
+                                    <td><input class="contact-man" name="contacts" type="text" placeholder="请输入姓名"></td>
+                                    <td><span>联系电话</span></td>
+                                    <td><input class="contact-tel" name="contactsPhone" type="text" placeholder="请输入真实电话"></td>
+                                    <td><span>联系邮箱</span></td>
+                                    <td><input class="contact-email" name="contactsEmail" type="text" placeholder="请输入邮箱地址"></td>
+                                    <%}%>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="text_center">
+                            <a class="create-btn"  data-type="2">创建词条</a>
+                        </div>
+                    </form>
+                </div>
+                <div data-type="CR_ZR" class="module_content assignment-wrap">
+                    <div class="content-wrap">
+                        <p class="head_t">创建词条（作品版权转让）</p>
+                        <div class="head_c">
+                            <span class="color_000">作品版权转让：</span>是指著作权人将著作权中的全部或部分财产权有偿或无偿地移交给他人所有的法律行为。这种转让通常可以通过买卖、赠与或遗赠等方式完成。</br>
+                        </div>
+                    </div>
+                    <form style="padding-top: 0" action="" method="post" class="zr-form">
+                        <input type="hidden" name="workSeqNo" class="workSeqNo" value="<%=workSeqNo%>">
+                        <div class="clearfix mt10">
+                            <label><span>*</span>转让方式</label>
+                            <ul class="clearfix float_left authorize-type-item empower-ul">
+                                <li><a data-type="继承"><i></i></a><span>继承</span></li>
+                                <li><a data-type="赠与"><i></i></a><span>赠与</span></li>
+                                <li><a data-type="有偿转让"><i></i></a><span>有偿转让</span></li>
+                                <li><a data-type="其他"><i></i></a><span>其他</span></li>
+                            </ul>
+                            <input type="text" class="assignment-type ele-tag" name="tag">
+                            <span class="error-msg">转让方式不能为空</span>
+                        </div>
+                        <div class="clearfix mt10">
+                            <label><span>*</span>转让方</label>
+                            <div class="float_left">
+                                <ul class="originalMan-list">
+                                    <li>
+                                        <input type="text" name="grant" placeholder="如果授权方由多个作者或者组织构成，请'，'隔开。">
+                                        <!--<a class="add-ppl">添加</a>-->
+                                    </li>
+                                </ul>
+                            </div>
+                            <span class="error-msg">转让方不能为空</span>
+                        </div>
+                        <div class="clearfix mt10">
+                            <label><span>*</span>授权方</label>
+                            <div class="float_left">
+                                <ul class="originalMan-list">
+                                    <li>
+                                        <input type="text" name="obllige" placeholder="如果被授权方由多个作者或者组织构成，请'，'隔开。">
+                                        <!--<a class="add-ppl">添加</a>-->
+                                    </li>
+                                </ul>
+                            </div>
+                            <span class="error-msg">授权方不能为空</span>
+                        </div>
+                        <div class="clearfix mt10 time-wrap">
+                            <label>有效期</label>
+                            <div class="float_left select-btn">
+                                <a class="copyType-btn"  data-time="forever"><i></i></a>
+                                <span>永久</span>
+                            </div>
+                            <div class="float_left select-btn">
+                                <a class="copyType-btn on"  data-time="other"><i></i></a>
+                                <span>未知</span>
+                            </div>
+                            <input type="hidden" value="other" name="validity">
+                            <div class="float_left time-wrap">
+                                <input placeholder="年/月/日" name="contractStart" id="assignment-startTime"  class="dateTime-s">
+                                <span>至</span>
+                                <input placeholder="年/月/日" name="contractEnd" id="assignment-endTime"  class="dateTime-s">
+                            </div>
+                        </div>
+                        <div class="clearfix mt10 money-wrap">
+                            <label>作品转让方涉及金额</label>
+                            <div class="float_left">
+                                <input type="text" name="amount">
+                            </div>
+                            <div class="float_left select-btn">
+                                <a class="copyType-btn on"  data-time="永久"><i></i></a>
+                                <span>公开金额信息</span>
+                                <input name="isopen" type="hidden" value="true">
+                            </div>
+                        </div>
+                        <div class="clearfix remark-wrap mt10">
+                            <label>备注</label>
+                            <div>
+                                <textarea name="remark" placeholder="限50字以内"></textarea>
+                            </div>
+                        </div>
+                        <div class="contact-wrap">
+                            <table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
+                                <tr>
+                                    <% if(useInfo.islogin) { %>
+                                    <td><span>联系人</span></td>
+                                    <td><input class="contact-man" name="contacts" type="text" placeholder="请输入姓名" value="<%=useInfo.loginUser.name %>"></td>
+                                    <td><span>联系电话</span></td>
+                                    <td><input class="contact-tel" name="contactsPhone" type="text" placeholder="请输入真实电话" value="<%=useInfo.loginUser.telephone %>"></td>
+                                    <td><span>联系邮箱</span></td>
+                                    <td><input class="contact-email" name="contactsEmail" type="text" placeholder="请输入邮箱地址" value="<%=useInfo.loginUser.account %>"></td>
+                                    <%}else{%>
+                                    <td><span>联系人</span></td>
+                                    <td><input class="contact-man" name="contacts" type="text" placeholder="请输入姓名"></td>
+                                    <td><span>联系电话</span></td>
+                                    <td><input class="contact-tel" name="contactsPhone" type="text" placeholder="请输入真实电话"></td>
+                                    <td><span>联系邮箱</span></td>
+                                    <td><input class="contact-email" name="contactsEmail" type="text" placeholder="请输入邮箱地址"></td>
+                                    <%}%>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="text_center">
+                            <input class="create-btn" type="button" value="创建词条" data-type="3">
+                        </div>
+                    </form>
+                </div>
+                <div data-type="CR_ZY" class="module_content pledge-wrap">
+                    <div class="content-wrap">
+                        <p class="head_t">创建版权词条（作品版权授权使用）</p>
+                        <div class="head_c">
+                            <span class="color_000">版权质押即：</span>版权所有人将其版权以质押的方式从债权人那取得贷款。
+                        </div>
+                    </div>
+                    <form style="padding-top: 0" action="" method="post" class="zy-form">
+                        <input type="hidden" name="workSeqNo" class="workSeqNo" value="<%=workSeqNo%>">
+                        <div class="clearfix mt10">
+                            <label><span>*</span>出质方</label>
+                            <div class="float_left">
+                                <ul class="originalMan-list">
+                                    <li>
+                                        <input type="text" name="grant" placeholder="如果出质方由多个作者或者组织构成，请'，'隔开。">
+                                        <!--<a class="add-ppl">添加</a>-->
+                                    </li>
+                                </ul>
+                            </div>
+                            <span class="error-msg">出质方不能为空</span>
+                        </div>
+                        <div class="clearfix mt10">
+                            <label><span>*</span>受质方</label>
+                            <div class="float_left">
+                                <ul class="originalMan-list">
+                                    <li>
+                                        <input type="text" name="obllige" placeholder="如果受质方由多个作者或者组织构成，请'，'隔开。">
+                                        <!--<a class="add-ppl">添加</a>-->
+                                    </li>
+                                </ul>
+                            </div>
+                            <span class="error-msg">受质方不能为空</span>
+                        </div>
+                        <div class="clearfix mt10">
+                            <label>版权质押时间</label>
+                            <div class="float_left select-btn">
+                                <a class="copyType-btn"  data-time="forever"><i></i></a>
+                                <span>永久</span>
+                            </div>
+                            <div class="float_left select-btn">
+                                <a class="copyType-btn on"  data-time="other"><i></i></a>
+                                <span>未知</span>
+                            </div>
+                            <input type="hidden" value="other" name="validity">
+                            <div class="float_left time-wrap">
+                                <input placeholder="年/月/日" name="contractStart" id="pledge-startTime"  class="dateTime-s">
+                                <span>至</span>
+                                <input placeholder="年/月/日" name="contractEnd" id="pledge-endTime"  class="dateTime-s">
+                            </div>
+                        </div>
+                        <div class="clearfix mt10 money-wrap">
+                            <label>作品质押涉及金额</label>
+                            <div class="float_left">
+                                <input type="text" name="amount">
+                            </div>
+                            <div class="float_left select-btn">
+                                <a class="copyType-btn on"  data-time="永久"><i></i></a>
+                                <span>公开金额信息</span>
+                                <input name="isopen" type="hidden" value="true">
+                            </div>
+                        </div>
+                        <div class="clearfix remark-wrap mt10">
+                            <label>备注</label>
+                            <div>
+                                <textarea name="remark" placeholder="限50字以内"></textarea>
+                            </div>
+                        </div>
+                        <div class="contact-wrap">
+                            <table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
+                                <tr>
+                                    <% if(useInfo.islogin) { %>
+                                    <td><span>联系人</span></td>
+                                    <td><input class="contact-man" name="contacts" type="text" placeholder="请输入姓名" value="<%=useInfo.loginUser.name %>"></td>
+                                    <td><span>联系电话</span></td>
+                                    <td><input class="contact-tel" name="contactsPhone" type="text" placeholder="请输入真实电话" value="<%=useInfo.loginUser.telephone %>"></td>
+                                    <td><span>联系邮箱</span></td>
+                                    <td><input class="contact-email" name="contactsEmail" type="text" placeholder="请输入邮箱地址" value="<%=useInfo.loginUser.account %>"></td>
+                                    <%}else{%>
+                                    <td><span>联系人</span></td>
+                                    <td><input class="contact-man" name="contacts" type="text" placeholder="请输入姓名"></td>
+                                    <td><span>联系电话</span></td>
+                                    <td><input class="contact-tel" name="contactsPhone" type="text" placeholder="请输入真实电话"></td>
+                                    <td><span>联系邮箱</span></td>
+                                    <td><input class="contact-email" name="contactsEmail" type="text" placeholder="请输入邮箱地址"></td>
+                                    <%}%>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="text_center">
+                            <input class="create-btn" type="button" value="创建词条" data-type="4">
+                        </div>
+                    </form>
+                </div>
+                <input type="hidden" class="now_name">
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="modle-wrap update-gxWork">
+         <div class="modle-container">
+             <div class="modle-detail module-gxWork">
+                 <div class="modle-head">修改作品关联关系<i class="close_btn"></i></div>
+                 <div class="module-body">
+                     <form action="" method="post" class="updateGx-form">
+                         <div>
+                             <label>关联标签</label><input type="text" name="tag" class="add-webName tag" placeholder="作品关系">
+                             <input name="id" type="hidden" class="relationId">
+                         </div>
+                     <div class="text_center">
+                         <a class="update-gx">修改标签</a>
+                         <a class="detail-gx">删除关联作品</a>
+                     </div>
+                     </form>
+                 </div>
+             </div>
+         </div>
+     </div>
+    <div class="modle-wrap module-getCopyRight">
+        <div class="modle-container">
+            <div class="modle-content getCopyRight-module">
+                <div class="module-head">获取使用授权<span class="module-minHead"></span><i class="close_btn"></i></div>
+                <div class="module-view">
+                    <div class="module_content original-wrap" style="display: block">
+                        <form action="" method="post" class="getCopyRight-form">
+                            <input type="hidden" name="workSeqNo" value="<%=workSeqNo%>">
+                            <P class="getCopy-title"><span>*</span>填写该版权使用需求</P>
+                            <textarea class="getCopy-text" name="content" placeholder="版权百科为版权需求者获取版权授权提供帮助，包括提供真实有价值的作品版权资讯，协助您寻找版权人、根据您的需求制定版权采购交易方案，最终帮助您完成版权授权的获取。"></textarea>
+                            <div class="contact-wrap">
+                                <table border="0" cellspacing="0" cellpadding="0" style="width: 100%">
+                                    <tr>
+                                        <% if(useInfo.islogin) { %>
+                                        <td><span>联系人</span></td>
+                                        <td><input class="contact-man" name="contacts" type="text" placeholder="请输入姓名" value="<%=useInfo.loginUser.name %>"></td>
+                                        <td><span>联系电话</span></td>
+                                        <td><input class="contact-tel" name="contactsPhone" type="text" placeholder="请输入真实电话" value="<%=useInfo.loginUser.telephone %>"></td>
+                                        <td><span>联系邮箱</span></td>
+                                        <td><input class="contact-email" name="contactsEmail" type="text" placeholder="请输入邮箱地址" value="<%=useInfo.loginUser.account %>"></td>
+                                        <%}else{%>
+                                        <td><span>联系人</span></td>
+                                        <td><input class="contact-man" name="contacts" type="text" placeholder="请输入姓名"></td>
+                                        <td><span>联系电话</span></td>
+                                        <td><input class="contact-tel" name="contactsPhone" type="text" placeholder="请输入真实电话"></td>
+                                        <td><span>联系邮箱</span></td>
+                                        <td><input class="contact-email" name="contactsEmail" type="text" placeholder="请输入邮箱地址"></td>
+                                        <%}%>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="text_center">
+                                <a class="getCopy-btn create-btn">提交</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modle-tips tips-one">
+        <p>尊敬的百科用户，欢迎您使用版权声明服务。我们需要共同完成以下步骤完成版权声明。
+            点击<span class="color_main">作品节点</span>选择需要创建的版权类型。
+          </p>
+        <div class="text_center">
+            <a class="close-tips">知道了</a>
+        </div>
+    </div>
+    <div class="modle-tips tips-two">
+        <p>尊敬的用户，我们已经完成版权词条的创建。找到您<span class="color_main">添加的权利人并点击上面的连线</span>将会带您进入对应的版权详情页。</p>
+        <div class="text_center">
+            <a class="close-tips">知道了</a>
+        </div>
+    </div>
+     <div class="modle-tips tips-three">
+         <p>尊敬的百科用户，我们需要共同完成以下步骤完成版权声明。
+             如果您在图中发现权利人名称，请点击权利人创建您的版权词条；如果未发现请点击作品节点创建版权词条；点击<span class="color_main">节点之间的连线</span>可以跳至版权详情页。
+         </p>
+         <div class="text_center">
+             <a class="close-tips">知道了</a>
+         </div>
+     </div>
+     <div class="modle-tips tips-four">
+         <p>尊敬的用户，我们已经完成版权词条的创建。
+             找到您添加的权利人并点击<span class="color_main">上面的连线</span>将会带您进入对应的版权详情页。
+         </p>
+         <div class="text_center">
+             <a class="close-tips">知道了</a>
+         </div>
+     </div>
+     <div class="modle-tips tips-five">
+         <p>
+             尊敬的百科用户，欢迎创建您的版权词条。我们需要共同完成以下步骤完成版权声明。
+             点击<span class="color_main">作品节点</span>选择需要创建的版权类型。
+         </p>
+         <div class="text_center">
+             <a class="close-tips">知道了</a>
+         </div>
+     </div>
+     <div class="modle-tips tips-six">
+         <p>尊敬的用户，我们已经完成版权词条的创建。
+             如果您是真实权利人，请点击您创建<span class="color_main">词条节点上生的连线</span>进入版权详情页声明您的版权。
+         </p>
+         <div class="text_center">
+             <a class="close-tips">知道了</a>
+         </div>
+     </div>
+     <div class="modle-tips tips-seeven">
+         <p>尊敬的百科用户，我们需要共同完成以下步骤完成版权声明。
+             如果您在图中发现权利人名称，请点击<span class="color_main">权利人</span>创建您的版权词条；如果未发现请点击<span class="color_main">作品节点</span>创建版权词条；点击<span class="color_main">节点之间的连线</span>可以带您进入对应的版权详情页。
+         </p>
+         <div class="text_center">
+             <a class="close-tips">知道了</a>
+         </div>
+     </div>
+     <div class="modle-tips tips-ehight">
+         <p>尊敬的用户，我们已经完成版权词条的创建。
+             找到您<span class="color_main">添加的权利人并点击上面的连线</span>将会带您进入对应的版权详情页。
+         </p>
+         <div class="text_center">
+             <a class="close-tips">知道了</a>
+         </div>
+     </div>
+    <div class="modle-copyList" style="display: none">
+        <ul>
+
+        </ul>
+    </div>
+ <input type="hidden" class="share_name" value="<%=data.workName%>_<%=data.type%>_版权链_版权百科">
+ <% include('../common/foot_script') %>
+     <script>
+         var share = {
+             title:$('.share_name').val(),
+             imgUrl:"http://"+location.host+"/app/images/img_fm.png",
+             link:location.href,
+             desc:"版权数据服务专家",
+             success:function(){
+                 //$(".share").hide();
+             },
+             cancel:function(){
+
+             }
+         };
+     </script>
+     <script type="text/javascript" src="/app/lib/wx.js"></script>
+     <script type="text/javascript" src="/app/lib/wx.util.js"></script>
+    <script src="../../lib/tipso/tipso.min.js"></script>
+    <script src="../../lib/laydate/laydate.js"></script>
+    <script type="text/javascript" src="../../lib/laypage/laypage.js"></script>
+    <script src="../../lib/shade_layer/shadeLayer.js"></script>
+    <script type="text/javascript" src="../../javascripts/RGraph.bql.js"></script>
+    <script type="text/javascript" src="../../javascripts/copyright.js"></script>
+
+
+ </body>
+</html>
+

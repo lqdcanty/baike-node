@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        [v-cloak] {display: none;}
+        *{margin: 0;padding: 0;font-family: "微软雅黑"}
+        .main-wrap{width: 900px;padding: 20px;margin: 0 auto;margin-top: 100px}
+        .search-form{text-align: center;width: 550px;height: 40px;margin: 0 auto;position: relative}
+        .search-form input{width: 530px;height:100%;border: 1px solid #1A8CDC;border-radius: 2px;padding-left: 20px;outline:none;}
+        .search-icon{position: absolute;right: 8px;top:8px;cursor: pointer}
+        .search-title{line-height: 19px;font-size: 14px;color: #000000;margin: 40px 0 23px}
+        .search-title span{color: #1A8CDC;margin: 0 5px}
+        .search-content{border-top: solid 1px #DEDEDE; border-left: solid 1px #DEDEDE;width: 860px}
+        .search-content td:first-child{text-indent: 30px}
+        .search-content td{height: 40px;font-size: 14px;border-bottom: solid 1px #DEDEDE;border-right: solid 1px #DEDEDE;text-align: center}
+        .search-content thead td{color: #333333;background:#ECECEC}
+        .search-content tbody td{color: #666666}
+        .search-content tbody tr:nth-of-type(even){background:rgba(236,236,236,0.5)}
+        .online-item{color: #1A8CDC !important;}
+        .change_btn{text-decoration: underline;cursor: pointer}
+    </style>
+</head>
+<body>
+    <div class="main-wrap" id="app">
+        <form action="#" class="search-form">
+            <input class="" v-model="searchWord" @keyup.enter="submit">
+            <a class="search-icon" @click="submit"><img src="img/icon_search.png"></a>
+        </form>
+        <div class="search-title"  v-cloak>
+            共搜到<span>{{totalNum}}</span>个作品，已上架<span>{{onlineNum}}</span>个作品
+        </div>
+        <table class="search-content"  border="0" cellspacing="0" cellpadding="0"  v-show="dataList.length>0" v-cloak>
+            <thead>
+                <tr>
+                    <td>作品名称</td>
+                    <td>状态</td>
+                    <td>创建时间</td>
+                    <td>创作者</td>
+                    <td>操作</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="u in dataList">
+                    <td>{{u.name}}</td>
+                    <td v-if="u.status=='online'" class="online-item">上架</td>
+                    <td v-else>下架</td>
+                    <td>{{u.create_time}}</td>
+                    <td>{{u.regist_id}}</td>
+                    <td class="change_btn" v-if="u.status=='online'" @click="changeStatus(u)">下架</td>
+                    <td class="change_btn" v-else  @click="changeStatus(u)">上架</td>
+                </tr>
+            </tbody>
+        </table>
+        <div></div>
+    </div>
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        var App=new Vue({
+            el:'#app',
+            data:{
+                totalNum:'0',
+                onlineNum:'0',
+                searchWord:'',
+                dataList:[]
+            },
+            methods:{
+                submit:function () {
+                    $.ajax({
+                        url:'',
+                        data:{},
+                        type:'get',
+                        success:function (data) {
+                            $this.dataList=data.
+                            $this.totalNum=data.
+                            $this.onlineNum=data.
+                        }
+                    })
+                },
+                changeStatus:function () {
+                    $.ajax({
+                        url:'',
+                        data:{},
+                        type:'get',
+                        success:function (data) {
+
+                        }
+                    })
+                }
+            }
+        });
+    </script>
+</body>
+</html>

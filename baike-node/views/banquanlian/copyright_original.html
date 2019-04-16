@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>版权百科</title>
+    <link rel="icon" href="../../images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../../stylesheets/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../stylesheets/copyright.css"/>
+    <link rel="stylesheet" type="text/css" href="../../stylesheets/webuploader.css"/>
+    <link rel="stylesheet" type="text/css" href="../../font/iconfont.css"/>
+    <% include('../common/baidu_tj') %>
+</head>
+<body>
+<% include('../common/header') %>
+<% var result=data.result %>
+<!-- content -->
+<div class="content-nav1">
+    <div><div><a href="/item/<%=result.copyrightDetail.workSeqNo%>"><%=result.copyrightDetail.name%></a>> <a href="/copyRight/bql/<%=result.copyrightDetail.workSeqNo%>">版权链</a>>  版权详情</div></div>
+</div>
+<div class="copyRight-wrap">
+    <div class="wrap">
+        <div class="copy-item">
+            <div class="copy-title">
+                <h2><%=result.copyrightDetail.name%><span>（原始著作权）</span></h2>
+            </div>
+            <div class="copy copy-synopsis">
+                原始著作权人为作者，即《著作权法》规定的直接享有著作权的创作作品的公民；由法人或者其他组织主持，代表法人或者其他组织意志创作，并由法人或者其他组织承担责任的作品，法人或者其他组织视为作者。
+            </div>
+            <form action="" medthod="post" class="xg_form">
+                <input type="hidden" name="id" value="<%=workSeqNo%>">
+                 <div class="copy-basicInfo clearfix">
+                    <dl class="basicInfo-block basicInfo-left leftwiddth100">
+                        <div class="xg_div">
+                            <dt class="basicInfo-item name">原始著作权人:</dt>
+                            <dd class="basicInfo-item value" id="obllige_dd">
+                                <span class="old1_value"><%=result.copyrightDetail.obllige%></span>
+                                <input type="text" value="<%=result.copyrightDetail.obllige%>" class="new1_value" name="obllige" style="display:none">
+                            </dd>
+                        </div>
+                    </dl>
+                    <dl class="basicInfo-block basicInfo-right">
+                        <div class="xg_div">
+                            <dt class="basicInfo-item name">创作完成时间:</dt>
+                            <dd class="basicInfo-item value" id="time_dd">
+                                <span class="old1_value creationTime0"><%=result.copyrightDetail.creationTime%></span>
+                                <div class="time-wrap creationTime1">
+                                    <input placeholder="年/月/日" name="time" id="pledge-creationTime"  class="dateTime-s">
+                                </div>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+                <dl class="border_dl leftwiddth100">
+                    <div class="xg_div clearfix">
+                        <dt class="basicInfo-item name" style="vertical-align: top">版权信息备注:</dt>
+                        <dd class="basicInfo-item value" id="remark_dd">
+                            <span class="old1_value" style="width:100%;"><%=result.copyrightDetail.remark%></span>
+                            <textarea type="text" value="" class="new1_value new_textarea" name="remark"><%=result.copyrightDetail.remark%></textarea>
+                    </div>
+                    </dd>
+                </dl>
+                <div class="save_sq_div">
+                    <input type="button" class="save_sq" value="保存" >
+                </div>
+            </form>
+            <div class="update-Info use">＊该版权信息<%=result.copyrightDetail.editTime%>前，由<span class="use_a" ><%=result.copyrightDetail.userName%>编辑</span>
+                <%if(result.copyrightDetail.isCorrection){%>
+                ，我要 <a   href="#" class="use_a xgxx">纠正和完善</a>该版权信息
+                <%}%>
+            </div>
+            <div class="clearfix">
+                <div class="float_left copy-para">
+                    <div class="para-title left">
+                        官方版权机构认证
+                    </div>
+                    <div class="para-txt">
+                        <%if(result.copyrightDetail.cerfUrl==null|| result.copyrightDetail.cerfUrl==""){%>
+                        该版权还未上传全球任何官方版权机构颁发的版权认证证书，您可以上传版权证书。
+                        <%}else{%>
+                        证书信息错误，我是真实原始著作权人，我可以
+                        <%if(result.copyrightDetail.isCorrection){%>
+                        <a class="UploadAgain" id="re_filePickerCertificate">重新上传</a>或
+                        <%}%>
+                        去<a class="CopyrightProtectionCenter" href="/copyright/biaoju?id=<%=result.copyrightDetail.id%>" target="_blank">中国版权保护中心登记</a>
+                        <%}%>
+                    </div>
+                    <div class="text_center">
+                        <%if(result.copyrightDetail.cerfUrl==null|| result.copyrightDetail.cerfUrl==""){%>
+                        <div class="upload-btn1 lqd" id="uploadCertificate">
+                            <div class="id_photo1"  id="fileCertificate">
+                                <img class="" alt="点击图片上传" src="../../images/banquanlian/img_sfzd.png">
+                            </div>
+                            <label class="filePickerCertificate" id="filePickerCertificate"></label>
+                        </div>
+                        <p class="f14 color_666 mb10 mt20">原始著作权人如何获取版权证书？</p>
+                        <a href="/copyright/biaoju?id=<%=result.copyrightDetail.id%>" target="_blank" class="copy-btn1 white" id="protect_registration">中国版权保护中心登记</a>
+                        <%}else{%>
+                            <div class="id_photo2 width40"  id="re_fileCertificate">
+                                <img src="<%=result.copyrightDetail.cerfUrl%>" class="width260">
+                            </div>
+                        <%}%>
+                    </div>
+                </div>
+                <div class="float_right copy-para">
+                    <div class="para-title right">
+                        原始著作人声明
+                    </div>
+                    <div class="para-txt">
+                        该声明为原始著作权人填写并公示。平台对原始著作人的正当声明进行保护，同时平台保留对原始著作人消极错误的声明信息追究法律责任。
+                    </div>
+                    <div class="para-body">
+                        <textarea class="textarea_style" placeholder="请输入原始著作人的权利范围......（最多200字）"<%if(result.copyrightDetail.hasObbligeStaments){%>disabled="disabled"<%}%>><%if(result.copyrightDetail.hasObbligeStaments){%><%=result.copyrightDetail.statement[0].statement%><%}%></textarea>
+                    </div>
+                     <%if(result.copyrightDetail.statement==""){%>
+                           <div class="text_center">
+                               <p class="f14 color_666 mb10 mt20">原始著作权人如何保护正当权益？</p>
+                               <a class="copy-btn1 colorwhite" style="background:#1A8CDC;" id="state_copyright" href="#">我要声明该版权</a>
+                           </div>
+                     <%}else{%>
+                        <div class="para-btn text_center mt59">
+                            <a class="unopen" target="_blank" href="/complain/<%=workSeqNo%>">侵权申诉</a>
+                        </div>
+                     <%}%>
+                </div>
+            </div>
+            <div class="workSeqNoId" style="display:none"><%=workSeqNo%></div>
+            <%if(!useInfo.islogin){%>
+            <div class="workSeqNoId1" style="display:none">false</div>
+            <%}else{%>
+            <div class="workSeqNoId1" style="display:none">true</div>
+            <%}%>
+            <div class="detailPage_message sm">
+                尊敬的用户，您可以核对您的版权信息，如果信息有误您可以点击纠正和完善该版权信息；如果确认无误，请发表您的版权声明内容。如果您的版权声明信息核对无误，您将获得该作品词条社群协作编辑审核身份
+                <a href="javascript:void(0)">知道了</a>
+            </div>
+        </div>
+    </div>
+</div>
+<% include('../common/bottom') %>
+<% include('../common/foot_script') %>
+<input type="hidden" class="share_name" value="<%=result.copyrightDetail.name%>_版权详情_版权百科">
+<script>
+    var share = {
+        title:$('.share_name').val(),
+        imgUrl:"http://"+location.host+"/app/images/img_fm.png",
+        link:location.href,
+        desc:"版权数据服务专家",
+        success:function(){
+            //$(".share").hide();
+        },
+        cancel:function(){
+
+        }
+    };
+</script>
+<script type="text/javascript" src="/app/lib/wx.js"></script>
+<script type="text/javascript" src="/app/lib/wx.util.js"></script>
+<script src="../../lib/webuploader.js"></script>
+<script src="../../lib/laydate/laydate.js"></script>
+<script src="../../lib/shade_layer/shadeLayer.js"></script>
+<script>
+    $(function(){
+        var workSeqNoId=$(".workSeqNoId").html();
+        var coverImgContent,re_coverImgContent;
+        $(".unopen").click(function(){
+            $hint.open("该功能未开放")
+        })
+        //进入详情页的提示信息；
+        $(".detailPage_message a").click(function(){
+            $(".detailPage_message").hide();
+        })
+        setTimeout(function(){
+            $(".detailPage_message").hide();
+        },10000)
+        function certificate(){
+           /* var api_domain = "http://tmpfs.banquanjia.com.cn/",*/
+            var api_domain = "http://tmpfs.banquanbaike.com.cn/",//线上
+                chunkSize = 4*1024*1024,
+                $list = $("#fileCertificate"),
+                check_url = api_domain+"file/upload/check",
+                // 缩略图大小
+                ratio = window.devicePixelRatio || 1,
+                thumbnailWidth = 120 * ratio,
+                thumbnailHeight = 120 * ratio;
+            function generateUUID() {
+                var d = new Date().getTime();
+                var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = (d + Math.random()*16)%16 | 0;
+                    d = Math.floor(d/16);
+                    return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+                });
+                return uuid;
+            };
+
+            function getFileUid(file){
+                return $.md5(file.name+"_"+file.size+"_"+file.lastModifiedDate.getTime());
+            }
+            var uploader = WebUploader.create({
+                auto:true,
+                server: api_domain+'file/upload?X-Progress-ID='+generateUUID(),
+                swf: 'http://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf',
+                /*pick: {id:'#filePickerCertificate', multiple: false},*/
+                pick: {id:'#filePickerCertificate', multiple: false},
+                resize: false,
+                preserveHeaders: true,
+                accept: {title: 'Images', extensions: 'gif,jpg,jpeg,bmp,png', mimeTypes: 'image/*'}
+            }).on( 'fileQueued', function( file ) {
+                var $li = $('<div id="' + file.id + '" class="item"><img><i class="del-imgBtn"></i><span class="border-item"></span></div>'),
+                    $img = $li.find('img');
+                console.log(file.id,"xiu")
+                $list.html( $li ); // $list为容器jQuery实例
+                $li.find('.del-imgBtn').click(function () {
+                    uploader.removeFile( file.id,true  );
+                    $li.remove();
+                    $(".upload_fm").attr("style","background:url(/images/icon_zjfm1.png) no-repeat center center/cover!important");
+                    coverValue="";
+                });
+                uploader.makeThumb( file, function( error, src ) {
+                    if ( error ) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+                    $img.attr( 'src', src );
+                }, thumbnailWidth, thumbnailHeight );
+            }).on( 'uploadSuccess', function( file ,data ) {
+                coverImgContent=data.result.sourceId;//得到的值
+                $( '#'+file.id ).addClass('upload-state-done');
+            }).on( 'uploadError', function( file ) {
+                var $li = $( '#'+file.id ),
+                    $error = $li.find('div.error');
+                if ( !$error.length ) { // 避免重复创建
+                    $error = $('<div class="error"></div>').appendTo( $li );
+                }
+                $error.text('上传失败');
+            }).on( 'uploadComplete', function( file ) {
+            });
+            uploader.on("uploadFinished",function() {
+                if (coverImgContent!="") {
+                    console.log(coverImgContent);
+                    var url="/api/copyright/uploadCerf";//绝对地址
+                    var datan={url:coverImgContent,id:workSeqNoId};
+                    ajax(url,datan,function(data){
+                        $hint.open(data.resultMsg);
+                    })
+                } else {
+                    $hint.open("请添加上传的封面图片");
+                }
+            })
+        }
+        if(!isLogin()){
+            $("#filePickerCertificate").click(function () {
+                $('.modle-login').show();
+                showLogin();
+                return;
+            })
+        }else{
+            certificate();
+        }
+
+//重新上传
+        function re_certificate(){
+          /*  var api_domain = "http://tmpfs.banquanjia.com.cn/",*/
+            var api_domain = "http://tmpfs.banquanbaike.com.cn/",//线上
+                 chunkSize = 4*1024*1024,
+                        $list = $("#fileCertificate"),
+                $list = $("#re_fileCertificate"),
+                check_url = api_domain+"file/upload/check",
+                // 缩略图大小
+                ratio = window.devicePixelRatio || 1,
+                thumbnailWidth = 120 * ratio,
+                thumbnailHeight = 120 * ratio;
+            function generateUUID() {
+                var d = new Date().getTime();
+                var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = (d + Math.random()*16)%16 | 0;
+                    d = Math.floor(d/16);
+                    return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+                });
+                return uuid;
+            };
+
+            function getFileUid(file){
+                return $.md5(file.name+"_"+file.size+"_"+file.lastModifiedDate.getTime());
+            }
+
+            var uploader = WebUploader.create({
+                auto:true,
+                server: api_domain+'file/upload?X-Progress-ID='+generateUUID(),
+                swf: 'http://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf',
+                /*pick: {id:'#filePickerCertificate', multiple: false},*/
+                pick: {id:'#re_filePickerCertificate', multiple: false},
+                resize: false,
+                preserveHeaders: true,
+                accept: {title: 'Images', extensions: 'gif,jpg,jpeg,bmp,png', mimeTypes: 'image/*'}
+            }).on( 'fileQueued', function( file ) {
+                var $li = $('<div id="' + file.id + '" class="item"><img><i class="del-imgBtn"></i><span class="border-item"></span></div>'),
+                    $img = $li.find('img');
+                console.log(file.id,"xiu")
+                $list.html( $li ); // $list为容器jQuery实例
+                $li.find('.del-imgBtn').click(function () {
+                    uploader.removeFile( file.id,true  );
+                    $li.remove();
+                    $(".upload_fm").attr("style","background:url(/images/icon_zjfm1.png) no-repeat center center/cover!important");
+                    coverValue="";
+                });
+                uploader.makeThumb( file, function( error, src ) {
+                    if ( error ) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+                    $img.attr( 'src', src );
+                }, thumbnailWidth, thumbnailHeight );
+            }).on( 'uploadSuccess', function( file ,data ) {
+                re_coverImgContent=data.result.sourceId;//得到的值
+                $( '#'+file.id ).addClass('upload-state-done');
+            }).on( 'uploadError', function( file ) {
+                var $li = $( '#'+file.id ),
+                    $error = $li.find('div.error');
+                if (!$error.length ) { // 避免重复创建
+                    $error = $('<div class="error"></div>').appendTo( $li );
+                }
+                $error.text('上传失败');
+            }).on( 'uploadComplete', function( file ) {
+            });
+            uploader.on("uploadFinished",function() {
+                if (re_coverImgContent!="") {
+                    console.log(re_coverImgContent);
+                    var url="/api/copyright/uploadCerf";//绝对地址
+                    var datan={url:re_coverImgContent,id:workSeqNoId};
+                    ajax(url,datan,function(data){
+                        $hint.open(data.resultMsg);
+                    })
+                } else {
+                    $hint.open("请添加上传的封面图片");
+                }
+            })
+        }
+        if(!isLogin()){
+            $("#re_filePickerCertificate").click(function () {
+                $('.modle-login').show();
+                showLogin();
+                return;
+            })
+        }else{
+            re_certificate();
+        }
+
+
+
+
+        //修改
+        var url_xgValue="/api/copyright/update";
+        var pledge_style,tag_value;
+        $(".use_a.xgxx").click(function(){
+            if(!isLogin()){
+                $('.modle-login').show();
+                showLogin();
+                return;
+            }else{
+                $(".border_dl").attr("style","height:62px");
+                $("#time_dd").children(".time-wrap.creationTime1").show();
+                $(".xg_div").each(function(){
+                    var old1_value= $(this).children("dd").children(".old1_value").text();
+                    console.log(old1_value);
+                    $(this).children("dd").children(".old1_value").hide();
+                    $(this).children("dd").children(".new1_value").show().focus();
+                    if($(this).children("dd").find("select")){
+                        $(this).children("dd").children("select").change(function(){
+                            pledge_style=$(this).children("dd").children("select option:selected").val()
+                        })
+                        console.log(pledge_style,"12");
+                    }
+                    if($(this).children("dd").find(".modify_time")){
+                        $(this).children("dd").children(".old1_value").hide();
+                        $(this).children("dd").children(".new1_value.modify_time").show();
+                    }
+                    if($(this).find("#time_dd")){
+                        $("#time_dd").children(".creationTime0").show();
+                    }
+                    console.log(pledge_style,"11");
+                })
+                $(".save_sq_div").show();
+            }
+        })
+        $("#modify_time_value").click(function(){
+            $(".time_xg").show();
+        })
+
+
+        var time_start,time_end,creation_time;
+        var creationTime={
+            elem: '#pledge-creationTime',
+            format: 'YYYY/MM/DD',
+            max: '2099-06-16', //最大日期
+            istoday: false,
+            fixed: true,
+            choose: function(datas){
+                /* end2.min = datas; //开始日选好后，重置结束日的最小日期
+                 end2.start = datas; //将结束日的初始值设定为开始日*/
+                creation_time=datas;
+                console.log(creation_time,"creation_time")
+                $(".old1_value.creationTime0").text(creation_time);
+            }
+        }
+        laydate(creationTime);
+
+        $(".save_sq").click(function() {
+            $(".border_dl").attr("style","height:auto");
+            $(".xg_div").each(function(){
+                var i=$(this).index();
+                var new1_value= $(this).children("dd").children(".new1_value").val();
+                console.log(new1_value);
+                $(this).children("dd").children(".old1_value").show().text(new1_value);
+                $(this).children("dd").children(".new1_value").hide();
+                if($(this).find("#time_dd")){
+                    if(creation_time){
+                       $(".creationTime1").hide();
+                    }
+                }
+                console.log(pledge_style,"baocunshi");
+            })
+
+            console.log("cehsi")
+            console.log($(".xg_form").serialize())
+            var datan=$(".xg_form").serialize();
+            ajax(url_xgValue,datan,function(data){
+                $hint.open(data.resultMsg);
+            },function(data){
+                $hint.open(data.resultMsg);
+            })
+            $(".save_sq_div").hide();
+        })
+
+        //申明
+        var textarea_true=false,textarea_word;
+        var textarea_word="";
+        $(".textarea_style").focus(function(){
+            $(this).text("");
+        })
+        $(".textarea_style").blur(function(){
+            textarea_word=$(this).val();
+            textarea_true=true;
+            console.log(textarea_word,"textarea_word")
+        })
+
+        $("#state_copyright").click(function(){
+            if(!isLogin()){
+                $('.modle-login').show();
+                showLogin();
+                return;
+            }else{
+                if(textarea_word){
+                    var url="/api/copyright/cache";
+                    var datan={id:workSeqNoId,statements:textarea_word,type:"obblige"}
+                    ajax(url,datan,function(data){
+                        window.location.href='/copyRight/state/'+workSeqNoId;
+                    },function(data){
+                        $hint.open(data.resultMsg);
+                    })
+                }else{
+                    $hint.open("声明内容不能为空");
+                }
+            }
+        })
+        function isLogin() {
+            if($('.is_login').find('.personalWrap').hasClass('login_true')){
+                return true
+            }else{
+                return false
+            }
+        }
+        function showLogin() {
+            $(".nav-tab").find("a").each(function (i) {
+                if($(this).data("type")=='login'){
+                    $(this).addClass('active-tab');
+                }
+            });
+            $(".login-modle").find('.form-type').each(function () {
+                if($(this).data("type")=='login'){
+                    $(this).addClass('active-wrap');
+                }
+            });
+        }
+        function ajax(url,data,succCallback,errorCallback){
+            $.ajax({
+                url:url,
+                type:"post",
+                data:data,
+                success:function(data){
+                    if(data.status){
+                        console.log(data.data)
+                        if(data.data.resultCode==200){
+                            if(succCallback){
+                                succCallback(data.data);
+                            }
+                        }else{
+                            if(errorCallback){
+                                errorCallback(data.data);
+                            }
+                        }
+                    }else{
+                        $hint.open(data.resultMsg);
+                    }
+                }
+            })
+        }
+    })
+</script>
+</body>
+</html>

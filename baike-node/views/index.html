@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!--<html xmlns:wb="http://open.weibo.com/wb">-->
+<head>
+    <meta charset="utf-8" />
+    <title>版权百科</title>
+    <meta name="description" content="版权百科致力于保护创作者版权推动版权交流，任何用户通过编辑版权词条参与管理作品版权数据。通过作品词条用户可关注作品获得持续的监听数据报告。基于大数据真正解决版权交易中价值评估问题，通过版权链解决有效版权人信息问题，真正推动最终交易。">
+    <meta name="keyword" content=" 版权数据，版权服务，版权百科，版权关系，版权查询，版权信息，版权大数据，版权故事，版权评估，版权估值，盗版监听，版权交易">
+    <link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/common.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/index.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/animate.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="/lib/liMarquee/BreakingNews.css" />-->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/dataStatistics.css" />
+
+</head>
+<body>
+    <header class="home-header">
+        <div class="wrap clearfix">
+            <% if(!useInfo.islogin) { %>
+            <div class="float_right no_loading">
+                <a class="pointer header-btn" data-type="login">登录</a>
+                |
+                <a class="pointer header-btn" data-type="regist">注册</a>
+            </div>
+            <%}else{%>
+            <div class="float_right login_true">
+                <img  class="mas_img" src="/images/icon_xx_11.gif">
+                <a href="/all_news" class="msg_num" id="msgNum"></a>
+                <a class="user_name" href="/person_set"><%=useInfo.loginUser.usename %></a>
+                <a class="layOutBtn ml10" style="margin-left: 10px;">退出</a>
+                <input value="<%=useInfo.loginUser.useid%>" type="hidden" class="userId">
+            </div>
+            <%}%>
+        </div>
+    </header>
+
+    <div class="home-bg">
+        <div class="wrap text_center">
+            <div>
+                <img class="logo_img" src="/images/logo-img.png"/>
+            </div>
+            <div class="search_input ">
+                <form action="/list" method="get" class="search-form">
+                    <div class="form_input">
+                        <input  type="text" name="keyword" class="search_input" placeholder="输入作品名称、作者。例如：盗墓笔记" />
+                        <!--<a class="icon_search"></a>-->
+                        <i class="icon iconfont icon-sousuo search_icon"></i>
+                    </div>
+                </form>
+            </div>
+            <!--<div class="num_view">-->
+                <!--已收录-->
+                <!--<%var workTotalNum=data.result.workTotal.toString().split("")%>-->
+                <!--<%for(var i=0;i < 8-workTotalNum.length;i++){%>-->
+                    <!--<span>0</span>-->
+                <!--<%}%>-->
+
+                <!--<%for(var i=0;i < workTotalNum.length;i++){%>-->
+                    <!--<span><%=workTotalNum[i]%></span>-->
+                <!--<%}%>-->
+                <!--条版权作品-->
+            <!--</div>-->
+            <!--<div class="num_view">-->
+                <!--已完成-->
+                <!--<%var editTotalNum=data.result.editTotal.toString().split("")%>-->
+                <!--<%for(var i=0;i < 8-editTotalNum.length;i++){%>-->
+                <!--<span>0</span>-->
+                <!--<%}%>-->
+                <!--<%for(var i=0;i < editTotalNum.length;i++){%>-->
+                    <!--<span><%=editTotalNum[i]%></span>-->
+                <!--<%}%>-->
+                <!--次词条编辑-->
+            <!--</div>-->
+            <div class="orkTotal-wrap">
+                <div class="dataStatistics workTotalNum">已收录
+                    <div style="display: inline-block;position: relative;top: 10px;">
+                        <%var workTotalNum=data.result.workTotal.toString().split("")%>
+                        <%for(var i=0;i < 8-workTotalNum.length;i++){%>
+                        <div class="digit_set">0</div>
+                        <%}%>
+                        <%for(var i=0;i < workTotalNum.length;i++){%>
+                        <%if(i < workTotalNum.length-1){%>
+                        <div class="digit_set"><%=workTotalNum[i]%></div>
+                        <%}else{%>
+                        <div class="digit_set set_last"><%=workTotalNum[i]%></div>
+                        <%}%>
+                        <%}%>
+                    </div>
+
+                    条版权作品</div>
+            </div>
+            <input type="hidden" class="workTotal" value="<%=data.result.workTotal%>">
+            <input type="hidden" class="editTotal" value="<%=data.result.editTotal%>">
+            <div class="editTotal-wrap">
+                <div class="dataStatistics editTotalNum">已完成
+                    <div style="display: inline-block;position: relative;top: 10px;">
+                        <%var editTotalNum=data.result.editTotal.toString().split("")%>
+                        <%for(var i=0;i < 8-editTotalNum.length;i++){%>
+                        <div class="digit_set">0</div>
+                        <%}%>
+                        <%for(var i=0;i < editTotalNum.length;i++){%>
+                            <%if(i < editTotalNum.length-1){%>
+                                <div class="digit_set"><%=editTotalNum[i]%></div>
+                            <%}else{%>
+                                <div class="digit_set set_last"><%=editTotalNum[i]%></div>
+                            <%}%>
+                        <%}%>
+                    </div>
+                    次词条编辑</div>
+            </div>
+        </div>
+    </div>
+    <div class="item-wrap">
+        <a class="text-item" href='/list?keyword=小说' data-img="icon_xsh">
+            <div>
+                <img src="images/indexImg/icon_xsh.png" class="icon-item">
+                <p>小说</p>
+            </div>
+        </a>
+        <a class="cartoon-item" href='/list?keyword=动漫' data-img="icon_dm">
+            <div>
+                <img src="images/indexImg/icon_dm.png" class="icon-item">
+                <p>动漫</p>
+            </div>
+        </a>
+        <a class="music-item" href='/list?keyword=音乐' data-img="icon_yy">
+            <div>
+                <img src="images/indexImg/icon_yy.png" class="icon-item">
+                <p>音乐</p>
+            </div>
+        </a>
+        <a class="movie-item" href='/list?keyword=电影' data-img="icon_dy">
+            <div>
+                <img src="images/indexImg/icon_dy.png" class="icon-item">
+                <p>电影</p>
+            </div>
+        </a>
+        <a class="tv-item" href='/list?keyword=电视剧' data-img="icon_tv">
+            <div>
+                <img src="images/indexImg/icon_tv.png" class="icon-item">
+                <p>电视剧</p>
+            </div>
+        </a>
+        <a class="rj-item" href='/list?keyword=软件' data-img="icon_tv">
+            <div>
+                <img src="images/indexImg/icon_rj.png" class="icon-item">
+                <p>软件</p>
+            </div>
+        </a>
+        <a class="wh-item" href='/list?keyword=传承文化' data-img="icon_tv">
+            <div>
+                <img src="images/indexImg/icon_wh.png" class="icon-item">
+                <p>传承文化</p>
+            </div>
+        </a>
+        <!--<img src="/images/indexImg/img_tc.png" id="img-tc" class="img-tc" style="position: fixed;right: 0;bottom: 5%;">-->
+    </div>
+    <footer>
+        <span>Copyright 2017 北京畅元国讯科技有限公司 版权所有 京ICP备09087229号</span>
+    </footer>
+    <% include('./common/login') %>
+    <% include('./common/foot_script') %>
+    <script src="/lib/jquery.dataStatistics.js"></script>
+    <script src="/javascripts/index.js"></script>
+    <script type="text/javascript" src="/lib/layer/layer.js"></script>
+    <script>
+        $(function(){
+            $('#img-tc').addClass('animated fadeInUp');
+            setTimeout(function(){
+                $('#img-tc').removeClass('fadeInUp').addClass('fadeOutDown');
+            }, 6000);
+            $('.item-wrap').find('a').hover(function () {
+                $(this).find('img').css({"opacity":"1"})
+            },function () {
+                $(this).find('img').css({"opacity":"0.5"})
+            })
+            $('.search_input').focus(function () {
+                $('.search_icon').css("color",'#1A8CDC');
+            }).blur(function () {
+                $('.search_icon').css("color",'#999999');
+            })
+            var minEditTotal,minWorkTotal;
+            setInterval(function () {
+                var s='',t='';
+                $.ajax({
+                    url: '/api/index/statistics',
+                    type: 'get',
+                    success: function(data){
+                        var editTotalNum=data.data.result.editTotal.toString().split("")
+                        for(var i=0;i < 8-editTotalNum.length;i++){
+                            s+='<div class="digit_set">0</div>'
+                        }
+                        for(var i=0;i < editTotalNum.length;i++){
+                            if(i < editTotalNum.length-1){
+                                s+='<div class="digit_set">'+editTotalNum[i]+'</div>'
+                            }else{
+                                s+='<div class="digit_set set_last">'+editTotalNum[i]+'</div>'
+                            }
+                        }
+                        var workTotalNum=data.data.result.workTotal.toString().split("")
+                        for(var i=0;i < 8-workTotalNum.length;i++){
+                            t+='<div class="digit_set">0</div>'
+                        }
+                        for(var i=0;i < workTotalNum.length;i++){
+                            if(i < workTotalNum.length-1){
+                                t+='<div class="digit_set">'+workTotalNum[i]+'</div>'
+                            }else{
+                                t+='<div class="digit_set set_last">'+workTotalNum[i]+'</div>'
+                            }
+                        }
+                        $('.editTotalNum').html('已完成<div style="display: inline-block;position: relative;top: 10px;margin: 0 6px">'+s+'</div>次词条编辑')
+                        $('.workTotalNum').html('已收录<div style="display: inline-block;position: relative;top: 10px;;margin: 0 6px">'+t+'</div>条版权作品')
+//                        $('.editTotalNum').dataStatistics({min:parseInt(data.data.result.editTotal),max:parseInt(data.data.result.editTotal)+1000,time:2000,len:8});
+//                        $('.workTotalNum').dataStatistics({min:parseInt(data.data.result.editTotal),max:parseInt(data.data.result.editTotal)+1000,time:2000,len:8});
+                    }
+                })
+            },8000)
+
+//            $("#msg_view").BreakingNews({
+//                timer			:1500,
+//                background		:'#025CA3'
+//            });
+            $('.icon-sousuo').click(function (){
+                if($("input[name='keyword']").val()!=''){
+                    $('.search-form').submit();
+                }else{
+                    console.log("空");
+                }
+            });
+            var num=13;
+        });
+    </script>
+    <script>
+
+    </script>
+</body>

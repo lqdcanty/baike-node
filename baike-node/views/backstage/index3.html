@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="layui/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <style>
+        span,a{display: inline-block;overflow: hidden;}
+        .text_center{text-align: center}
+        .layui-form-label{font-size: 12px;padding: 0;width: 100px;line-height: 38px}
+        .layui-form-item{margin-bottom: 0}
+        .layui-col-space30{margin: 0}
+        .table-wrap{width: 100%; border-top: solid 1px #DEDEDE; border-left: solid 1px #DEDEDE;}
+        .table-wrap thead td{background: #f5f5f5}
+        td{height: 40px;font-size: 14px;border-bottom: solid 1px #DEDEDE;border-right: solid 1px #DEDEDE;}
+        thead td{color: #333333;background:#ECECEC;text-align: center}
+        tbody td{color: #666666;padding: 5px;}
+        tbody tr:nth-of-type(even){background:rgba(236,236,236,0.5)}
+        ul li{margin-bottom: 5px}
+        ul li:last-child{margin-bottom: 0}
+        .gl-btn-wrap{text-align: center}
+        .layui-container .gl-btn-wrap button:first-child{margin-bottom: 5px}
+        .work_name{max-width: 150px}
+        .yx_work_name{max-width: 150px;display: inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; word-wrap: normal;}
+        .yx_work button,.zd_2 button{float: right}
+        .yx_work span,.zd_2 span{margin-right: 5px}
+        .zd_1 .status-a{float: right}
+        .module-table{width: 95%;margin:  0 auto}
+        .module-table td{text-align: center;padding: 0}
+        .module{ display: none;position: fixed; top: 0;left: 0;width: 100%;height: 100%;background-color: rgb(0, 0, 0);opacity: 0.7;z-index: 19891017;}
+        .module-content .layui-input-block{width: 150px !important;}
+        .module-content .layui-form-item{float: left;clear:none}
+        .module-content .layui-form-label{width: 60px;font-size: 14px}
+        .module-content .layui-input-block{margin-left: 70px}
+        .module-content{width: 850px;margin-top: -225px;margin-left: -425px;height: 550px;position: fixed;left:50%;top:50%;padding: 0;background-color: #fff;    z-index: 19891023;-webkit-background-clip: content;border-radius: 2px;box-shadow: 1px 1px 50px rgba(0,0,0,.3);}
+        .page-wrap{margin-top: 20px}
+        .close-btn{font-size: 20px;float: right;margin-right: 5px;cursor: pointer}
+        [v-cloak] {display: none;}
+    </style>
+</head>
+<body>
+<div class="layui-container">
+    <form class="layui-form" action="">
+        <div class="layui-row layui-col-space30">
+            <div class="layui-col-xs3">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">作品名称:</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs3">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">监听分类:</label>
+                    <div class="layui-input-block">
+                        <select name="interest" lay-filter="aihao">
+                            <option value="0" selected="">全部</option>
+                            <option value="1">电影</option>
+                            <option value="2" >视频</option>
+                            <option value="3">小说</option>
+                            <option value="4">漫画</option>
+                            <option value="5">音乐</option>
+                            <option value="6">软件</option>
+                            <option value="7">其他</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">人工核查时间范围:</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input" id="test6" placeholder=" 2015-01-12 ">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row layui-col-space30">
+            <div class="layui-col-xs3">
+                <div class="layui-form-item ">
+                    <label class="layui-form-label">院线匹配度:</label>
+                    <div class="layui-input-block">
+                        <select name="interest" lay-filter="aihao">
+                            <option value="0" selected="">全部</option>
+                            <option value="1">无关联电影</option>
+                            <option value="2" >无审核通过</option>
+                            <option value="3">审核通过</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs3">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">站点匹配度:</label>
+                    <div class="layui-input-block">
+                        <select name="interest" lay-filter="aihao">
+                            <option value="0" selected="">全部</option>
+                            <option value="1">无关联站点</option>
+                            <option value="2" >无审核通过站点</option>
+                            <option value="3">审核通过</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-xs4">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">站点审核状态:</label>
+                    <div class="layui-input-block">
+                        <select name="interest" lay-filter="aihao">
+                            <option value="0" selected="">全部</option>
+                            <option value="1">待审核（低匹配度）</option>
+                            <option value="2" >待审核（高匹配度）</option>
+                            <option value="3">无需审核</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-xs2 ">
+                <div class="layui-form-item">
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <table class="table-wrap" border="0" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <td>作品名称</td>
+            <td>院线匹配</td>
+            <td>请求监控站点</td>
+            <td>已监控站点</td>
+            <td>状态</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="work_name">战狼2（电影）</td>
+            <td class="yx_work">
+                <ul>
+                    <li>
+                        <span class="yx_work_name">战狼2战狼2战狼2战狼2战狼2</span>
+                        <span class="yx_work_author">吴京</span>
+                        <span  class="status-a">通过</span>
+                        <button class="status-btn layui-btn layui-btn-warm layui-btn-xs">拒绝</button>
+                    </li>
+                    <li>
+                        <span>战狼2</span>
+                        <span>吴京</span>
+                        <span  class="status-a">通过</span>
+                        <button class="status-btn layui-btn layui-btn-danger layui-btn-xs">驳回</button>
+                    </li>
+                    <li>
+                        <span>战狼2</span>
+                        <span>吴京</span>
+                        <span  class="status-a">通过</span>
+                        <button class="status-btn layui-btn layui-btn-normal layui-btn-xs">通过</button>
+                    </li>
+                </ul>
+            </td>
+            <td class="zd_1">
+                <ul>
+                    <li>
+                        <a>乐视</a>
+                        <span class="status-a">拒绝</span>
+                    </li>
+                    <li>
+                        <a>爱奇艺</a>
+                        <span class="status-a">拒绝</span>
+                    </li>
+                </ul>
+            </td>
+            <td class="zd_2">
+                <ul>
+                    <li>
+                        <span>乐视</span>
+                        <span>80%</span>
+                        <span  class="status-a">通过</span>
+                        <button class="status-btn layui-btn layui-btn-danger layui-btn-xs">驳回</button>
+                    </li>
+                    <li>
+                        <span>爱奇艺</span>
+                        <span>50%</span>
+                        <span  class="status-a">通过</span>
+                        <button class="status-btn layui-btn layui-btn-danger layui-btn-xs">驳回</button>
+                    </li>
+                </ul>
+            </td>
+            <td class="text_center">
+                <div>院线审核通过</div>
+                <div>院线审核通过</div>
+                <div>院线审核通过</div>
+            </td>
+            <td class="gl-btn-wrap ">
+                <button class="layui-btn layui-btn-sm gl-btn" data-type='1'>关联电影</button></br>
+                <button class="layui-btn layui-btn-sm gl-btn" data-type='2'>关联站点</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="text_center page-wrap">
+        <div id="demo1"></div>
+    </div>
+</div>
+
+
+<div class="module module_zd"></div>
+<div class="module-content" id="app" v-show="showStatus" v-cloak>
+    <div><a class="close-btn" @click="closeModule()">ｘ</a></div>
+    <form class="layui-form form_1" @submit.prevent="submit" >
+        <div class="layui-row layui-col-space30">
+            <div class="layui-form-item">
+                <label class="layui-form-label">关联类别:</label>
+                <div class="layui-input-block select-wrap-1">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">类别:</label>
+                <div class="layui-input-block select-wrap-2">
+
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">关键词:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title"  lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" v-model="text">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+            </div>
+        </div>
+        <div class="layui-row layui-col-space30">
+            <span>百科词条：战狼2</span>
+            <span>创作者：吴京</span>
+        </div>
+    </form>
+    <table class="module-table table-wrap" border="0" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <td>序号</td>
+            <td>作品名称(匹配度)</td>
+            <td>创作者</td>
+            <td>类型</td>
+            <td>网站</td>
+            <td>综合匹配度</td>
+            <td>状态</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>战狼2(100%)</td>
+            <td>吴京(100%)</td>
+            <td>电影</td>
+            <td>优酷</td>
+            <td>100%</td>
+            <td>已关联-已审核</td>
+            <td class="gl-btn-wrap">
+                <button class="layui-btn layui-btn-sm">关联电影</button>
+            </td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>战狼2(100%)</td>
+            <td>吴京(100%)</td>
+            <td>电影</td>
+            <td>优酷</td>
+            <td>100%</td>
+            <td>已关联-已审核</td>
+            <td class="gl-btn-wrap">
+                <button class="layui-btn layui-btn-sm">关联电影</button>
+            </td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>战狼2(100%)</td>
+            <td>吴京(100%)</td>
+            <td>电影</td>
+            <td>优酷</td>
+            <td>100%</td>
+            <td>已关联-已审核</td>
+            <td class="gl-btn-wrap">
+                <button class="layui-btn layui-btn-sm">关联电影</button>
+            </td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>战狼2(100%)</td>
+            <td>吴京(100%)</td>
+            <td>电影</td>
+            <td>优酷</td>
+            <td>100%</td>
+            <td>已关联-已审核</td>
+            <td class="gl-btn-wrap">
+                <button class="layui-btn layui-btn-sm">关联电影</button>
+            </td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>战狼2(100%)</td>
+            <td>吴京(100%)</td>
+            <td>电影</td>
+            <td>优酷</td>
+            <td>100%</td>
+            <td>已关联-已审核</td>
+            <td class="gl-btn-wrap">
+                <button class="layui-btn layui-btn-sm">关联电影</button>
+            </td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>战狼2(100%)</td>
+            <td>吴京(100%)</td>
+            <td>电影</td>
+            <td>优酷</td>
+            <td>100%</td>
+            <td>已关联-已审核</td>
+            <td class="gl-btn-wrap">
+                <button class="layui-btn layui-btn-sm">关联电影</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="text_center page-wrap">
+        <div id="demo2"></div>
+    </div>
+
+</div>
+
+<script src="layui/layui.js" charset="utf-8"></script>
+<script src="js/jquery-1.9.1.min.js" charset="utf-8"></script>
+<script src="js/vue.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use(['jquery','form', 'layedit', 'laydate','layer','laypage'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate
+            ,laypage=layui.laypage
+            ,$ = layui.$ //重点处
+
+        //日期
+        laydate.render({
+            elem: '#test6'
+            ,range: true
+        });
+        laypage.render({
+            elem: 'demo1'
+            ,count: '100'
+            ,curr: '1'
+            ,theme: '#1E9FFF'
+            ,jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                //首次不执行
+                if(!first){
+
+                }
+            }
+        });
+        laypage.render({
+            elem: 'demo2'
+            ,count: 100
+            ,theme: '#1E9FFF'
+            ,jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+
+                //首次不执行
+                if(!first){
+                    //do something
+                }
+            }
+        });
+
+
+
+
+        $('.gl-btn').click(function () {
+            var s='';
+            if($(this).data('type')==1){
+                s='<select name="interest" lay-filter="aihao1">' +
+                    '                        <option value="1" selected>电影院线</option>' +
+                    '                        <option value="2">网络站点</option>' +
+                    '                    </select>'
+            }else{
+                s='<select name="interest" lay-filter="aihao1">' +
+                    '                        <option value="1" >电影院线</option>' +
+                    '                        <option value="2" selected>网络站点</option>' +
+                    '                    </select>'
+            }
+            var h='    <select name="interest1" lay-filter="aihao">' +
+                '                        <option value="0" selected="">全部</option>' +
+                '                        <option value="1">电影</option>' +
+                '                        <option value="2" >视频</option>' +
+                '                        <option value="3">小说</option>' +
+                '                        <option value="4">漫画</option>' +
+                '                        <option value="5">音乐</option>' +
+                '                        <option value="6">软件</option>' +
+                '                        <option value="7">其他</option>' +
+                '                    </select>'
+            $('.select-wrap-1').html(s);
+            $('.select-wrap-2').html(h);
+            form.render('select');
+            App.openModule();
+        });
+        form.on('select(aihao1)', function(data){
+            console.log(data.elem); //得到select原始DOM对象
+            console.log(data.value); //得到被选中的值
+            console.log(data.othis); //得到美化后的DOM对象
+        });
+
+    });
+    var App=new Vue({
+        el:'#app',
+        data:{
+            text:'',
+            showStatus:false,
+            glType:1
+        },
+        methods:{
+            getTable:function () {
+                var $this=this;
+                $.ajax({
+                    url:'',
+                    data:{},
+                    type:'get',
+                    success:function (data) {
+
+                    }
+                })
+            },
+            submit:function () {
+                this.getTable()
+            },
+            openModule:function () {
+                $('.module').show();
+                this.showStatus=true;
+                this.getTable();
+            },
+            closeModule:function () {
+                if(this.glType==1){
+                    console.log($('.form_1').serialize());
+                }else{
+                    console.log($('.form_2').serialize());
+                }
+                $('.module').hide();
+                this.showStatus=false;
+            },
+            submit:function(){
+                if(this.glType==1){
+                    console.log($('.form_1').serialize());
+                }else{
+                    console.log($('.form_2').serialize());
+                }
+
+                return false;
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:wb="http://open.weibo.com/wb">
+<head>
+    <meta charset="UTF-8">
+    <title><%=data.workDetail.name%>_<%=data.workDetail.tags[0]%>_版权百科</title>
+    <meta name="Keywords" content="<% data.workDetail.tags.forEach(function(u,index){ %><%=u%>,<% })%>">
+    <meta name="description" content="<% data.workDetail.chapters.forEach(function(x,index){ %><%if(x.code=='synopsis'){%><% if(x.content&&x.content.length>0){ %><% x.content.forEach(function(u,index){ %><% if(u.text!=null&&u.text!=''){ %><%=u.text%><%}else{%>版权百科<%}%><%})%><%}%><%}%><% })%>"/>
+    <link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/common.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/detail.css"/>
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/webuploader.css"/>
+    <link rel="stylesheet" href="/lib/tipso/tipso.min.css">
+    <link rel="stylesheet" href="/lib/swiper/swiper-3.4.2.min.css">
+    <script src="/lib/echarts.min.js"></script>
+    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2708545225" type="text/javascript" charset="utf-8"></script>
+    <style>
+        body{background:#EFF3F3;}
+        [v-cloak] {display: none;}
+    </style>
+    <% include('common/baidu_tj') %>
+</head>
+<body>
+    <% include('./common/header') %>
+    <% var workDetail=data.workDetail %>
+    <%if(workID){%>
+        <input type="hidden" id="workItemID" value="<%=workID%>">
+    <%}%>
+    <%if(from){%>
+    <input type="hidden" id="from" value="<%=from%>">
+    <%}%>
+    <div class="wrap detail-wrap clearfix" id="detailModle">
+        <div class="l-wrap float_left">
+
+            <div class="clearfix" style="margin-bottom: 20px">
+                <div class="float_left work_cover">
+                    <%if(workDetail.cover&&workDetail.cover!=null&&workDetail.cover!=''){%>
+                        <%if(workDetail.type=='录音制品' || workDetail.type=='MV' || workDetail.type=='词谱' || workDetail.type=='曲谱' || workDetail.type=='词曲谱'){%>
+                            <a class="music_cover" style="background: url(<%=workDetail.cover%>) no-repeat center"></a>
+                        <%}else if(workDetail.type=='移动APP' || workDetail.type=='操作系统' || workDetail.type=='PC软件'){%>
+                            <a class="app_cover" style="background: url(<%=workDetail.cover%>) no-repeat center"></a>
+                        <%}else{%>
+                            <a  style="background: url(<%=workDetail.cover%>) no-repeat center"></a>
+                        <%}%>
+                    <%}else{%>
+                        <%if(workDetail.type=='录音制品' || workDetail.type=='MV' || workDetail.type=='词谱' || workDetail.type=='曲谱' || workDetail.type=='词曲谱'){%>
+                        <a class="music_cover" style="background: url('../images/details/img_mr2.png') no-repeat center"></a>
+                        <%}else if(workDetail.type=='移动APP' || workDetail.type=='操作系统' || workDetail.type=='PC软件'){%>
+                        <a class="app_cover" style="background: url('../images/details/img_mr2.png') no-repeat center"></a>
+                        <%}else{%>
+                        <a class="" style="background: url('../images/details/img_mr2.png') no-repeat center"></a>
+                        <%}%>
+
+                    <%}%>
+                </div>
+                <div class="float_right info_right">
+                    <div class="main-info para-item" style="padding-bottom: 15px">
+                        <div class="clearfix name-wrap">
+                            <h1 class="workName"><%=workDetail.name%></h1>
+                            <div class="para-btn dy-btn">
+                                <a class="dy-TypeBtn"><i class="icon iconfont icon-fangwenliang"></i>
+                                <span>浏览<%=workDetail.visitsCount%></span></a>
+                                <span class="color_ccc">|</span>
+                                <% if(workDetail.isSubscribe) {%>
+                                <a class="dy-TypeBtn"><i class="icon iconfont icon-dingyue"></i><span>已关注(<%=workDetail.subscribeCount%>)</span></a>
+                                <%}else{%>
+                                <a class="dy-TypeBtn get-dy"><i class="icon iconfont icon-dingyue"></i><span>关注(<%=workDetail.subscribeCount%>)</span></a>
+                                <%}%>
+                                <span class="color_ccc">|</span>
+                                <div class="dy-TypeBtn share-btn" style="display: inline-block">
+                                    <i class="icon iconfont icon-share" style="font-size: 15px;position: relative;top: -6px;margin-right: 3px;"></i>
+                                    <div style="display: inline-block">
+                                        <span>分享</span>
+                                        <div class="share-box">
+                                            <div class="bdsharebuttonbox clearfix" data-tag="share_1">
+                                                <a class="fx_qzone" data-cmd="qzone" href="#"></a>
+                                                <a class="fx_tsina" data-cmd="tsina"></a>
+                                                <a class="fx_weixin" data-cmd="weixin"></a>
+                                                <a class="fx_tqq" data-cmd="tqq"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input class="updateNameVal" type="text" value="<%=workDetail.name%>">
+                            <a class="updateName"><i class="icon iconfont icon-xiugai"></i><span>编辑</span></a>
+                            <a class="cancelUpdateName"></i><span>取消</span></a>
+                        </div>
+                        <div class="workTitle-wrap">
+                            <span><%=workDetail.workTitle%></span>
+                            <input class="workTitle-input" type="text" placeholder="编辑作品副标题" value="<%=workDetail.workTitle%>" style="display: none">
+                        </div>
+                        <div class="tips">
+                            <div class="maxLabel-wrap label-wrap">
+                                <i class="icon iconfont icon-xiajiantou bottom-icon"></i>
+                                <a class="maxLabel-val label-btn"></a>
+
+                                <div class="maxLabel" value="1"></div>
+                            </div>
+                            <div class="smallLabel-wrap label-wrap">
+                                <i class="icon iconfont icon-xiajiantou bottom-icon"></i>
+                                <a class="smallLabel-val  label-btn"></a>
+                                <div class="smallLabel" value="1"></div>
+                                <input class="elseLabel" type="text">
+                            </div>
+                            <div class="tips-div" style="display: inline-block">
+                            <% workDetail.tags.forEach(function(u,index){ %>
+                            <% if(index==0) { %>
+                            <a class="active" data-index="<%=index%>"><%=u%></a>
+                            <%}else{%>
+                            <a data-index="<%=index%>"><%=u%></a>
+                            <%}%>
+                            <% })%>
+                            </div>
+                            <span class="addTip-wrap"></span>
+                            <span class="addTip-input" style="display: none;">+打标签（点击标签进行修改）</span>
+                            <ul class="tips-ul none">
+                                <% workDetail.tags.forEach(function(u,index){ %>
+                                    <li><%=u%></li>
+                                <% })%>
+                            </ul>
+                        </div>
+                    </div>
+                    <% workDetail.chapters.forEach(function(x,index){ %>
+                    <%if(x.code=='synopsis'){%>
+                    <div class="para-item" style="padding-bottom: 0">
+                        <div class="para-synopsis">
+                            <% if(x.content&&x.content.length>0){ %>
+                            <% x.content.forEach(function(u,index){ %>
+                            <% if(u.text!=null&&u.text!=''){ %>
+                            <p class="" id="synopsis"><%=u.text%></p>
+                            <%}else{%>
+                            <span class="color_999">暂无<%=x.name%></span>
+                            <%}%>
+                            <%})%>
+                            <%}%>
+                            <textarea class="eSynopsisInfo"><%=x.content[0].text%></textarea>
+                        </div>
+                        <%if(x.version>1){%>
+                        <div class="update-Info"><a target="_blank" href="/history?chapterId=<%=x.id%>&workSeqNo=<%=workDetail.seqNo%>">*该信息由<%=x.lastModfiedName%><%=x.lastModifiedTime%>更新</a></div>
+                        <%}%>
+                    </div>
+                    <%}%>
+                    <% })%>
+                </div>
+            </div>
+            <div class="para-item">
+                <div class="para-title clearfix" style="background: none;border: 0">
+                    <h2 class="copy-service">版权数据服务</h2>
+                </div>
+                <% include('./baiduIndexScreenshot') %>
+            </div>
+            <% workDetail.chapters.forEach(function(x,index){ %>
+            <%if(x.code=='essential_info'){%>
+            <div class="para-item">
+                <div class="basicIfo-div">
+                    <div class="para-title clearfix">
+                        <h2><%=x.name%></h2>
+                        <a class="para-btn openEditor" data-name="<%=x.name%>" data-id="<%=x.id%>">编辑</a>
+                    </div>
+                    <% if(x.content&&x.content.length>0) {%>
+                    <div class="basicInfo-wrap clearfix" id="basicInfo-wrap">
+                        <ul class="basicInfo-block basicInfo-left">
+                            <% x.content.forEach(function(u,index){ %>
+                            <%if(index%2==0){%>
+                            <li>
+                                <span class="basicInfo-item name"><%=u.key%>：</span>
+                                <span class="basicInfo-item value"><%=u.val%></span>
+                            </li>
+                            <%}%>
+                            <%})%>
+                        </ul>
+                        <ul class="basicInfo-block basicInfo-right">
+                            <% x.content.forEach(function(u,index){ %>
+                            <%if(index%2!=0){%>
+                            <li>
+                                <span class="basicInfo-item name"><%=u.key%>：</span>
+                                <span class="basicInfo-item value"><%=u.val%></span>
+                            </li>
+                            <%}%>
+                            <%})%>
+                        </ul>
+                    </div>
+                    <ul style="display: none" id="basicInfo-ul">
+                        <% x.content.forEach(function(u,index){ %>
+                            <li><span><%=u.key%></span><span><%=u.val%></span></li>
+                        <%})%>
+                    </ul>
+                    <%}else{%>
+                    <P class="color_999 f14">暂无<%=x.name%></P>
+                    <%}%>
+                </div>
+                <div class="basicInfo-form" id="basicIfoForm"  v-cloak>
+                    <div class="para-title clearfix">
+                        <h2>基本信息</h2>
+                        <a class="para-btn" @click="cancelEditor" v-show="EditorStatus">取消</a>
+                        <a class="para-btn" @click="saveEditor" v-show="EditorStatus">保存</a>
+                    </div>
+                    <div class="basicInfo-wrap clearfix" id="Editor-basicInfo" v-show="!EditorStatus">
+                        <ul class="basicInfo-block basicInfo-left">
+                            <li v-for="(item,index) in info" v-if="index%2==0">
+                                <span class="basicInfo-item name">{{item.key}}：</span>
+                                <span class="basicInfo-item value">
+                                    {{item.val}}
+                                </span>
+                            </li>
+                        </ul>
+                        <ul class="basicInfo-block basicInfo-right">
+                            <li v-for="(item,index) in info" v-if="index%2!=0">
+                                <span class="basicInfo-item name">{{item.key}}：</span>
+                                <span class="basicInfo-item value">
+                                    {{item.val}}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="editor-wrap clearfix" v-show="EditorStatus">
+                        <ul class="clearfix">
+                            <li v-for="(item,index) in info" :data-type="1">
+                                <!--<span class="basicInfo-item name">{{item.key}}：</span>-->
+                                <input class="basicInfo-item name"  type="text" v-model="item.key">
+                                <input class="basicInfo-item value" type="text" v-model="item.val">
+                                <i class="icon iconfont icon-shanchu detalInfoadd ml10" @click="detailInfo(index)"></i>
+                            </li>
+                        </ul>
+                        <ul class="clearfix" :data-type="2">
+                            <li v-for="(item,index) in addInfo" class="addInfo-item">
+                                <input class="basicInfo-item addName" type="text" v-model="item.key">:
+                                <input class="basicInfo-item addValue" type="text" v-model="item.val">
+                                <i class="icon iconfont icon-shanchu detalInfoadd ml5" @click="detailAddInfo(item,index)"></i>
+                            </li>
+                        </ul>
+                        <a class="add-basicIfo" @click="addBasicInfo"><span>+</span>增加</a>
+                    </div>
+                </div>
+                <%if(x.version>1){%>
+                <div class="update-Info"><a target="_blank" href="/history?chapterId=<%=x.id%>&workSeqNo=<%=workDetail.seqNo%>">*该信息由<%=x.lastModfiedName%><%=x.lastModifiedTime%>更新</a></div>
+                <%}%>
+            </div>
+            <%}%>
+            <% })%>
+            <div class="text_center story-wrap">
+                <div class="story-select">
+                    <a class="story-view add-infoBtn"><i class="icon iconfont icon-shiliangzhinengduixiang9"></i><span class="story-btn-text">添加词条版权故事</span></a>
+                </div>
+            </div>
+            <div class="para-otherExp"></div>
+            <div class="para-item para-addinfo" >
+                <div class="para-title clearfix">
+                    <h2>增加信息</h2>
+                    <a class="para-btn cancelInfoBtn">取消</a>
+                    <a class="para-btn addinfoBtn">保存</a>
+                </div>
+                <div class="addpara-title">
+                    <a>标题：</a>
+                    <input placeholder="请输入标题">
+                </div>
+                <script id="add-container" name="content" type="text/plain">
+
+                </script>
+            </div>
+            <% workDetail.chapters.forEach(function(x,index){ %>
+            <%if(x.code=="other"){%>
+            <div class="para-item">
+                <div class="para-title clearfix">
+                    <h2><%=x.name%></h2>
+                    <a class="para-btn none cancel-other" data-name="<%=x.name%>" data-id="<%=x.id%>" data-num="<%=index%>">取消</a>
+                    <a class="para-btn other-editor" data-name="<%=x.name%>" data-id="<%=x.id%>" data-num="<%=index%>">编辑</a>
+                </div>
+                <%if(x.content&&x.content.length>0){%>
+                <div class="para para-other clearfix <%=x.code%>">
+                        <% x.content.forEach(function(u,index){ %>
+                            <%=#u.text%>
+                        <%})%>
+                </div>
+                <%}else{%>
+                <div class="para color_999 f14">暂无<%=x.name%></div>
+                <%}%>
+                <div id="ue_<%=index%>" class="ue" style="display: none;margin-top: 20px;"></div>
+                <%if(x.version>1){%>
+                <div class="update-Info"><a target="_blank" href="/history?chapterId=<%=x.id%>&workSeqNo=<%=workDetail.seqNo%>">*该信息由<%=x.lastModfiedName%><%=x.lastModifiedTime%>更新</a></div>
+                <%}%>
+            </div>
+
+            <%}%>
+            <% })%>
+        </div>
+        <div class="r-wrap float_right">
+            <div class="side-box bql-wrap">
+                <div class="side-item">
+                    <a class="title_t">版权百科交易中介服务</a>
+                    <p class="aside_txt">版权百科通过收集版权信息帮助交易双方建立信息沟通桥梁。版权持有者通过[声明我的版权]录入版权词条即可展示持有的版权信息；版权需求者通过【<a href="#"  style="color:#FFF351;">版权声明服务</a>】填写您的版权需求将会得到寻找相关资源的信息机会。</p>
+                    <div class="bqlBtn-wrap clearfix">
+                        <a class="float_left" href="/copyRight/bql/<%=workID%>?from=smCopyRight" target="_blank">声明我的版权</a>
+                        <a class="float_right" href="/copyRight/bql/<%=workID%>?from=getCopyRight" target="_blank">获得作品授权</a>
+                    </div>
+                </div>
+            </div>
+            <div class="side-box kp-wrap">
+                <div class="side-item">
+                    <% workDetail.chapters.forEach(function(x,index){ %>
+                    <%if(x.code=='website'){%>
+                        <p class="title_t"><span class="zhishu-logo"></span>版权数据报告</p>
+                        <%if(workDetail.monitorStatus==0 && formWeb=='web'){%>
+                        <div class="zs-wrap" style="background: #fff;text-align: center">
+                            <%if(workDetail.isSubscribe){%>
+                            <div class="monitorImg img_wk" style="margin: 0 auto"></div>'
+                            <%}else{%>
+                            <a onclick="DetailAjax.openLockFun()" class="js_btn"></a>
+                            <%}%>
+                        </div>
+                        <div class="aside_txt aside_txt_div">
+                            <%if(workDetail.isSubscribe){%>
+                            监听数据正在整理中,我们将尽快整理该作品相关监听数据并形成报告文件，通过邮件的方式发送到您的邮箱。
+                            <%}else{%>
+                            词条【<%=workDetail.name%>】<span style="font-weight: bold;color: #000">版权数据服务</span>处于锁定中，还不能为你提供版权数据报告服务,请点击<span style="font-weight: bold;color: #000">解锁</span>按钮激活服务。
+                            <%}%>
+                        </div>
+                        <%}else{%>
+                        <div class="monitorZS-wrap">
+                            <div class="zs-wrap">
+                                <span class="listTags"><%=workDetail.type%></span>
+                                <p class="zs-num">
+                                    <%if(workDetail.zhishu=='' || workDetail.zhishu==null){%>
+                                    —
+                                    <%}else{%>
+                                    <%=workDetail.zhishu%>
+                                    <%}%>
+                                </p>
+                                <p class="zs-title">版权百科指数</p>
+                                <div class="clearfix">
+                                    <dl class="float_left" style="width: 50%;text-align: center;margin-top: 15px">
+                                        <dt style="font-size: 16px"> <%if(workDetail.typeSort==null){%>
+                                            —
+                                            <%}else{%>
+                                            <%=workDetail.typeSort%>
+                                            <%}%></dt>
+                                        <dd >
+                                            频道排行
+                                        </dd>
+                                    </dl>
+                                    <dl class="float_left" style="width: 50%;text-align: center;margin-top: 15px">
+                                        <dt  style="font-size: 16px"> —</dt>
+                                        <dd>
+                                            累计用户
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                            <div class="aside_txt aside_txt_div bqbg_text"></div>
+                            <div class="aside_txt bqbg_text" style="display: none"></div>
+                            <div class="text_right open_aside_txt clearfix"><span class="float_left">更多报告详情请关注该作品</span><a class="float_right">展开</a></div>
+                        </div>
+                        <div class="monitor-loading">
+                            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+                        </div>
+                        <%}%>
+                    <%}%>
+                    <%})%>
+                </div>
+            </div>
+            <div class="side-box kp-wrap top-Wrap">
+                <div class="side-item">
+                    <p class="title_t" target="_blank" href="/copyRight/bql/<%=workID%>"><span class="bql-logo"></span>版权链</p>
+                    <p class="aside_txt" style="    border-bottom: 1px solid #ececec;padding-bottom: 10px;">版权百科致力于保护创作者版权推动版权交流，任何用户通过编辑版权词条参与管理作品版权数据。版权链实现对版权溯源，作品权利人通过<a href="#" class="tips-o color_main"  data-tipso="如果您是该作品的版权持有者，您可以通过《版权百科版权声明》服务，对该作品的相关版权进行声明。通过作品版权声明获得该作品词条审核权，以及对外公示您拥有该作品的有效版权，版权百科将为您的作品提供一系列的版权相关服务。">[版权声明服务]</a>成为作品词条管理者。</p>
+                    <% workDetail.chapters.forEach(function(x,index){ %>
+                    <%if(x.code=="copyright"){%>
+                    <ul class="side-copy" style="margin-top: 10px;">
+                        <% x.content.forEach(function(u,index){ %>
+                        <%if(index<3){%>
+                        <li>
+                            <%if(u.category=='yz'){%>
+                            <span class="class_n yz">原著</span>
+                            <%}else if(u.category=='zs'){%>
+                            <span class="class_n zs">转授</span>
+                            <%}else if(u.category=='zr'){%>
+                            <span class="class_n zr">转让</span>
+                            <%}else if(u.category=='zy'){%>
+                            <span class="class_n zy">质押</span>
+                            <%}%>
+                            <span class="obligee"><%=u.obligee%></span>
+                            <%if(u.isDeclared){%>
+                            <img class="sm_icon" src="/images/workImg/icon_v.png">
+                            <%}%>
+                            <a href="/copyRight/detail/<%=u.id%>" class="ck">查看</a>
+                        </li>
+                        <%}%>
+                        <%})%>
+                    </ul>
+                    <%}%>
+                    <%})%>
+                    <a class="side_btn" href="/copyRight/bql/<%=workID%>?from=addCopyRight" target="_blank" style="margin-top: 25px;">添加版权词条</a>
+                </div>
+            </div>
+            <div class="side-box">
+                <div class="side-item">
+                    <p class="title_t score-title"><i class="icon iconfont icon-user6-copy"></i>用户评价
+                        <% if(data.totalScoreMen!=null) {%>
+                        （<span class="totalScoreMen"><%=data.totalScoreMen%></span>人已评价）
+                        <%}else{%>
+                        （<span class="totalScoreMen"></span>人已评价）
+                        <%}%>
+                    </p>
+                    <div class="score-pjWrap">
+                        <span class="float_left">评价</span>
+                        <ul class="score-star float_left">
+                            <li data-score="1" data-text="非常不满"><i class="icon iconfont icon-dingyue"></i></li>
+                            <li data-score="2" data-text="不满意"><i class="icon iconfont icon-dingyue"></i></li>
+                            <li data-score="3" data-text="一般"><i class="icon iconfont icon-dingyue"></i></li>
+                            <li data-score="4" data-text="满意"><i class="icon iconfont icon-dingyue"></i></li>
+                            <li data-score="5" data-text="非常满意"><i class="icon iconfont icon-dingyue"></i></li>
+                        </ul>
+                        <span class="score-result float_left"></span>
+                    </div>
+                    <div class="score-num">
+                        <div class="score-num-top clearfix">
+                            <span class="score-num-t float_left">综合</span>
+                            <ul class="score-num-star float_left">
+                                <li><span class="star-img star-hs"></span></li>
+                                <li><span class="star-img star-hs"></span></li>
+                                <li><span class="star-img star-hs"></span></li>
+                                <li><span class="star-img star-hs"></span></li>
+                                <li><span class="star-img star-hs" style="margin-right: 0"></span></li>
+                            </ul>
+                            <span class="score-num-result float_left"><%=data.avgScore%></span>
+                            <span style="font-size: 12px;line-height: 36px;float: left">分</span>
+                        </div>
+                        <div class="score-num-line">
+                            <ul>
+                                <li class="score-five">
+                                    <span>5星</span>
+                                    <a class="start-line-bg"><span></span></a>
+                                    <span class="score-num-value" data-num="<%=data.scoreProportion.fiveStar%>"><%=data.scoreProportion.fiveStar%>%</span>
+                                </li>
+                                <li class="score-four">
+                                    <span>4星</span>
+                                    <a class="start-line-bg"><span></span></a>
+                                    <span class="score-num-value" data-num="<%=data.scoreProportion.fourStar%>"><%=data.scoreProportion.fourStar%>%</span>
+                                </li>
+                                <li class="score-three">
+                                    <span>3星</span>
+                                    <a class="start-line-bg"><span></span></a>
+                                    <span class="score-num-value" data-num="<%=data.scoreProportion.threeStar%>"><%=data.scoreProportion.threeStar%>%</span>
+                                </li>
+                                <li class="score-two">
+                                    <span>2星</span>
+                                    <a class="start-line-bg"><span ></span></a>
+                                    <span class="score-num-value" data-num="<%=data.scoreProportion.twoStar%>"><%=data.scoreProportion.twoStar%>%</span>
+                                </li>
+                                <li class="score-one">
+                                    <span>1星</span>
+                                    <a class="start-line-bg"><span ></span></a>
+                                    <span class="score-num-value" data-num="<%=data.scoreProportion.oneStar%>"><%=data.scoreProportion.oneStar%>%</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%if(data.ranking.length>0){%>
+            <div class="side-box kp-wrap top-Wrap">
+                <div class="side-item">
+                    <p class="title_t">指数排行榜 · <%=workDetail.type%></p>
+                    <div>
+                        <div class="swiper-container" style="height: 250px">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <ul>
+                                        <% data.ranking.forEach(function(u,index){ %>
+                                        <%if(index<5){%>
+                                            <%if(index==0){%>
+                                            <li class="list-item on">
+                                            <%}else{%>
+                                            <li class="list-item">
+                                            <%}%>
+                                                <a href='/item/<%=u.seqNo%>' target="_blank">
+                                                    <div class="l-view">
+                                                        <span class="new_Index no_<%=index+1%>"></span>
+                                                        <div>
+                                                            <span class="item-name"><%=u.name%></span>
+                                                            <span class="grade"><%=u.indexNumber%></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="b-view">
+                                                        <div>
+                                                            <span class="new_Index no_0<%=index+1%>"></span>
+                                                            <p class="item-name"><%=u.name%></p>
+                                                            <p class="grade"><%=u.indexNumber%></p>
+                                                        </div>
+                                                        <%if(u.cover&&u.cover!=null&&u.cover!=''){%>
+                                                            <% if(u.type=='音乐' || u.type=='录音制品' || u.type=='MV' || u.type=='词谱' || u.type=='曲谱' || u.type=='词曲谱'){%>
+                                                            <a class="item-cover" style='background-image: url(<%=u.cover%>);display: inline-block;height: 60px;border-radius: 100%'></a>
+                                                            <%}else if(u.type=='软件' || u.type=='移动APP' || u.type=='操作系统' || u.type=='PC软件'){%>
+                                                            <a class="item-cover" style='background-image: url(<%=u.cover%>);display: inline-block;height: 60px;border-radius: 20px;'></a>
+                                                            <%}else{%>
+                                                            <a class="item-cover" style="background-image: url(<%=u.cover%>)"></a>
+                                                            <%}%>
+                                                        <%}else{%>
+                                                            <% if(u.type=='音乐' || u.type=='录音制品' || u.type=='MV' || u.type=='词谱' || u.type=='曲谱' || u.type=='词曲谱'){%>
+                                                            <a class="item-cover" style='background-image: url(<%=u.cover%>);display: inline-block;height: 60px;border-radius: 100%'></a>
+                                                            <%}else if(u.type=='软件' || u.type=='移动APP' || u.type=='操作系统' || u.type=='PC软件'){%>
+                                                            <a class="item-cover" style='background-image: url(<%=u.cover%>);display: inline-block;height: 60px;border-radius: 20px;'></a>
+                                                            <%}else{%>
+                                                            <a class="item-cover" style="background-image: url('../images/details/img_mr1.png')"></a>
+                                                            <%}%>
+                                                        <%}%>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        <%}%>
+                                        <%})%>
+                                    </ul>
+                                </div>
+                                <div class="swiper-slide">
+                                    <ul>
+                                        <% data.ranking.forEach(function(u,index){ %>
+                                        <%if(index>4){%>
+                                        <%if(index==5){%>
+                                        <li class="list-item on">
+                                            <%}else{%>
+                                        <li class="list-item">
+                                            <%}%>
+                                            <a href='/item/<%=u.seqNo%>' target="_blank">
+                                                <div class="l-view">
+                                                    <span class="new_Index no_<%=index+1%>"></span>
+                                                    <div>
+                                                        <span class="item-name"><%=u.name%></span>
+                                                        <span class="grade"><%=u.indexNumber%></span>
+                                                    </div>
+                                                </div>
+                                                <div class="b-view">
+                                                    <div>
+                                                        <span class="new_Index no_0<%=index+1%>"></span>
+                                                        <p class="item-name"><%=u.name%></p>
+                                                        <p class="grade"><%=u.indexNumber%></p>
+                                                    </div>
+                                                    <%if(u.cover&&u.cover!=null&&u.cover!=''){%>
+                                                        <% if(u.type=='音乐' || u.type=='录音制品' || u.type=='MV' || u.type=='词谱' || u.type=='曲谱' || u.type=='词曲谱'){%>
+                                                        <a class="item-cover" style='background-image: url(<%=u.cover%>);display: inline-block;height: 60px;border-radius: 100%'></a>
+                                                        <%}else if(u.type=='软件' || u.type=='移动APP' || u.type=='操作系统' || u.type=='PC软件'){%>
+                                                        <a class="item-cover" style='background-image: url(<%=u.cover%>);display: inline-block;height: 60px;border-radius: 20px;'></a>
+                                                        <%}else{%>
+                                                        <a class="item-cover" style="background-image: url(<%=u.cover%>)"></a>
+                                                        <%}%>
+                                                    <%}else{%>
+                                                        <% if(u.type=='音乐' || u.type=='录音制品' || u.type=='MV' || u.type=='词谱' || u.type=='曲谱' || u.type=='词曲谱'){%>
+                                                        <a class="item-cover" style='background-image: url(<%=u.cover%>);display: inline-block;height: 60px;border-radius: 100%'></a>
+                                                        <%}else if(u.type=='软件' || u.type=='移动APP' || u.type=='操作系统' || u.type=='PC软件'){%>
+                                                        <a class="item-cover" style='background-image: url(<%=u.cover%>);display: inline-block;height: 60px;border-radius: 20px;'></a>
+                                                        <%}else{%>
+                                                        <a class="item-cover" style="background-image: url('../images/details/img_mr1.png')"></a>
+                                                        <%}%>
+                                                    <%}%>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <%}%>
+                                        <%})%>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- 如果需要分页器 -->
+                            <div class="swiper-pagination"></div>
+
+                            <!-- 如果需要导航按钮 -->
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%}%>
+            <div class="side-box kp-wrap top-Wrap">
+                <div class="side-item">
+                    <p class="title_t">我是版权持有者</p>
+                    <p class="aside_txt">版权百科为版权创作者或被授权方提供版权作品全网监听，包括跟踪作品在什么地方有传播、阅读数、播放量、评论数以及作品热点话题追踪。您通过关注【作品词条】即可获得<span class="color_main">【版权作品全网传播使用监听数据服务】</span></p>
+                    <% if(workDetail.isSubscribe) {%>
+                    <a class="side_btn open-forgetWrap">取消关注</a>
+                    <%}else{%>
+                    <a class="side_btn get-dy">关注</a>
+                    <%}%>
+                </div>
+            </div>
+
+            <!--<div class="side-box kp-wrap top-Wrap">-->
+                <!--<div class="side-item">-->
+                    <!--<p class="title_t">我是版权需求者</p>-->
+                    <!--<p class="aside_txt">版权百科为版权需求者获取版权授权提供帮助，包括提供真实有价值的作品版权资讯，协助您寻找版权人、根据您的需求制定版权采购交易方案，最终帮助您完成版权授权的获取。</p>-->
+                    <!--<a class="side_btn" href="/copyRight/bql/<%=workID%>?from=getCopyRight" target="_blank">获得该作品授权</a>-->
+                    <!--<%if(data.copyrightDescriptions>0){%>-->
+                    <!--<div class="dowebok">-->
+                        <!--<ul>-->
+                            <!--<% data.copyrightDescriptions.forEach(function(x,index){ %>-->
+                            <!--<li>· <%=x%></li>-->
+                            <!--<%})%>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                    <!--<%}%>-->
+                <!--</div>-->
+            <!--</div>-->
+            <% if(workDetail.relationWorks&&workDetail.relationWorks.length>0) {%>
+            <div class="side-box"  style="position: relative">
+                <div class="side-title">相关作品</div>
+                <% var re=workDetail.relationWorks%>
+                <ul class="recommended-works clearfix">
+                    <% re.forEach(function(u,index){ %>
+                    <li>
+                        <% if(u.cover) {%>
+                        <a target="_blank" href='/item/<%=u.seqNo%>' style='background-image: url(<%=u.cover%>)'></a>
+                        <%}else{%>
+                        <a target="_blank" href='/item/<%=u.seqNo%>' style='background: url("/images/workImg/img_mr_1.png")'> </a>
+                        <%}%>
+                        <p class="recommendName"><%=u.name%></p>
+                    </li>
+                    <% })%>
+                </ul>
+            </div>
+            <%}%>
+            <div class="side-box"  style="position: relative">
+                <% workDetail.chapters.forEach(function(x,index){ %>
+                <%if(x.code=="cover"){%>
+                <div class="side-title">相关图片 <a class="float_right" id="filePicker" data-name="<%=x.name%>" data-id="<%=x.id%>">上传</a></div>
+                <%if(x.content&&x.content.length>0){%>
+                <ul class="recommended-works clearfix" id="recommended-works">
+                    <% x.content.forEach(function(u,index){ %>
+                    <li>
+                        <% if(u.url) {%>
+                        <a target="_blank" data-src="<%=u.url%>" style='background-image: url(<%=u.url%>)'></a>
+                        <%}else{%>
+                        <a target="_blank" data-src="/images/workImg/img_mr_1.png" style='background: url("/images/workImg/img_mr_1.png")'> </a>
+                        <%}%>
+                    </li>
+                    <% })%>
+                </ul>
+                <%}else{%>
+                <P class="color_999" style="margin-top: 10px;font-size: 14px">暂无相关图片</P>
+                <%}%>
+                    <%}%>
+                    <% })%>
+            </div>
+        </div>
+    </div>
+    <!--封面详情-->
+    <div class="modle-wrap modle-coverImg">
+        <div class="modle-container">
+            <div class="modle-detail module-coverImgInfo">
+                <div><i class="close_btn"></i></div>
+                <div>
+                    <img class="big_coverImg">
+                </div>
+                <a class="del_coverImg">删除图片</a>
+            </div>
+        </div>
+    </div>
+    <div class="modle-wrap updateWeb-module updateWebSite">
+        <div class="modle-container">
+            <div class="modle-detail module-web">
+                <div class="modle-head">修改站点<i class="close_btn"></i></div>
+                <div class="modle-body">
+                    <div>
+                        <label>网站名称</label><input type="text" class="add-webName update-webName" placeholder="网站名字">
+                    </div>
+                    <div>
+                        <label>地址</label><input type="text" class="add-webUrl update-webUrl" placeholder="网站地址必须以http://或www开头">
+                    </div>
+                    <div>
+                        <label>是否具有版权</label>
+                        <ul class="radio-ul">
+                            <li class="float_left select-btn">
+                                <a data-type="true"><i></i></a>
+                                <span>正版</span>
+                            </li>
+                            <li class="float_left select-btn">
+                                <a data-type="false"><i></i></a>
+                                <span>盗版</span>
+                            </li>
+                            <li class="float_left select-btn">
+                                <a data-type="other" class="active"><i></i></a>
+                                <span>疑似</span>
+                            </li>
+                            <li class="float_left select-btn">
+                                <a data-type="lj" ><i></i></a>
+                                <span>链接</span>
+                            </li>
+                            <li class="float_left select-btn">
+                                <a data-type=""><i></i></a>
+                                <span>空</span>
+                            </li>
+                        </ul>
+                        <input type="hidden" class="web-copy update-copy" value="other">
+                        <input type="hidden" class="old-name">
+                    </div>
+                    <div class="text_center">
+                        <a class="update-web">确定</a>
+                        <a class="detail-web">删除</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modle-wrap web-module addWebSite">
+        <div class="modle-container">
+            <div class="modle-detail module-web">
+                <div class="modle-head">新增站点<i class="close_btn"></i></div>
+                <div class="modle-body">
+                    <div>
+                        <label>网站名称</label><input type="text" class="add-webName" placeholder="网站名字">
+                    </div>
+                    <div>
+                        <label>地址</label><input type="text" class="add-webUrl" placeholder="网站地址必须以http://或www开头">
+                    </div>
+                    <div>
+                        <label>是否具有版权</label>
+                        <ul class="radio-ul">
+                            <li class="float_left select-btn">
+                                <a data-type="true"><i></i></a>
+                                <span>正版</span>
+                            </li>
+                            <li class="float_left select-btn">
+                                <a data-type="false"><i></i></a>
+                                <span>盗版</span>
+                            </li>
+                            <li class="float_left select-btn">
+                                <a data-type="other" class="active"><i></i></a>
+                                <span>疑似</span>
+                            </li>
+                            <li class="float_left select-btn">
+                                <a data-type="lj" ><i></i></a>
+                                <span>链接</span>
+                            </li>
+                            <li class="float_left select-btn">
+                                <a data-type=""><i></i></a>
+                                <span>空</span>
+                            </li>
+                        </ul>
+                        <input type="hidden" class="web-copy" value="other">
+                    </div>
+                    <div class="text_center">
+                        <a class="save-web">保存</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modle-wrap tips-module">
+        <div class="modle-container">
+            <div class="modle-detail modle-tips">
+                <div class="modle-head">修改标签<i class="close_btn"></i></div>
+                <div class="modle-body">
+                    <input type="text" class="update-tips">
+                    <div class="text_center clearfix">
+                        <a class="save-tips float_left">保存</a>
+                        <a class="detail-tips float_right">删除</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="forget-dy-wrap">
+        <p>确定取消关注服务？</p>
+        <div>
+            <a class="forget-dy">确定</a>
+            <a class="cancel-forget">取消</a>
+        </div>
+    </div>
+    <% if(!workDetail.isSubscribe) {%>
+    <div class="modle-wrap dy-module">
+        <div class="modle-container">
+            <div class="modle-detail modle-dy">
+                <div class="modle-head">版权百科版权作品全网使用监听关注服务<i class="close_btn"></i></div>
+                <div class="modle-body">
+                    <p class="c-title">版权百科为版权创作者或被授权方提供版权作品全网监听，包括跟踪作品在什么地方有传播、阅读数、播放量、评论数以及作品热点话题追踪。感谢您申请该服务，请阅读并同意《版权百科作品全网传播使用监听数据服务协议》。</p>
+                    <div class="body-content" style="    max-height: 300px;overflow: auto;">
+                        <p class="p-title">【关注范围】</p>
+                        <p>1.版权作品使用报告</p>
+                        <p>2.版权作品全网使用7日监听数据报告</p>
+                        <p>3、版权作品社会关注度报告</p>
+                        <p class="p-title">【声明】</p>
+                        <p>本网站作品内容由社群协作用户提供，作品传播使用数据由版权百科大数据平台提供。任何媒体、互联网站和商业机构不得利用本网站发布的内容进行商业性的原版原式地转载，也不得歪曲和篡改本网站所发布的内容。如无特殊版权声明，方可转载，转摘请注明出处并做回链。</p>
+                        <p class="p-title">【个人隐私】</p>
+                        <p>1.版权百科为了更好地为用户提供版权作品全网使用监听服务，需要绑定您的邮箱账户。</p>
+                        <p>2. 我们将保护您的隐私权并保证您所提供的个人资料的保密性。我们所收集的个人资料仅用于为您提供服务并尽力满足您的要求。除此之外，我们只在您允许的情况下才使用您的个人资料。除非为了满足您的需要，否则决不会出售或与第三方共享您的个人资料。</p>
+                        <p class="p-title">【免责条款】</p>
+                        <p>1. 根据司法机关之要求公开特定用户个人资料。</p>
+                        <p>2. 为维护本网站版权、著作权及紧急情况下的公众隐私安全而透露特定用户个人资料。</p>
+                        <p>3. 由于您将用户密码告知他人或与他人共享注册帐户，由此导致的个人资料和客户信息的泄露。</p>
+                        <p>4. 由于黑客攻击、计算机病毒发作等影响网络正常经营之不可抗力所造成的个人资料泄露、丢失、被盗用或被篡改。</p>
+                        <p>5. 由于与本网站链接的其它网站所造成个人资料泄露及由此而导致的任何法律争议和后果。　</p>
+                    </div>
+                    <div class="get-dyBtn">关注</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%}%>
+    <input type="hidden" class="share_name" value="<%=data.workDetail.name%>_<%=data.workDetail.tags[0]%>_版权百科">
+    <%if(workDetail.cover&&workDetail.cover!=null&&workDetail.cover!=''){%>
+    <input type="hidden" class="share_img" value="<%=data.workDetail.cover%>">
+    <%}%>
+    <% include('./common/bottom') %>
+    <% include('./common/foot_script') %>
+    <script>
+        var share = {
+            title:$('.share_name').val(),
+            imgUrl:$('.share_img')?$('.share_img').val():"http://"+location.host+"/app/images/img_fm.png",
+            link:location.href,
+            desc:$('.workTitle-input').val(),
+            success:function(){
+                //$(".share").hide();
+            },
+            cancel:function(){
+
+            }
+        };
+    </script>
+    <script type="text/javascript" src="/app/lib/wx.js"></script>
+    <script type="text/javascript" src="/app/lib/wx.util.js"></script>
+    <script>
+        function show(){
+            var box = document.getElementById("synopsis");
+            var text = box.innerHTML;
+            var newBox = document.createElement("span");
+            var btn = document.createElement("a");
+            var _span=document.createElement('span');
+            btn.style.color='#666666';
+            if(text.length > 150){
+                _span.innerHTML = '...'+'<i class="icon iconfont icon-spread-up" style="position: relative;top: 2px;"></i>';
+            };
+            btn.innerHTML = text.length > 150 ? "展开更多" : "";
+            newBox.innerHTML = text.substring(0,150)+btn;
+            btn.href = "###";
+//            btn.onclick = function(){
+//                if (btn.innerHTML == "展开更多"){
+//                    btn.innerHTML = "收起";
+//                    newBox.innerHTML = text;
+//                    _span.innerHTML ='<i class="icon iconfont icon-zhankai" style="position: relative;top: 2px;"></i>';
+//                }else{
+//                    btn.innerHTML = "展开更多";
+//                    newBox.innerHTML = text.substring(0,150);
+//                    _span.innerHTML ='...'+'<i class="icon iconfont icon-spread-up" style="position: relative;top: 2px;"></i>';
+//                }
+//            }
+            if(text.length > 150){
+                box.onmouseover=function () {
+                    btn.innerHTML = "";
+                    newBox.innerHTML = text;
+                    _span.innerHTML ='';
+                }
+                box.onmouseout=function () {
+                    btn.innerHTML = "展开更多";
+                    newBox.innerHTML = text.substring(0,150);
+                    _span.innerHTML ='...'+'<i class="icon iconfont icon-spread-up" style="position: relative;top: 2px;"></i>';
+                }
+            }
+            box.innerHTML = "";
+            box.appendChild(newBox);
+            box.appendChild(_span);
+            box.appendChild(btn);
+        }
+        show();
+    </script>
+    <script src="/lib/jquery.md5.js"></script>
+    <script src="/lib/webuploader.js"></script>
+    <script src="/lib/vue/vue.js"></script>
+    <script src="/lib/swiper/swiper.min.js"></script>
+    <script src="/lib/laydate/laydate.js"></script>
+    <script src="/lib/layer/layer.js"></script>
+    <script src="/lib/shade_layer/shadeLayer.js"></script>
+    <script src="/lib/uediter/ueditor.config.js"></script>
+    <script src="/lib/uediter/ueditor.all.js"></script>
+    <script src="/lib/liMarquee/jquery.liMarquee.js"></script>
+    <script src="/javascripts/detail-echarts.js"></script>
+    <script src="/lib/tipso/tipso.min.js"></script>
+    <script>
+        window._bd_share_config = {
+            common : {
+                bdText : '',
+                bdDesc : '',
+                bdUrl : '',
+                bdPic : ''
+            },
+            share : [{
+                "bdSize" : 16
+            }]
+        }
+        $('.share-btn').hover(function () {
+            $('.share-box').show()
+        },function () {
+            $('.share-box').hide()
+        })
+
+        //以下为js加载部分
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+    <script>
+        $(function(){
+            $('.top-Wrap').find('.list-item').hover(function () {
+                $(this).addClass('on').siblings().removeClass('on')
+            });
+            var mySwiper = new Swiper ('.swiper-container', {
+                // 如果需要分页器
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+
+                // 如果需要前进后退按钮
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            })
+            $('.dowebok').liMarquee({
+                direction: 'up'
+            });
+            $('.tips-o').tipso({
+                useTitle: false,
+                background: '#000',
+                position:"right"
+            });
+            $('.open_aside_txt').find('a').click(function () {
+                if($(this).html()=='展开'){
+                    $(this).html('收起');
+                    $('.aside_txt_div').hide().next().show()
+                }else{
+                    $(this).html('展开');
+                    $('.aside_txt_div').show().next().hide()
+                }
+            })
+            $('.show-baiduImg').click(function () {
+                if($(this).html()=='更多'){
+                    $(this).html('收起');
+                    $('.demand-Img').show()
+                }else{
+                    $(this).html('更多');
+                    $('.demand-Img').hide()
+                }
+            })
+        })
+        layer.photos({
+            photos: '#layer-photos-demo',
+            anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+        });
+
+    </script>
+</body>
+</html>

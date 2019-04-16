@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>版权百科</title>
+    <link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+	<link rel="stylesheet" type="text/css" href="stylesheets/common.css"/>
+	<link rel="stylesheet" href="lib/layer/skin/default/layer.css">
+	<link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+	<link rel="stylesheet" type="text/css" href="stylesheets/person_center.css"/>
+	<% include('common/baidu_tj') %>
+</head>
+<body>
+<% include('common/header') %>
+<!--<% var result=data.result %>-->
+<div class="wrap" id="warp_height">
+	<div class="person_center text_center">
+		<div class="pc_out">
+			<ul class="pc_nav inline_block">
+				<li class="inline_block">
+					<a href="person_set">个人设置</a>
+				</li>
+				<li class="inline_block">
+					<a href="entry">词条任务</a>
+				<li class="inline_block on">
+					<a href="javascript:void(0)">我的编辑</a>
+				</li>
+				<li class="inline_block">
+					<a href="all_news">消息通知</a>
+				</li>
+				<li class="inline_block">
+					<a href="creatEntry">创建词条</a>
+				</li>
+				<%if(useInfo.loginUser.isCommunity=='2'){%>
+					<li class="inline_block">
+						<a href="workAudit">作品词条审核</a>
+					</li>
+					<li class="inline_block">
+						<a href="myAudit">我的审核</a>
+					</li>
+				<%}%>
+				<li class="inline_block">
+					<a href="attentionWork">关注作品</a>
+				</li>
+			</ul>
+		</div>
+		<div class="pc_w860 text_left">
+			<select class="edit_select">
+				<option value="">全部</option>
+				<option value="adopt">通过</option>
+				<option value="audit">审核中</option>
+				<option value="submit">提交</option>
+				<option value="reject">驳回</option>
+			</select>
+			<p class="edit_number">共发起<span class="color_red"><%=data.all%>次</span>编辑，审核通过<span class="color_red"><%=data.adopt%>次</span>，驳回<span class="color_red"><%=data.reject%>次</span>。</p>
+			<div class="works">
+				<table class="works_table">
+					<thead>
+					<tr>
+						<th>作品名称</th>
+						<th>作品类型</th>
+						<th class="text_center">状态</th>
+						<th class="text_center">创建时间</th>
+						<th>内容</th>
+					</tr>
+					</thead>
+					<tbody class="editor_tables">
+						<%for(i=0;i<data.result.list.length;i++){%>
+							<tr>
+								<td><a href="/item/<%=data.result.list[i].workSeqNo%>" target="_blank"><%=data.result.list[i].name%></a></td>
+								<td><%=data.result.list[i].type%></td>
+								<td><%=data.result.list[i].statusDesc%></td>
+								<td><%=data.result.list[i].date%></td>
+								<td><%=data.result.list[i].content%></td>
+							</tr>
+						<%}%>
+					</tbody>
+				</table>
+				<div class="html_page"><span class="allpage"><%=data.result.totalPage%></span><span class="curpage"><%=data.result.currentPage%></span></div>
+				<div class="editorNone"><%=data.result.list.length%></div>
+				<div class="page text_center" id="page1">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<%include ('common/bottom')%>
+<%include ('common/foot_script')%>
+<script>
+    var share = {
+        title:"版权百科",
+        imgUrl:"http://"+location.host+"/app/images/img_fm.png",
+        link:location.href,
+        desc:"版权数据服务专家",
+        success:function(){
+            //$(".share").hide();
+        },
+        cancel:function(){
+
+        }
+    };
+</script>
+<script type="text/javascript" src="/app/lib/wx.js"></script>
+<script type="text/javascript" src="/app/lib/wx.util.js"></script>
+<script type="text/javascript" src="javascripts/person_center.js"></script>
+<script type="text/javascript" src="/lib/laypage.js"></script>
+<script type="text/javascript" src="lib/layer/layer.js"></script>
+<script src="lib/shade_layer/shadeLayer.js"></script>
+<script>
+    $(function(){
+        var allPage,curPage,editorStyle,pagenumber=1;
+        if($(".editorNone").text()==0){
+            $hint.open("暂时还没有数据");
+		}
+       pageGet();
+       page(allPage,curPage);
+       $(".edit_select").change(function (){
+            pagenumber=1;
+            editorStyle = $(".edit_select  option:selected").val();
+            console.log(editorStyle);
+            var data1={
+                status:editorStyle,
+                pagenumber:1
+            }
+            console.log(data1);
+            ajax(data1);
+        });
+        function ajax(data){
+            $.ajax({
+                type: "post",
+                url: "api/query/editLog",
+                data:data,
+                success: function (data){
+                    console.log(data);
+                    var _data=data.data;
+                    if(data.status){
+                        if(_data.resultCode == 200){
+                            var data0 = _data.result.result;
+                            var length1=data0.list.length;
+                            console.log(data0);
+                            console.log(length1);
+                            if(data0.list.length>0){
+                                var html;
+                                for (var i = 0; i < data0.list.length; i++) {
+                                    html += '<tr><td>'+ data0.list[i].name+'</td><td>'+ data0.list[i].type+'</td><td>'+data0.list[i].statusDesc+'</td> <td>'+data0.list[i].date+'</td><td>'+data0.list[i].content+'</td> </tr>'
+                                }
+                                $(".editor_tables").html(html);
+                                var spanPage='<span class="allpage">'+data0.totalPage+'</span><span class="curpage">'+data0.currentPage+'</span>'
+                                $(".html_page").html(spanPage);
+                                pageGet();
+                                page();
+                            }else{
+                                $hint.open("暂时没有数据了");
+                                $(".editor_tables").html("");
+                                $(".bottom").addClass("pc_fixed");
+                                $("#page1").css("display","none");
+                            }
+                        }else{
+                            $hint.open(data.resultMsg);
+						}
+					}else{
+                        $hint.open(data.resultMsg);
+					}
+                }
+            })
+        }
+        function pageGet(){
+            allPage= $(".allpage").text();
+            curPage=$(".curpage").text();
+            console.log(allPage+"页",curPage+"当前");
+            if(allPage==0||allPage==1){
+                $("#page1").css("display","none")
+				$(".bottom").addClass("")
+            }else{
+                $("#page1").css("display","block")
+            }
+			 console.log(allPage,curPage);
+            page(allPage,curPage);
+        }
+        function page(){
+            laypage({
+                cont: $('#page1'), //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
+                pages: allPage, //通过后台拿到的总页数
+                curr: curPage || 1, //当前页
+                jump: function(obj, first){ //触发分页后的回调
+                    if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                        var data2={
+                            status:editorStyle,
+                            pagenumber:obj.curr
+                        }
+                        ajax(data2);
+                    }
+                }
+            });
+		}
+    })
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        [v-cloak] {display: none;}
+        *{margin: 0;padding: 0;font-family: "微软雅黑"}
+        .main-wrap{width: 900px;padding: 20px;margin: 0 auto;margin-top: 100px}
+        .search-form{text-align: center;width: 550px;height: 40px;margin: 0 auto;position: relative}
+        .search-form input{width: 530px;height:100%;border: 1px solid #1A8CDC;border-radius: 2px;padding-left: 20px;outline:none;}
+        .search-icon{position: absolute;right: 8px;top:8px;cursor: pointer}
+        .search-title{line-height: 19px;font-size: 14px;color: #000000;margin: 40px 0 23px}
+        .search-title span{color: #1A8CDC;margin: 0 5px}
+        .search-content{border-top: solid 1px #DEDEDE; border-left: solid 1px #DEDEDE;width: 860px}
+        .search-content td:first-child{text-indent: 30px}
+        .search-content td{height: 40px;font-size: 14px;border-bottom: solid 1px #DEDEDE;border-right: solid 1px #DEDEDE;text-align: center}
+        .search-content thead td{color: #333333;background:#ECECEC}
+        .search-content tbody td{color: #666666}
+        .search-content tbody tr:nth-of-type(even){background:rgba(236,236,236,0.5)}
+        .online-item{color: #1A8CDC !important;}
+        .change_btn{text-decoration: underline;cursor: pointer}
+        .radioBox{  display: inline-block;cursor: pointer;width: 20px;  height: 20px;  background: #FFFFFF;  border: 1px solid #CCCCCC;position: relative;top:2px}
+        .radioBox i{  display: none;  background:url(img/detail-public.png)  no-repeat;  height:20px;width:20px;background-position:0 -24px;  position: relative;  top: -4px;  left: 4px;  }
+        .radioBox.on i{  display: inline-block;  }
+        .checkBox{display: inline-block;cursor: pointer;width: 20px;height: 20px;background: #FFFFFF;border: 1px solid #CCCCCC;border-radius: 50%;text-align: center;line-height: 1;position: relative;top:2px}
+        .checkBox i{display: none;width: 8px;height: 8px;background: #1A8CDC;border-radius: 50%;position: absolute;left: 6px;top: 6px;}
+        .checkBox.on i{display: inline-block;}
+        .subBtn{background: #1A8CDC;border-radius: 2px;width: 160px;height:36px;line-height: 36px;color: #FFFFFF;text-align: center;font-size: 14px;margin: 0 auto;margin-top: 50px;cursor: pointer};
+        /*loding*/
+        #preloader_1{
+            position:relative;
+        }
+        #preloader_1 span{
+            display:block;
+            bottom:0px;
+            width: 9px;
+            height: 5px;
+            background:#9b59b6;
+            position:absolute;
+            animation: preloader_1 1.5s  infinite ease-in-out;
+        }
+
+        #preloader_1 span:nth-child(2){
+            left:11px;
+            animation-delay: .2s;
+
+        }
+        #preloader_1 span:nth-child(3){
+            left:22px;
+            animation-delay: .4s;
+        }
+        #preloader_1 span:nth-child(4){
+            left:33px;
+            animation-delay: .6s;
+        }
+        #preloader_1 span:nth-child(5){
+            left:44px;
+            animation-delay: .8s;
+        }
+        @keyframes preloader_1 {
+            0% {height:5px;transform:translateY(0px);background:#9b59b6;}
+            25% {height:30px;transform:translateY(15px);background:#3498db;}
+            50% {height:5px;transform:translateY(0px);background:#9b59b6;}
+            100% {height:5px;transform:translateY(0px);background:#9b59b6;}
+        }
+    </style>
+</head>
+<body>
+<div class="main-wrap" id="app">
+    <form action="#" class="search-form">
+        <input class="" v-model="searchWord" @keyup.enter="submit">
+        <a class="search-icon" @click="submit"><img src="img/icon_search.png"></a>
+    </form>
+    <div class="search-title"  v-cloak v-show="totalNum!=''">
+        共搜到<span>{{totalNum}}</span>个作品
+    </div>
+    <table class="search-content"  border="0" cellspacing="0" cellpadding="0"  v-show="dataList.length>0" v-cloak>
+        <thead>
+        <tr>
+            <td>作品名称</td>
+            <td>状态</td>
+            <td>创建时间</td>
+            <td>创作者</td>
+            <td>勾选</td>
+            <td>保留作品</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="u in dataList">
+            <td>{{u.name}}</td>
+            <td v-if="u.status=='online'" class="online-item">上架</td>
+            <td v-else>下架</td>
+            <td>{{u.create_time}}</td>
+            <td>{{u.regist_id}}</td>
+            <td>
+                <a class="radioBox" @click="checkR(u)" :class="{on:u.radioStatus}"><i></i></a>
+            </td>
+            <td>
+                <a class="checkBox" @click="checkC(u)" :class="{on:u.checkStatus}"><i></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="subBtn" @click="subUpdate">提交</div>
+</div>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/shadeLayer.js"></script>
+<script src="js/vue.js"></script>
+<script>
+    Array.prototype.remove=function(dx)
+    {
+        if(isNaN(dx)||dx>this.length){return false;}
+        for(var i=0,n=0;i<this.length;i++)
+        {
+            if(this[i]!=this[dx])
+            {
+                this[n++]=this[i]
+            }
+        }
+        this.length-=1
+    }
+    var App=new Vue({
+        el:'#app',
+        data:{
+            totalNum:'0',
+            searchWord:'',
+            flag:true,
+            radioArry:[],
+            checkId:'',
+            dataList:[]
+        },
+        methods:{
+            getTable:function () {
+                var $this=this;
+                $.ajax({
+                    url:'',
+                    data:{},
+                    type:'get',
+                    success:function (data) {
+                        $this.dataList=data.
+                        $this.totalNum=data.
+                    }
+                })
+            },
+            submit:function () {
+                this.getTable()
+            },
+            checkR:function (item) {
+                if(item.radioStatus){
+                    this.$set(item,'radioStatus',false);
+                    this.$set(item,'checkStatus',false);
+                }else{
+                    this.$set(item,'radioStatus',true);
+                }
+            },
+            checkC:function (item) {
+                var $this=this;
+                if(item.checkStatus){
+                    $this.$set(item,'checkStatus',false)
+                }else{
+                    $this.dataList.forEach(function (p1, p2, p3) {
+                        $this.$set(p1,'checkStatus',false)
+                        $this.$set(p1,'radioStatus',false)
+                    })
+                    $this.$set(item,'checkStatus',true);
+                    $this.$set(item,'radioStatus',true);
+                }
+            },
+            subUpdate:function () {
+                var $this=this;
+                var newArry=[];
+                $this.dataList.forEach(function (p1, p2, p3) {
+                    if(p1.radioStatus){
+                        newArry.push(p1.workSeqNo)
+                    }
+                    if(p1.checkStatus){
+                        $this.checkId=p1.workSeqNo;
+                    }
+                });
+                $this.radioArry=newArry;
+
+                if($this.checkId==''){
+                    $hint.open('请选择保留作品');
+                    return;
+                }
+                if($this.radioArry.length<2){
+                    $hint.open('至少勾选两个作品');
+                    return;
+                }
+                if($this.flag==true){
+                    $this.flag=false;
+                    console.log($this.radioArry);
+                    console.log($this.checkId);
+                    $.ajax({
+                        url:'',
+                        data:{},
+                        type:'get',
+                        success:function (data) {
+                            $this.flag=true;
+                            $this.getTable();
+                        }
+                    })
+                }
+
+            }
+        }
+    });
+</script>
+</body>
+</html>

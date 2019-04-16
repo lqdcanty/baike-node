@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<script type="text/javascript">
+            (function(){var phoneWidth=parseInt(window.screen.width),phoneScale=phoneWidth/750,ua=navigator.userAgent;if(/Android (\d+\.\d+)/.test(ua)){var version=parseFloat(RegExp.$1);if(version>2.3){document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+", maximum-scale = "+phoneScale+', target-densitydpi=device-dpi">')}else{document.write('<meta name="viewport" content="width=750, target-densitydpi=device-dpi">')}}else{document.write('<meta name="viewport" content="width=750, user-scalable=no, target-densitydpi=device-dpi">')};})();
+		</script>
+		<meta  name="apple-mobile-web-app-capable" content="yes"/>
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta content="telephone=no" name="format-detection" />
+		<meta name="format-detection" content="email=no" />
+		<meta name="full-screen" content="true"/>
+		<meta name="screen-orientation" content="portrait"/>
+		<meta name="x5-fullscreen" content="true"/>
+		<meta name="360-fullscreen" content="true"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="expires" content="0" />
+		<meta http-equiv="pragma" content="no-cache" />
+		<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+		<meta name="apple-touch-fullscreen" content="yes" />
+		<title>版权百科</title>
+		<link rel="stylesheet" type="text/css" href="/app/stylesheets/index.css" />
+		<link rel="stylesheet" type="text/css" href="/app/stylesheets/mescroll.css" />
+	</head>
+
+	<body>
+		<div class="app mescroll" id="mescroll">
+			<div class="app-header" id="app-header">
+				版权百科
+				<a class="app-images icon_more"></a>
+			</div>
+			<div class="banner">
+				<span class="app-images bg_logo logo-img"></span>
+				<div class="search-wrap">
+					<span class="app-images icon_Search"></span>
+					<input class="search-input" placeholder="输入作品名称、作者。如：盗墓笔记">
+					<a class="app-images btu_s">搜索</a>
+				</div>
+			</div>
+			<div class="main-wrap" id="indexApp">
+				<div class="nav">
+					<ul class="clearfix">
+						<li class="active" i="0">小说</li>
+						<li i="1">动漫</li>
+						<li i="2">音乐</li>
+						<li i="3">电影</li>
+						<li i="4">电视剧</li>
+						<li i="5">软件</li>
+						<li i="6">传承文化</li>
+					</ul>
+				</div>
+				<div class="fixed-wrap">
+					<div class="search-wrap">
+						<span class="app-images icon_Search"></span>
+						<input class="search-input" placeholder="输入作品名称、作者。如：盗墓笔记">
+						<a class="app-images btu_s">搜索</a>
+					</div>
+					<div class="nav navFixed">
+						<ul class="clearfix">
+							<li class="active" i="0">小说</li>
+							<li i="1">动漫</li>
+							<li i="2">音乐</li>
+							<li i="3">电影</li>
+							<li i="4">电视剧</li>
+							<li i="5">软件</li>
+							<li i="6">传承文化</li>
+						</ul>
+					</div>
+				</div>
+				<input type="hidden" value="小说" class="keyword">
+				<div class="list-wrap">
+					<div id="" class="">
+						<!--展示上拉加载的数据列表-->
+						<ul id="dataList" class="data-list">
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+        function isWeiXin() {
+            var ua = window.navigator.userAgent.toLowerCase();
+            console.log(ua);//mozilla/5.0 (iphone; cpu iphone os 9_1 like mac os x) applewebkit/601.1.46 (khtml, like gecko)version/9.0 mobile/13b143 safari/601.1
+            if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if(isWeiXin()){
+            document.getElementById('app-header').style.display='none';
+        }else{
+            console.log("不是来自微信内置浏览器")
+        }
+	</script>
+	<script type="text/javascript" src="/app/lib/mescroll.js"></script>
+	<script type="text/javascript" src="/app/lib/jquery-1.9.1.min.js"></script>
+	<script>
+        var share = {
+            title:"版权百科 - 探索新知旅程",
+            imgUrl:"http://"+location.host+"/app/images/banner.png",
+            link:location.href,
+            desc:"",
+            success:function(){
+                //$(".share").hide();
+            },
+            cancel:function(){
+
+            }
+        };
+	</script>
+	<script type="text/javascript" src="/app/lib/wx.js"></script>
+	<script type="text/javascript" src="/app/lib/wx.util.js"></script>
+	<script type="text/javascript" src="/app/javascript/wx.Share.js"></script>
+	<script type="text/javascript" charset="utf-8">
+        $(function(){
+            //创建MeScroll对象,内部已默认开启下拉刷新,自动执行up.callback,刷新列表数据;
+            var mescroll = new MeScroll("mescroll", {
+                //上拉加载的配置项
+                up: {
+                    callback: getListData, //上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
+                    noMoreSize: 4, //如果列表已无数据,可设置列表的总数量要大于半页才显示无更多数据;避免列表数据过少(比如只有一条数据),显示无更多数据会不好看; 默认5
+                    empty: {
+                        icon: "", //图标,默认null
+                        tip: "暂无相关数据~", //提示
+                        btntext: "去逛逛 >", //按钮,默认""
+                        btnClick: function(){//点击按钮的回调,默认null
+                            alert("点击了按钮,具体逻辑自行实现");
+                        }
+                    },
+                    toTop: {
+                        src: "/app/images/mescroll-totop.png" //回到顶部按钮的图片路径
+                    },
+                    clearEmptyId: "dataList" //相当于同时设置了clearId和empty.warpId; 简化写法;默认null
+                }
+            });
+
+            /*初始化菜单*/
+            var pdType=0;//小说0; 动漫1; 音乐2; 电影3....;
+			var keyWord=['小说','动漫','音乐','电影','电视剧','软件','传承文化'];
+            $(".nav li").click(function(){
+                var i=$(this).attr('i');
+                if(pdType!=i) {
+                    //更改列表条件
+                    pdType=i;
+                    $(".nav .active").removeClass("active");
+                    $(".nav").find('li').each(function () {
+						if($(this).attr('i')==pdType){
+                            $(this).addClass("active");
+						}
+                    });
+                    //重置列表数据
+                    mescroll.resetUpScroll();
+                }
+            })
+
+            /*联网加载列表数据  page = {num:1, size:10}; num:当前页 从1开始, size:每页数据条数 */
+            function getListData(page){
+                //联网加载数据
+                console.log("pdType="+pdType+", page.num="+page.num);
+                getListDataFromNet(pdType, page.num, page.size, function(data){
+                    //联网成功的回调,隐藏下拉刷新和上拉加载的状态;
+                    console.log("data.length="+data.length);
+                    mescroll.endSuccess(data.length);//传参:数据的总数; mescroll会自动判断列表如果无任何数据,则提示空;列表无下一页数据,则提示无更多数据;
+                    //设置列表数据
+                    setListData(data);
+                }, function(){
+                    //联网失败的回调,隐藏下拉刷新和上拉加载的状态;
+                    mescroll.endErr();
+                });
+            }
+
+            /*设置列表数据*/
+            function setListData(data){
+                var listDom=document.getElementById("dataList");
+
+                for (var i = 0; i < data.length; i++) {
+                    var pd=data[i];
+                    var result='';
+                    result +='<div class="name-wrap">' +
+                        '<span class="works-name">'+pd.name+'</span>' +
+                        '<span class="works-title">（'+pd.workTitle+'）</span>' +
+                        '</div>' +
+                        '<div class="clearfix content-wrap"><div class="float_left">' +
+                        '<a class="cover-img" style="background-image: url('+pd.cover+')"></a>' +
+                        '<span></span>' +
+                        '</div>' +
+                        '<div class="float_right right-content">' +
+                        '<p class="works-content">'+pd.synopsis+'</p>' +
+                        '<p class="works-btns">' +
+                        '<a class="float_right"><span class="app-images icon_bq"></span>获得作品授权</a>' +
+                        '</p></div></div>';
+                    var s='';
+                    if(pd.copyrights.length>0){
+                        s='<div class="yz-item">' +
+                            '<span>原著</span>' +
+                            '<span>'+pd.copyrights[0].name+'</span>' +
+                            '<a>查看</a>' +
+                            '</div>'
+                    }
+                    result+=s;
+                    var liDom=document.createElement("li");
+                    liDom.innerHTML=result;
+                    listDom.appendChild(liDom);
+                }
+            }
+
+            /*联网加载列表数据*/
+            function getListDataFromNet(pdType,pageNum,pageSize,successCallback,errorCallback) {
+                //延时一秒,模拟联网
+                setTimeout(function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/app/list?keyword='+keyWord[pdType]+'&currentPage='+pageNum,
+                        dataType: 'json',
+                        success: function(data){
+                   			 //回调
+                    		successCallback(data.data.result.workList);
+		                },
+		                error: errorCallback
+		            });
+                },1000)
+            }
+
+            //禁止PC浏览器拖拽图片,避免与下拉刷新冲突;如果仅在移动端使用,可删除此代码
+            document.ondragstart=function() {return false;}
+        });
+	</script>
+</html>

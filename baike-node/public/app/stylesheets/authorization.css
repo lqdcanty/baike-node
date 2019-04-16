@@ -1,0 +1,109 @@
+html *{
+    -webkit-box-sizing:border-box!important;
+    -moz-box-sizing:border-box!important;
+    -ms-box-sizing:border-box!important;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    outline: 0;
+    text-size-adjust: none;
+    font-family: "微软雅黑";
+}
+html,body{
+    background-color: #F3F5F8;
+}
+body{
+    /* line-height: 1.5;*/
+    margin:0 auto;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+.authorizationContent{
+    width:100%;
+}
+.authorizationTitle{
+    width:100%;
+    height:65px;
+    padding:15px 0;
+    padding-left:30px;
+    position: relative;
+    font-size: 30px;
+    font-weight:900;
+    background: #fff;
+    color: #333333;
+    border-bottom: 1px solid #DEDEDE;
+}
+.authorizationTitle .leftBlue{
+    display: block;
+    position: absolute;
+    left:0;
+    top:20px;
+    width:10px;
+    height:26px;
+    background: #48A3E3;
+}
+.authorizationTextarea{
+    width:100%;
+    height:300px;
+    font-size: 26px;
+    color: #333;
+    line-height: 36px;
+    padding:20px 30px;
+    border:0;
+}
+textarea.authorizationTextarea[value]{
+    color: #333;
+}
+textarea.authorizationTextarea[placeholder] {
+    color: #999999;
+}
+.authorizationBasic{
+    width:100%;
+}
+.authorizationBasic li{
+    margin-top:10px;
+    height:78px;
+    line-height: 30px;
+    padding:24px 30px;
+    background: #fff;
+    font-size:0;
+}
+.authorizationBasic li span,.authorizationBasic li input{
+    display: inline-block;
+    vertical-align: middle;
+}
+.authorizationBasic li span{
+    color: #333;
+    font-size: 26px;
+}
+.authorizationBasic li input{
+    color: #999;
+    width:80%;
+    font-size: 26px;
+    padding:0 10px;
+    line-height:30px;
+    border:0;
+    background: #fff;
+}
+.authorizationBasic li input.workName{
+    width: 50% !important;
+}
+.authorizationSubmitBox{
+    width:100%;
+    padding:40px 30px;
+}
+.authorizationSubmit{
+    display: block;
+    height:78px;
+    text-align: center;
+    width: 100%;
+    line-height: 74px;
+    background: #1A8CDC;
+    box-shadow: 0 1px 0 0 #E2E2E2;
+    border-radius: 10px;
+    font-size: 34px;
+    color: #FFFFFF;
+    outline: none;
+    border:0;
+}
+.error-msg{text-align: center;color: #EF4F4F;font-size: 26px;}
+

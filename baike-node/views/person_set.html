@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>版权百科</title>
+    <link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="stylesheets/webuploader.css"/>
+    <link rel="stylesheet" href="lib/address/chosen.min.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/common.css"/>
+    <link rel="stylesheet" href="lib/layer/skin/default/layer.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/person_center.css"/>
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <script type="text/javascript" src="lib/address/area_chs.js"></script>
+    <script type="text/javascript">
+        var areaObj = [];
+        function initLocation(e){
+            var a = 0;
+            for (var m in e){
+                areaObj[a] = e[m];
+                a++;
+            }
+        }
+    </script>
+    <% include('common/baidu_tj') %>
+</head>
+<body>
+<% include('common/header') %>
+<% var result=data.result %>
+<div class="wrap" id="warp_height">
+    <div class="person_center text_center">
+        <div class="pc_out">
+            <ul class="pc_nav inline_block">
+                <li class="inline_block  on">
+                    <a href="javascript:void(0)">个人设置</a>
+                </li>
+                <li class="inline_block">
+                    <a href="entry">词条任务</a>
+                <li class="inline_block">
+                    <a href="my_editor">我的编辑</a>
+                </li>
+                <li class="inline_block">
+                    <a href="all_news">消息通知</a>
+                </li>
+                 <li class="inline_block">
+                     <a href="creatEntry">创建词条</a>
+                 </li>
+                <%if(useInfo.loginUser.isCommunity=='2'){%>
+                    <li class="inline_block">
+                        <a href="workAudit">作品词条审核</a>
+                    </li>
+                    <li class="inline_block">
+                        <a href="myAudit">我的审核</a>
+                    </li>
+                <%}%>
+                <li class="inline_block">
+                    <a href="attentionWork">关注作品</a>
+                </li>
+            </ul>
+        </div>
+        <div class="pc_nav_div">
+            <!-- <form action="">-->
+            <div class="all_news clearfix text_left">
+                <div class="all_mews_left float_left">
+                    <p class="pc_news_title">基本信息</p>
+                    <div class="news_line">
+                        <b class="news_line_left">头像</b>
+                        <div class="head_portrait wu-example" id="uploader-demo">
+                            <div class="fileImgs" id="fileList">
+                                <img src="<%=result.photo%>" alt="">
+                            </div>
+                            <div class="head_portrait_right xigai">
+                                <label class="pointer dw">
+                                    <a href="javascript:void(0)" class="limit_color" id="filePicker">修改头像</a>
+                                </label>
+                                <p class="news_limit ts">
+                                    格式：.jpg,.png,.jpeg <br>
+                                    大小：限制1M以内
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news_line">
+                        <b class="news_line_left">账户ID</b>
+                        <p class="news_line_right">
+                            <span><%=result.id%></span>
+                        </p>
+                    </div>
+                    <div class="news_line">
+                        <b class="news_line_left">账户绑定邮箱</b>
+                        <p class="news_line_right accountBind">
+                            <span class="tsmr20"><%=result.account%></span>
+                            <%if(result.account==""){%>
+                                <a href="#" class="limit_color" id="clickAccount">点击绑定账号</a>
+                            <%}%>
+                            <span id="huoquAuthId" style="display: none"><%if(useInfo.islogin){%><%=useInfo.loginUser.authId%><%}%></span>
+                        </p>
+                        <div class="modle-wrap account_wrap">
+                            <div class="modle-container">
+                                <div class="passwork">
+                                    <h5 class="pad_h5"> 设置密码
+                                        <span>&times;</span>
+                                    </h5>
+                                    <div class="passwork_con">
+                                        <p class="passwork_p">
+                                            <span>绑定账号</span>
+                                            <input type="text" placeholder="请输入绑定邮箱" id="person_bindAccount">
+                                        </p>
+                                        <p class="passwork_p">
+                                            <span>密码</span>
+                                            <input type="password" placeholder="请输入密码" id="new_passwordAccount">
+                                        </p>
+                                        <p class="passwork_p">
+                                            <span>确认密码</span>
+                                            <input type="password" placeholder="请确认密码" id="renew_passwordAccount">
+                                        </p>
+                                        <div class="heightset">
+                                            <p class="prompt ts_center"></p>
+                                        </div>
+                                        <p class="passwork_p">
+                                            <input type="submit" value="保存" id="password_saveAccount">
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news_line">
+                        <b class="news_line_left">注册时间</b>
+                        <p class="news_line_right">
+                            <!-- <span>2017年1月10日</span>-->
+                            <span class="time_set"><%=result.regTime%></span>
+                        </p>
+                    </div>
+                    <div class="news_line">
+                        <b class="news_line_left">账户昵称</b>
+                        <p class="news_line_right nickname">
+                            <span class="nickName_span"><%=result.nickName%></span>
+                            <a href="#" class="modify_a limit_color" id="modify">点击修改</a>
+                            <input class="nickname_input" type="text" placeholder="请输入昵称">
+                            <a href="#" class="save_name_a limit_color" id="save_name">保存</a>
+                        </p>
+                    </div>
+                    <div class="news_line">
+                        <b class="news_line_left">联系电话</b>
+                        <p class="news_line_right contact_telephone">
+                            <span class="telephone_span"><%=result.telephone%></span>
+                            <a href="#" class="limit_color" id="modify_telephone">
+                                <%if(result.telephone==''){%>
+                                点击添加
+                                <%}else{%>
+                                点击修改
+                                <%}%>
+                            </a>
+                            <input class="telephone_input" type="text" placeholder="请输入联系电话">
+                            <a href="#" class="limit_color" id="save_telephone">保存</a>
+                        </p>
+                    </div>
+                    <%if(result.account!=''){%>
+                    <div class="news_line password_parent">
+                        <b class="news_line_left">修改密码</b>
+                        <p class="news_line_right">
+                            <a href="javascript:void(0)" class="limit_color x_passsword">点击修改</a>
+                        </p>
+                        <div class="modle-wrap password_x">
+                            <div class="modle-container">
+                                <div class="passwork">
+                                    <h5 class="pad_h5">修改密码
+                                        <span>&times;</span>
+                                    </h5>
+                                    <div class="passwork_con">
+                                        <p class="passwork_p">
+                                            <span>当前密码</span>
+                                            <input type="password" placeholder="请输入当前密码" id="old_password">
+                                        </p>
+                                        <p class="passwork_p">
+                                            <span>新密码</span>
+                                            <input type="password" placeholder="请输入新密码" id="new_password">
+                                        </p>
+                                        <p class="passwork_p">
+                                            <span>确认密码</span>
+                                            <input type="password" placeholder="请确认密码" id="renew_password">
+                                        </p>
+                                        <div class="heightset">
+                                            <p class="prompt"></p>
+                                        </div>
+                                        <p class="passwork_p">
+                                            <input type="submit" value="保存" id="password_save">
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%}%>
+                    <div class="news_line">
+                        <b class="news_line_left">用户积分</b>
+                        <p class="news_line_right">
+                            <span><%=result.userGrade%></span>
+                            <!--<span class="pd_20">还需要完成5次编辑可升1级</span>-->
+                        </p>
+                    </div>
+                    <div class="news_line">
+                        <b class="news_line_left">喜欢作品类型</b>
+                        <p class="news_line_right">
+                            <label class="margin_right20 <%for(i=0;i<result.likeType.length;i++){%>
+                                        <%if(result.likeType[i]=='music'){%>on<%}%>
+                                    <%}%>" id="music">
+                                <b class="box_bordern">
+                                    <img src="images/icon_xzfw_1.png" class="box_border_img">
+                                </b>
+                                <input type="hidden" name="">
+                                <span class="vertial_middle music">音乐</span>
+                            </label>
+                            <label class="margin_right20 <%for(i=0;i<result.likeType.length;i++){%>
+                                        <%if(result.likeType[i]=='movie'){%>on<%}%>
+                                    <%}%>" id="movie">
+                                <b class="box_bordern">
+                                    <img src="images/icon_xzfw_1.png" class="box_border_img">
+                                </b>
+                                <input type="hidden" name="">
+                                <span class="vertial_middle movie">电影</span>
+                            </label>
+                            <label class="margin_right20 <%for(i=0;i<result.likeType.length;i++){%>
+                                        <%if(result.likeType[i]=='comic'){%>on<%}%>
+                                    <%}%>" id="comic">
+                                <b class="box_bordern">
+                                    <img src="images/icon_xzfw_1.png" class="box_border_img">
+                                </b>
+                                <input type="hidden" name="">
+                                <span class="vertial_middle comic">动漫</span>
+                            </label>
+                            <label class="margin_right20 <%for(i=0;i<result.likeType.length;i++){%>
+                                        <%if(result.likeType[i]=='tv'){%>on<%}%>
+                                    <%}%>" id="tv">
+                                <b class="box_bordern">
+                                    <img src="images/icon_xzfw_1.png" class="box_border_img">
+                                </b>
+                                <input type="hidden" name="">
+                                <span class="vertial_middle tv">电视剧</span>
+                            </label>
+                            <label class="margin_right20 <%for(i=0;i<result.likeType.length;i++){%>
+                                        <%if(result.likeType[i]=='novel'){%>on<%}%>
+                                    <%}%>" id="novel">
+                                <b class="box_bordern">
+                                    <img src="images/icon_xzfw_1.png" class="box_border_img">
+                                </b>
+                                <input type="hidden" name="">
+                                <span class="vertial_middle novel">小说</span>
+                            </label>
+                            <a href="javascript:void(0)" class="limit_color likes">修改保存</a>
+                        </p>
+                    </div>
+                    <div class="news_line">
+                        <b class="news_line_left">社群协作审核</b>
+                        <p class="news_line_right">
+                            <%if(result.isCommunity=="2"){%>
+                            <span>审核通过</span>
+                            <%}else if(result.isCommunity=="0"){%>
+                            <a href="javascript:void(0)" class="limit_color on">点击申请</a>
+                            <%}else if(result.isCommunity=="1"){%>
+                            <span>申请中</span>
+                            <%}else if(result.isCommunity=="3"){%>
+                            <a href="javascript:void(0)" class="limit_color on">申请驳回点击重新申请</a>
+                            <%}%>
+                        </p>
+                    </div>
+                </div>
+                <div class="all_news_right float_left">
+                    <p class="pc_news_title">实名信息 <span> <%if(result.status=="un_real_name"){%>（完善实名信息可提升信息编辑审核信任度）<%}else if(result.status=="wait_approve"){%>实名认证审核中<%}%></span></p>
+                    <%if(result.status=="complete_real_name" || result.status=="wait_approve" ){%>
+                    <div class="staus_wsm">
+                        <div class=" float_left">
+                            <div class="news_line">
+                                <b class="news_line_left">姓名</b>
+                                <p class="news_line_right">
+                                    <span><%=result.po.name%></span>
+                                </p>
+                            </div>
+                            <div class="news_line">
+                                <b class="news_line_left">证件类型</b>
+                                <p class="news_line_right">
+                                    <%if(result.po.cardType=="1"){%>
+                                    <span>身份证</span>
+                                    <%}else if(result.po.cardType=="2"){%>
+                                    <span>营业执照</span>
+                                    <%}else if(result.po.cardType=="3"){%>
+                                    <span>护照</span>
+                                    <%}%>
+                                </p>
+                            </div>
+                            <div class="news_line">
+                                <b class="news_line_left">证件号</b>
+                                <p class="news_line_right">
+                                    <span><%=result.po.cardNo%></span>
+                                </p>
+                            </div>
+                            <div class="news_line">
+                                <b class="news_line_left">证件照</b>
+                                <p class="news_line_right shim">
+                                    <img src="<%=result.po.attr1%>" alt="">
+                                    <%if(result.po.cardType=="1"){%>
+                                    <img src="<%=result.po.attr2%>" alt="">
+                                    <%}%>
+                                </p>
+                            </div>
+                            <div class="news_line">
+                                <b class="news_line_left">国家省市</b>
+                                <p class="news_line_right">
+                                    <span class="pad_5"><%=result.po.country%></span>
+                                    <span class="pad_5"><%=result.po.province%></span>
+                                    <span class="pad_5"><%=result.po.city%></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <%}else{%>
+                    <div class="staus_sm">
+                        <div class="news_line">
+                            <b class="news_line_left vertarial_top"><span class="red">*</span>证件类型</b>
+                            <p class="news_line_right">
+                                <select class="news_select" id="smIds">
+                                    <option value="1">身份证</option>
+                                    <option value="2">营业执照</option>
+                                    <option value="3">护照</option>
+                                </select>
+                            </p>
+                        </div>
+                        <div class="news_line">
+                            <b class="news_line_left vertarial_top"><span class="red">*</span>证件照</b>
+                            <div class="head_portrait on">
+                                <div class="head_portrait_right on">
+                                    <div class="box_photo">
+                                        <div class="box_photo_left" id="uploader-demo1">
+                                            <div class="id_photo id_photo_qian" style="width:160px;height:100px;" id="filez">
+                                                <img class="" alt="点击图片上传" src="images/img_sfz.png" >
+                                            </div>
+                                            <label class="" id="filePicker1"></label>
+                                        </div>
+                                        <div class="box_photo_right" id="uploader-demo2">
+                                            <div class="id_photo id_photo_hou" style="width:160px;height:100px;" id="filef">
+                                                <img class="" alt="点击图片上传" src="images/img_sff.png" >
+                                            </div>
+                                            <label class="" id="filePicker2"> </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="news_line">
+                            <b class="news_line_left vertarial_top"><span class="red" >*</span>姓名</b>
+                            <p class="news_line_right">
+                                <input type="text" id="nameReal" class="news_inputText" name="" placeholder="请输入姓名">
+                            </p>
+                        </div>
+                        <div class="news_line">
+                            <b class="news_line_left vertarial_top"><span class="red">*</span>证件号</b>
+                            <p class="news_line_right">
+                                <input type="text" id="careId" class="news_inputText" name="" placeholder="请输入证件照">
+                            </p>
+                        </div>
+                        <div class="news_line">
+                            <b class="news_line_left float_left guo"><span class="red">*</span>国家省市</b>
+                            <div class="news_line_right">
+                                <div class="padbottom20"><select class="news_select dept_select" id="country"></select></div>
+                                <div class="padbottom20"><select class="news_select dept_select" id="province"></select></div>
+                                <div class="padbottom20"><select class="news_select dept_select" id="city"></select></div>
+                                </p>
+                            </div>
+                            <div class="news_line">
+                                <b class="news_line_left vertarial_top"></b>
+                                <p class="news_line_right">
+                                    <input type="submit" name="" value="提交实名审核" class="news_btn">
+                                    <span class="ts_message"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%include ('common/bottom')%>
+<%include ('common/foot_script')%>
+<script>
+    var share = {
+        title:"版权百科",
+        imgUrl:"http://"+location.host+"/app/images/img_fm.png",
+        link:location.href,
+        desc:"版权数据服务专家",
+        success:function(){
+            //$(".share").hide();
+        },
+        cancel:function(){
+
+        }
+    };
+</script>
+<script type="text/javascript" src="/app/lib/wx.js"></script>
+<script type="text/javascript" src="/app/lib/wx.util.js"></script>
+<script src="lib/jquery.md5.js"></script>
+<script src="lib/webuploader.js"></script>
+<script type="text/javascript" src="/lib/laypage.js"></script>
+<script type="text/javascript" src="javascripts/person_center.js"></script>
+<script type="text/javascript" src="lib/layer/layer.js"></script>
+<script type="text/javascript" src="lib/address/chosen.jquery.min.js"></script>
+<script type="text/javascript" src="lib/address/location_chs.js"></script>
+<script src="lib/shade_layer/shadeLayer.js"></script>
+<script>
+    $(function () {
+        var nickname,old_password,new_password,renew_password,nameReal,idStyle,careId,x_telephone,huoquAuthId;
+        //社团申请
+        $(".limit_color.on").on("click",function(){
+            var url="api/community/apply";
+            var datan={};
+            ajax(url,datan,function(data){
+                console.log(data);
+                $hint.open(data.resultMsg);
+                /*$(".news_line_right").children("span").text("申请中");*/
+                location.reload();
+            },function(data){
+                $hint.open(data.resultMsg);
+            })
+        })
+        //社团申请ajax
+
+        //修改数据
+        //昵称修改
+        nickname=$(".nickName_span").text();
+        $(".nickname").on('click',"#modify",function(){
+            /*var modifies='<input type="text" placeholder="请输入昵称" class="x_nickname"/> <a href="#" class="limit_color pd_20" id="save">保存</a>';
+            $(".nickname").html(modifies);*/
+           /* nickname = $(this).val();*/
+           $(".nickname_input").show().focus().val(nickname);
+           $("#save_name").show();
+            $(".nickName_span").hide();
+            $("#modify").hide();
+            $(".nickname_input").blur(function(){
+                nickname = $(this).val();
+                console.log(nickname);
+                var place=/\s{2,}/;
+                if(nickname==" "||nickname=="请输入昵称"||place.test(nickname)){
+                    /* $hint.open("昵称不能为空");*/
+                    nickname="";
+                }
+            })
+        });
+        $(".nickname").on("click","#save_name",function(){
+            if(nickname){
+                $(".nickName_span").show().text(nickname);
+                $("#modify").show();
+                $(".nickname_input").hide()
+                $("#save_name").hide();
+                var url="api/user/update";
+                var datan={nickName:nickname}
+                ajax(url,datan,function (data){
+                    $hint.open(data.resultMsg);
+                },function (data) {
+                    $hint.open(data.resultMsg);
+                })
+            }else if(nickname==""){
+                $hint.open("昵称不能为空");
+            }
+        })
+        $('.heightset').find(".prompt").html("");
+        //账号绑定
+    if($(".tsmr20").text()!=""){
+        $(this).attr("style","margin-right:20px")
+    }
+
+        function account_bd(){
+            var bChk_account,szReg1,regExp1,new_passwordAccount,renew_passwordAccount,ture1,ture2,ture3,x_email,flage;
+            $(".accountBind").on('click',"#clickAccount",function(){
+                $(".account_wrap").show();
+                szReg1=/^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;//邮箱
+                regExp1=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;//密码
+                x_email=$("#person_bindAccount").val();
+                console.log(x_email)
+                new_passwordAccount=$("#new_passwordAccount").val();
+
+                renew_passwordAccount=$("#renew_passwordAccount").val();
+
+                huoquAuthId=$("#huoquAuthId").text();
+
+                $("#person_bindAccount").blur(function(){
+                    x_email = $(this).val();
+                })
+                $("#new_passwordAccount").blur(function () {
+                    new_passwordAccount=$("#new_passwordAccount").val();
+                })
+                $("#renew_passwordAccount").blur(function () {
+                    renew_passwordAccount=$("#renew_passwordAccount").val();
+                })
+
+                $("#person_bindAccount").focus(function(){
+                    $('.heightset').find(".prompt").html("");
+                })
+                $("#new_passwordAccount").focus(function(){
+                    $('.heightset').find(".prompt").html("");
+                })
+                $("#renew_passwordAccount").focus(function(){
+                    $('.heightset').find(".prompt").html("");
+                })
+
+            });
+            $("#password_saveAccount").click(function(){
+                if(!szReg1.test(x_email)){
+                    $('.heightset').find(".prompt").text("请输入正取的邮箱地址");
+                }else if(!regExp1.test(new_passwordAccount)){
+                    $('.heightset').find(".prompt").text("密码必须由6-21位字母和数字组成");
+                }else if(new_passwordAccount!=renew_passwordAccount){
+                    $('.heightset').find(".prompt").text("两次密码输入不一致");
+                }else{
+                    var url="api/auth/account/bind";
+                    var datan={account:x_email,password:renew_passwordAccount,authId:huoquAuthId}
+                    ajax(url,datan,function (data){
+                        $('.heightset').find(".prompt").html(data.resultMsg);
+                        $(".account_wrap").hide();
+                        location.reload();
+                    },function (data) {
+                        $('.heightset').find(".prompt").html(data.resultMsg);
+                    })
+                }
+            })
+        }
+
+        $(".pad_h5 span").click(function(){
+            $(".account_wrap").hide();
+            $("#old_password").val("").attr("placeholder","请输入当前密码");
+            $("#new_password").val("").attr("placeholder","请输入请确认密码新密码");
+            $("#renew_password").val("").attr("placeholder","请输入当前密码");
+        })
+        account_bd();
+
+        //联系电话
+        var x_telephone;
+        x_telephone = $(".telephone_span").text();
+        $(".contact_telephone").on('click',"#modify_telephone",function(){
+            $(".telephone_input").show().focus().val(x_telephone);
+            $("#save_telephone").show();
+            $(".telephone_span").hide();
+            $("#modify_telephone").hide();
+            $(".telephone_input").blur(function(){
+                x_telephone = $(this).val();
+                console.log(x_telephone);
+            })
+        });
+        $(".contact_telephone").on("click","#save_telephone",function(){
+            var szReg=/^((\+?86)|(\(\+86\)))?(13[012356789][0-9]{8}|15[012356789][0-9]{8}|18[02356789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$/;
+            var bChk=szReg.test(x_telephone);
+            if(bChk){
+                $(".telephone_span").show().text(x_telephone);
+                $("#modify_telephone").show();
+                $(".telephone_input").hide();
+                $("#save_telephone").hide();
+
+                var url="api/user/update";
+                var datan={telephone:x_telephone}
+                ajax(url,datan,function (data){
+                    $hint.open(data.resultMsg);
+                },function (data) {
+                    $hint.open(data.resultMsg);
+                })
+            }else{
+                $hint.open("手机号不正确");
+            }
+        })
+
+
+
+        //密码修改
+        var old_password_flage=false;
+        $(".x_passsword").click(function(){
+            $(".password_x").show();
+            $("#old_password").val("");
+            $("#new_password").val("");
+            $("#renew_password").val("");
+        })
+        old_password=$("#old_password").val();
+        $("#old_password").blur(function(){
+            old_password =  $(this).val();
+            console.log(old_password);
+            if(old_password==" "){
+                $(".prompt").html("当前密码不能为空")
+            }else{
+                var url="personal/user/queryPassword";
+                var datan={password:old_password};
+                ajax(url,datan,function(data){
+                    /* $(".prompt").html(data.resultMsg);*/
+                    old_password_flage=true;
+                },function(data){
+                    $(".prompt").html(data.resultMsg).css("display","block");
+                })
+            }
+        })
+        $("#old_password").focus(function(){
+            $(".prompt").html(" ");
+        })
+        new_password= $("#new_password").val();
+        if(new_password=="请输入新密码"){
+            new_password=" ";
+        }
+        $("#new_password").blur(function(){
+            new_password = $(this).val();
+            console.log(new_password);
+        })
+        $("#new_password").focus(function(){
+            new_password = $(this).val();
+            $(".prompt").html(" ");
+        })
+        /* renew_password= $("#new_password").val();*/
+        $("#renew_password").blur(function(){
+            renew_password = $(this).val();
+            console.log(renew_password,"确认密码");
+        })
+        //在这里编辑
+        $("#password_save").on("click",function(){
+            var regExp=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,21}$/;
+            if(old_password_flage){
+                if(new_password==""){
+                    $(".prompt").html("新密码不能为空");
+                }else if(!regExp.test(new_password)){
+                    $(".prompt").html("密码必须由6-21位字母和数字组成");
+                }else if(renew_password==""){
+                    $(".prompt").html("确认密码不能为空");
+                }else if(new_password!==renew_password){
+                    $(".prompt").html("两次输入密码不一样");
+                }else{
+                    $(".prompt").html(" ");
+                    renew_password=$("#renew_password").val();
+                    console.log(renew_password);
+                    var url="api/user/updatePassword";
+                    console.log(old_password,"ceshi")
+                    var datan={password:renew_password,oldpassword:old_password};
+                    ajax(url,datan,function(data){
+                        /*$(".prompt").html(data.resultMsg);*/
+                        $hint.open(data.resultMsg);
+                        $(".password_x").hide();
+                        $("#old_password").val("").attr("placeholder","请输入当前密码");
+                        $("#new_password").val("").attr("placeholder","请输入请确认密码新密码");
+                        $("#renew_password").val("").attr("placeholder","请输入当前密码");
+                    })
+                }
+            }
+
+        })
+        // 喜好修改
+        $(".likes").on("click",function(){
+            var likes=[];
+            $(".margin_right20").each(function(){
+                if($(this).hasClass("on")){
+                    likes.push($(this).children(".vertial_middle").attr("class").split(" ")[1]);
+                }
+            })
+            console.log(typeof likes);
+            console.log(likes);
+            var likes1=likes.join(",");
+            console.log(likes1);
+            var url="api/user/update";
+            var datan={likeType:likes1}
+            ajax(url,datan,function (data) {
+                $hint.open(data.resultMsg);
+            },function(data){
+                $hint.open(data.resultMsg);
+            })
+        })
+
+        //头像上传
+        var coverImgContent0="",webfilepath0='';
+        function touxiang(){
+            var api_domain = "http://tmpfs.banquanbaike.com.cn/",
+         /*   var api_domain = "http://tmpfs.banquanjia.com.cn/",*/
+                chunkSize = 4*1024*1024,
+                $list = $("#fileList"),
+                check_url = api_domain+"file/upload/check",
+                // 缩略图大小
+                ratio = window.devicePixelRatio || 1,
+                thumbnailWidth = 100 * ratio,
+                thumbnailHeight = 100 * ratio;
+            function generateUUID() {
+                var d = new Date().getTime();
+                var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = (d + Math.random()*16)%16 | 0;
+                    d = Math.floor(d/16);
+                    return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+                });
+                return uuid;
+            };
+            function getFileUid(file){
+                return $.md5(file.name+"_"+file.size+"_"+file.lastModifiedDate.getTime()) ;
+            }
+
+            var uploader = WebUploader.create({
+                auto:true,
+                server: api_domain+'file/upload?X-Progress-ID='+generateUUID(),
+                swf: 'http://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf',
+                pick: {id:'#filePicker',multiple: false},
+                resize: false,
+                preserveHeaders: true,
+                accept: {title: 'Images',extensions: 'gif,jpg,jpeg,bmp,png',mimeTypes: 'image/*'}
+            }).on( 'fileQueued', function( file ) {
+                var $li = $('<div id="' + file.id + '" class="file-item thumbnail">' + '<img>' + '<div class="info">' + file.name + '</div>' + '</div>'),
+                    $img = $li.find('img');
+                $list.html( $li ); // $list为容器jQuery实例
+                uploader.makeThumb( file, function( error, src ) {
+                    if ( error ) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+                    $img.attr( 'src', src );
+                }, thumbnailWidth, thumbnailHeight );
+            }).on( 'uploadSuccess', function( file ,data ) {
+                coverImgContent0=data.result.sourceId;
+                webfilepath0=data.result.webfilepath;
+                $( '#'+file.id ).addClass('upload-state-done');
+            }).on( 'uploadError', function( file ) {
+                var $li = $( '#'+file.id ),
+                    $error = $li.find('div.error');
+
+                // 避免重复创建
+                if ( !$error.length ) {
+                    $error = $('<div class="error"></div>').appendTo( $li );
+                }
+                $error.text('上传失败');
+            }).on( 'uploadComplete', function( file ) {
+            });
+            uploader.on("uploadFinished",function(){
+                if(coverImgContent0!==" "){
+                    /* ModifyAjax({photo:coverImgContent0})*/
+                    var url="api/user/update";
+                    var datan={photo:coverImgContent0};
+                    ajax(url,datan,function(data){
+                        $hint.open(data.resultMsg);
+                        var usephoto=data.result.photo;
+                        $.ajax({
+                            url:"/user/update",
+                            type:'get',
+                            data:{usephoto:usephoto},
+                            success:function(data){
+                                if(data.status){
+                                    $('.user_title').find('img').attr('src',usephoto);
+                                }
+                            }
+                        })
+                    })
+                }else{
+                    $hint.open("请添加上传的封面图片");
+                }
+            });
+        }
+        touxiang();
+        var coverImgContent1,coverImgContent2,z="",f="";//我在想想办法吧，你你是获取不到值吗？ 是的
+        function careId_z(){
+          /*  var api_domain = "http://tmpfs.banquanjia.com.cn/",*/
+                    var api_domain = "http://tmpfs.banquanbaike.com.cn/",//线上
+                chunkSize = 4*1024*1024,
+                $list = $("#filez"),
+                check_url = api_domain+"file/upload/check",
+                // 缩略图大小
+                ratio = window.devicePixelRatio || 1,
+                thumbnailWidth = 100 * ratio,
+                thumbnailHeight = 100 * ratio;
+            function generateUUID() {
+                var d = new Date().getTime();
+                var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = (d + Math.random()*16)%16 | 0;
+                    d = Math.floor(d/16);
+                    return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+                });
+                return uuid;
+            };
+
+            function getFileUid(file){
+                return $.md5(file.name+"_"+file.size+"_"+file.lastModifiedDate.getTime()) ;
+            }
+
+            var uploader = WebUploader.create({
+                auto:true,
+                server: api_domain+'file/upload?X-Progress-ID='+generateUUID(),
+                swf: 'http://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf',
+                pick: {id:'#filePicker1', multiple: false},
+                resize: false,
+                preserveHeaders: true,
+                accept: {title: 'Images', extensions: 'gif,jpg,jpeg,bmp,png', mimeTypes: 'image/*'}
+            }).on( 'fileQueued', function( file ) {
+                var $li = $('<div id="' + file.id + '" class="file-item thumbnail">' + '<img>' + '<div class="info">' + file.name + '</div>' + '</div>'),
+                    $img = $li.find('img');
+                $list.html( $li ); // $list为容器jQuery实例
+                uploader.makeThumb( file, function( error, src ) {
+                    if ( error ) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+                    $img.attr( 'src', src );
+                }, thumbnailWidth, thumbnailHeight );
+            }).on( 'uploadSuccess', function( file ,data ) {
+                /* console.log(data,"上传成功后的传入值");*/
+                coverImgContent1=data.result.sourceId;//得到的值
+                $( '#'+file.id ).addClass('upload-state-done');
+            }).on( 'uploadError', function( file ) {
+                var $li = $( '#'+file.id ),
+                    $error = $li.find('div.error');
+                if ( !$error.length ) { // 避免重复创建
+                    $error = $('<div class="error"></div>').appendTo( $li );
+                }
+                $error.text('上传失败');
+            }).on( 'uploadComplete', function( file ) {
+            });
+            uploader.on("uploadFinished",function() {
+                if (coverImgContent1!== " ") {
+                    z=coverImgContent1;
+                    console.log(z+"值1");
+                } else {
+                    $hint.open("请添加上传的封面图片");
+                }
+            })
+        }
+        function careId_f(){
+            var api_domain = "http://tmpfs.banquanbaike.com.cn/",//线上
+           /* var api_domain = "http://tmpfs.banquanjia.com.cn/",*/
+                chunkSize = 3*1024*1024,
+                $list = $("#filef"),
+                check_url = api_domain+"file/upload/check",
+                ratio = window.devicePixelRatio || 1,
+                thumbnailWidth = 100 * ratio,
+                thumbnailHeight = 100 * ratio;
+            function generateUUID() {
+                var d = new Date().getTime();
+                var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = (d + Math.random()*16)%16 | 0;
+                    d = Math.floor(d/16);
+                    return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+                });
+                return uuid;
+            };
+            function getFileUid(file){
+                return $.md5(file.name+"_"+file.size+"_"+file.lastModifiedDate.getTime()) ;
+            }
+            var uploader = WebUploader.create({
+                auto:true,
+                server: api_domain+'file/upload?X-Progress-ID='+generateUUID(),
+                swf: 'http://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf',
+                pick: {id:'#filePicker2', multiple: false},
+                resize: false,
+                preserveHeaders: true,
+                //添加
+                /*  duplicate:true,*/
+                /* multiple: false,*/
+                /*  threads :1,//上传并发数，允许同时最大上传进程数
+                 fileNumLimit:1,//验证文件总数量, 超出则不允许加入队列。*/
+                /*  chunkRetry:false,//如果失败，则不重试*/
+                //结束
+                accept: {title: 'Images', extensions: 'gif,jpg,jpeg,bmp,png', mimeTypes: 'image/*'}
+            }).on( 'fileQueued', function( file ) {
+                var $li = $('<div id="' + file.id + '" class="file-item thumbnail">' + '<img>' + '<div class="info">' + file.name + '</div>' + '</div>'),
+                    $img = $li.find('img');
+                $list.html( $li ); // $list为容器jQuery实例
+                uploader.makeThumb( file, function( error, src ){
+                    if ( error ) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+                    $img.attr( 'src', src );
+                }, thumbnailWidth, thumbnailHeight );
+            }).on( 'uploadSuccess', function( file ,data ) {
+                /* console.log(data,"上传成功后的传入值");*/
+                coverImgContent2=data.result.sourceId;//得到的值
+                $( '#'+file.id ).addClass('upload-state-done');
+            }).on( 'uploadError', function( file ) {
+                var $li = $( '#'+file.id ),
+                    $error = $li.find('div.error');
+                // 避免重复创建
+                if ( !$error.length ) {
+                    $error = $('<div class="error"></div>').appendTo( $li );
+                }
+                $error.text('上传失败');
+            }).on( 'uploadComplete', function( file ) {
+            });
+            uploader.on("uploadFinished",function() {
+                if (coverImgContent2!== " ") {
+                    f=coverImgContent2;// 赋值
+                    console.log(f+"值2");
+                } else {
+                    $hint.open("请添加上传的封面图片");
+                }
+            })
+        }
+        //实名制
+        idStyle= $("#smIds").val();
+        console.log(idStyle,"最开始");
+
+        $("#smIds").change(function (){
+            idStyle = $("#smIds  option:selected").val();
+            console.log(idStyle);
+            if(idStyle!="1"){
+                $(".box_photo_right").addClass("on");
+            }else {
+                $(".box_photo_right").removeClass("on");
+            }
+        })
+        careId= $("#careId").val();
+        $("#careId").blur(function(){
+            careId=$(this).val();
+            console.log(careId,"证件值");
+        })
+        nameReal= $("#nameReal").val();
+        $("#nameReal").blur(function(){
+            nameReal=$(this).val();
+            console.log(nameReal);
+        })
+        function Name(name) {
+            var pattern=/[`~%!@#^=''?~！@#￥……&——‘”“'？*()（），,。.、]/;
+            if(!pattern.test(name)){
+                var regName =/[\u4E00-\u9FA5]{2,5}(?:·[a-zA-Z]{2,20})*/;
+                if(!regName.test(name)){
+                    return false;
+                }else{
+                    return true;
+                }
+            }else{
+                return false;
+            }
+        }
+        function isPassport(number){
+            var str=number;
+//在JavaScript中，正则表达式只能使用"/"开头和结束，不能使用双引号
+            var Expression=/(P\d{7})|(G\d{8})/;
+            var objExp=new RegExp(Expression);
+            if(objExp.test(str)==true){
+                return true;
+            }else{
+                return false;
+            }
+        };
+        //判断是否为统一社会信用代码格式（营业执照）；
+        function isEnterpriseSCCode(obj) {
+            //代码字符集-代码字符
+            var charCode = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","J","K","L","M","N","P","Q","R","T","U","W","X","Y"];
+            //代码字符集-代码字符数值
+            var charVal = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+            //各位置序号上的加权因子
+            var posWi = [1,3,9,27,19,26,16,17,20,29,25,13,8,24,10,30,28];
+            //统一代码由十八位的数字或大写英文字母（不适用I、O、Z、S、V）组成，第18位为校验位。
+            //第1位为数字或大写英文字母，登记管理部门代码
+            //第2位为数字或大写英文字母，机构类别代码
+            //第3到8位共6位全为数字登记管理机关行政区划码
+            //第9-17位共9位为数字或大写英文字母组织机构代码
+            //第18为为数字或者大写的Y
+            var city = { 11: "北京", 12: "天津", 13: "河北", 14: "山西", 15: "内蒙古", 21: "辽宁", 22: "吉林", 23: "黑龙江 ", 31: "上海", 32: "江苏", 33: "浙江", 34: "安徽", 35: "福建", 36: "江西", 37: "山东", 41: "河南", 42: "湖北 ", 43: "湖南", 44: "广东", 45: "广西", 46: "海南", 50: "重庆", 51: "四川", 52: "贵州", 53: "云南", 54: "西藏 ", 61: "陕西", 62: "甘肃", 63: "青海", 64: "宁夏", 65: "新疆", 71: "台湾", 81: "香港", 82: "澳门", 91: "国外" };
+            var reg = /^([0-9ABCDEFGHJKLMNPQRTUWXY]{2})([0-9]{6})([0-9ABCDEFGHJKLMNPQRTUWXY]){10}$/;
+            if (obj.length != 0) {
+                if (!reg.test(obj)) {
+                    return false;
+                }
+                else if (!city[obj.substr(2, 2)]) {
+                    return false;
+                }
+                else {
+                    //校验位校验
+                    obj = obj.split('');
+                    //∑(ci×Wi)(mod 31)
+                    var sum = 0;
+                    var ci = 0;
+                    var Wi = 0;
+                    for (var i = 0; i < 17; i++) {
+                        ci = charVal[charCode.indexOf(obj[i])];
+                        Wi = posWi[i];
+                        sum += ci * Wi;
+                    }
+                    var c10 = 31 - (sum % 31);
+                    c10 = 31 == c10 ? 0 : c10;
+                    return c10 == charCode.indexOf(obj[17]);
+                }
+                return true;
+            }
+        }
+        //身份证验证
+        function IdentityCodeValid(code) {
+            var city={11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",21:"辽宁",22:"吉林",23:"黑龙江 ",31:"上海",32:"江苏",33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南",42:"湖北 ",43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆",51:"四川",52:"贵州",53:"云南",54:"西藏 ",61:"陕西",62:"甘肃",63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门",91:"国外 "};
+            var tip = "";
+            var pass= true;
+
+            if(!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)){
+                tip = "身份证号格式错误";
+                pass = false;
+            }
+
+            else if(!city[code.substr(0,2)]){
+                tip = "地址编码错误";
+                pass = false;
+            }
+            else{
+                //18位身份证需要验证最后一位校验位
+                if(code.length == 18){
+                    code = code.split('');
+                    //∑(ai×Wi)(mod 11)
+                    //加权因子
+                    var factor = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 ];
+                    //校验位
+                    var parity = [ 1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2 ];
+                    var sum = 0;
+                    var ai = 0;
+                    var wi = 0;
+                    for (var i = 0; i < 17; i++)
+                    {
+                        ai = code[i];
+                        wi = factor[i];
+                        sum += ai * wi;
+                    }
+                    var last = parity[sum % 11];
+                    if(parity[sum % 11] != code[17]){
+                        tip = "校验位错误";
+                        pass =false;
+                    }
+                }
+            }
+            return pass;
+        }
+
+
+        //三级联动
+        var country = '';
+        for (var a=0;a<=_areaList.length-1;a++) {
+            var objContry = _areaList[a];
+            country += '<option value="'+objContry+'" a="'+(a+1)+'">'+objContry+'</option>';
+        }
+        $("#country").html(country).chosen({search_contains: true}).change(function(){
+            var a = $("#country").find("option[value='"+$("#country").val()+"']").attr("a");
+            var _province = areaObj[a];
+            var province = '';
+            for (var b in _province) {
+                var objProvince = _province[b];
+                if (objProvince.n) {
+                    province += '<option value="'+objProvince.n+'" b="'+b+'">'+objProvince.n+'</option>';
+                }
+            }
+            if (!province) {
+                province = '<option value="" b="0">--</option>';
+            }
+            $("#province").html(province).chosen({search_contains: true}).change(function(){
+                var b = $("#province").find("option[value='"+$("#province").val()+"']").attr("b");
+                var _city = areaObj[a][b];
+                var city = '';
+                for (var c in _city) {
+                    var objCity = _city[c];
+                    if (objCity.n) {
+                        city += '<option value="'+objCity.n+'">'+objCity.n+'</option>';
+                    }
+                }
+                if (!city) {
+                    var city = '<option value="">--</option>';
+                }
+                $("#city").html(city).chosen({search_contains: true}).change();
+                $(".dept_select").trigger("chosen:updated");
+            });
+            $("#province").change();
+            $(".dept_select").trigger("chosen:updated");
+        });
+        $("#country").change();
+        careId_f();
+        careId_z();
+        setInterval(function(){
+            console.log(z,f);
+        },2000)
+        var urluploadT="api/user/realName";
+        $(".news_btn").click(function(){
+            if(idStyle=="1"){
+                if(z==""){
+                    $hint.open("请上传证件正面");
+                }else if(f==""){
+                    $hint.open("请上传证件反面");
+                }else if(!Name(nameReal)){
+                    $hint.open("请填写正确的姓名");
+                }else if(!IdentityCodeValid(careId)){
+                    $hint.open("请填写正确的证件号码");
+                }else{
+                    var datan={
+                        cardType:idStyle,
+                        attr1:z,
+                        attr2:f,
+                        name:nameReal,
+                        cardNo:careId,
+                        country:$("#country").val(),
+                        province:$("#province").val(),
+                        city:$("#city").val()
+                    }
+                    ajax(urluploadT,datan,function(data){
+                        $hint.open(data.resultMsg);
+                        location.reload();
+                    },function(data){
+                        $hint.open(data.resultMsg);
+                    });
+                }
+            }else if(idStyle=="2"){
+                if(z==""){
+                    $hint.open("请上传证件");
+                }else if(!Name(nameReal)){
+                    $hint.open("请填写正确的姓名");
+                }else if(!isEnterpriseSCCode(careId)){
+                    $hint.open("请填写正确的证件号码");
+                }else{
+                    var datan={
+                        cardType:idStyle,
+                        attr1:z,
+                        attr2:"",
+                        name:nameReal,
+                        cardNo:careId,
+                        country:$("#country").val(),
+                        province:$("#province").val(),
+                        city:$("#city").val()
+                    }
+                    ajax(urluploadT,datan,function(data){
+                        $hint.open(data.resultMsg);
+                        location.reload();
+                    },function(data){
+                        $hint.open(data.resultMsg);
+                    })
+                }
+            }else if(idStyle=="3"){
+                if(z==""){
+                    $hint.open("请上传证件");
+                }else if(!Name(nameReal)){
+                    $hint.open("请填写正确的姓名");
+                }else if(!isPassport(careId)){
+                    $hint.open("请填写正确的证件号码");
+                }else {
+                    var datan = {
+                        cardType: idStyle,
+                        attr1: z,
+                        attr2: "",
+                        name: nameReal,
+                        cardNo: careId,
+                        country: $("#country").val(),
+                        province: $("#province").val(),
+                        city: $("#city").val()
+                    }
+                    ajax(urluploadT, datan, function (data) {
+                        $hint.open(data.resultMsg);
+                        location.reload();
+                    }, function (data) {
+                        $hint.open(data.resultMsg);
+                    })
+                }
+            }
+        })
+        //ajax的封装
+        //可以传的参数。   curl，data，function（）；
+        function ajax(url,data,succCallback,errorCallback){
+            $.ajax({
+                url:url,
+                type:"post",
+                data:data,
+                success:function(data){
+                    if(data.status){
+                        if(data.data.resultCode==200){
+                            if(succCallback){
+                                succCallback(data.data);
+                            }
+                        }else{
+                            if(errorCallback){
+                                errorCallback(data.data);
+                            }
+                        }
+                    }else{
+                        $hint.open(data.resultMsg);
+                    }
+                }
+            })
+        }
+    });
+</script>
+
+</body>
+</html>

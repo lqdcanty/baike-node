@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>版权百科</title>
+    <link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="stylesheets/webuploader.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/common.css"/>
+    <link rel="stylesheet" href="lib/layer/skin/default/layer.css">
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/person_center.css"/>
+    <% include('common/baidu_tj') %>
+</head>
+<body>
+<% include('./common/header')%>
+<div class="wrap" id="warp_height">
+    <div class="person_center text_center" style="padding-bottom: 100px">
+        <div class="pc_out">
+            <ul class="pc_nav inline_block">
+                <li class="inline_block">
+                    <a href="person_set">个人设置</a>
+                </li>
+                <li class="inline_block">
+                    <a href="entry">词条任务</a>
+                <li class="inline_block">
+                    <a href="my_editor">我的编辑</a>
+                </li>
+                <li class="inline_block">
+                    <a href="all_news">消息通知</a>
+                </li>
+                <li class="inline_block on">
+                    <a href="javascript:void(0)">创建词条</a>
+                </li>
+                <%if(useInfo.loginUser.isCommunity=='2'){%>
+                    <li class="inline_block">
+                        <a href="workAudit">作品词条审核</a>
+                    </li>
+                    <li class="inline_block">
+                        <a href="myAudit">我的审核</a>
+                    </li>
+                <%}%>
+                <li class="inline_block">
+                    <a href="attentionWork">关注作品</a>
+                </li>
+            </ul>
+        </div>
+        <div class="pc_nav_div">
+            <div class="createntry">
+                <div class="news_line clearfix">
+                    <b class="news_line_left">
+                        <span class="red">*</span>
+                        <span class="entry_style">创建作品词条</span>
+                    </b>
+                    <div class="news_line_right">
+                        <input type="text" placeholder="请输入作品名称" class="word_name changeColor" >
+                    </div>
+                </div>
+                <div class="news_line clearfix">
+                    <b class="news_line_left">
+                        <span class="red">*</span>
+                        <span class="entry_style">选择作品主标签</span>
+                    </b>
+                    <div class="news_line_right word_style">
+                        <div class="bigType">
+
+                        </div>
+                        <div class="tipSmallType">
+                            <b class="news_line_left">
+                                <span class="red">*</span>
+                                <span class="entry_style">选择作品子标签</span>
+                            </b>
+                        </div>
+                        <div class="SmallTypeBox">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="news_line clearfix">
+                    <b class="news_line_left">
+                        <span class="red"></span>
+                        <span class="entry_style">添加作品其他标签</span>
+                    </b>
+                    <div class="news_line_right text_left">
+                        <p>请为该作品添加其它标签。如：创作者，表演者，演员，导演等信息</p>
+                        <p class="add_creatBox"></p>
+                        <input type="text" class="input_label" placeholder="请输入添加标签">
+                        <p><a href="javascript:void(0);" class="add_entry"><img src="images/icon_zj.png" alt=""><span>增加</span></a></p>
+                    </div>
+                </div>
+                <div class="news_line clearfix">
+                    <b class="news_line_left">
+                        <span class="red"></span>
+                        <span class="entry_style">副标题</span>
+                    </b>
+                    <div class="news_line_right" style="line-height:20px;">
+                        <textarea placeholder="副标题不能超出100个字符" class="subtitle changeColor"></textarea>
+                    </div>
+                </div>
+                <div class="news_line clearfix">
+                    <b class="news_line_left">
+                        <span class="red">*</span>
+                        <span class="entry_style">上传封面</span>
+                    </b>
+                    <div class="news_line_right" >
+                        <div class="upload_fm" id="uploadp">
+                            <div class="id_photo1 border1"  id="file">
+                                <img alt="点击图片上传" src="images/icon_zjfm1.png" class="yl">
+                            </div>
+                            <label class="" id="filePicker"></label>
+                            <div class="loadShow ">
+                                <div class="contentCenter clearfix">
+                                    <div class="loadAnimation">
+                                        <div class="outCircle"></div>;
+                                        <div class="innerCircle"></div>
+                                    </div>
+                                    <div class="loadText">上传中...</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="upload_fm_tips">
+                            <span class="red">*</span><span class="bold">格式：</span>.jpg,.png,.jpeg
+                            <span class="bold">大小：</span>单张限制1M以内
+                        </div>
+                    </div>
+                </div>
+                <div class="news_line clearfix" style="margin-top:40px;">
+                    <b class="news_line_left" style="height: 10px;">
+                    </b>
+                    <div class="news_line_right text_left">
+                        <a href="#" class="add_creatEntry_a" id="add_creatEntry_a">创建作品词条</a>
+                    </div>
+                </div>
+                <!--新增加的模块-->
+                <div class="isBeingEntry">
+                    <h1>尊敬的用户：</h1>
+                    <p class="isBeingEntryTip">通过您输入的信息我们在版权百科中找到以下作品词条。</p>
+                    <div class="BeingEntryContent clearfix">
+                        <div class="EntryContentImg float_left">
+                            <img src="images/fm_1 (2).png" alt="" id="EntryContentImg">
+                        </div>
+                        <div class="EntryContentText float_left">
+                            <p class="headings" id="headings">三年二班</p>
+                            <p class="submitX" id="submitX">(收录在周杰伦2003年发行的专辑《叶惠美》中)</p>
+                            <div class="EntryContentTag">
+                                <a href="#" class="on" id="one">音乐</a>
+                                <a href="#" id="two">词谱</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="perfectWork">
+                        <a href="#" class="" id="perfectWorkA" target="_blank">完善该词条</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%include ('./common/bottom')%>
+<%include ('./common/foot_script')%>
+<script>
+    var share = {
+        title:"版权百科-创建词条",
+        imgUrl:"http://"+location.host+"/app/images/img_fm.png",
+        link:location.href,
+        desc:"版权数据服务专家",
+        success:function(){
+            //$(".share").hide();
+        },
+        cancel:function(){
+
+        }
+    };
+</script>
+<script type="text/javascript" src="/app/lib/wx.js"></script>
+<script type="text/javascript" src="/app/lib/wx.util.js"></script>
+<script src="lib/webuploader.js"></script>
+<script type="text/javascript" src="javascripts/person_center.js"></script>
+<script type="text/javascript" src="/lib/laypage.js"></script>
+<script type="text/javascript" src="lib/layer/layer.js"></script>
+<script src="lib/shade_layer/shadeLayer.js"></script>
+<script>
+    var arr=[];
+    function clickFunction(ele){
+        var cur= $(ele).siblings("b").text();
+        $(".addE").each(function(){
+            var i=$(this).index();
+           // console.log(i)
+            if($(this).children("b").text()==cur){
+                arr.splice(i,1);
+                $(ele).parent("span").remove();
+            }
+        })
+        ///console.log(arr,"zui");
+    }
+
+    $(function () {
+        var coverImgContent,coverValue,true3=true,subtitleTrue2=false,i=0,qtbq,other_label,smallType;
+        var main_label="小说",otherEntryInput,word_name="",ajax_flag=false,true2,subtitle="",labelHtml="",fileId="";
+        //动态获取标签
+        $.ajax({
+            type:"get",
+            url:"/api/work/label",
+            success: function (data){
+                if(data.data.resultCode == 200){
+                    //遍历获取标签；
+                    var result=data.data.result;
+                    var SmallTypeOutHtml;
+                    for(var i=0;i<result.length;i++){
+                        labelHtml+="<a href='javascript:void(0);'>"+result[i].type+"</a>";
+                        SmallTypeOutHtml+="<div class='news_line_right word_style SmallTypeOut'>";
+                        for(var j=0;j<result[i].tags.length;j++){
+                            if(result[i].type=="文字"&&(j==result[i].tags.length-1)){
+                                SmallTypeOutHtml+="<a href='javascript:void(0);' class='otherEntry'>"+result[i].tags[j]+"</a>"+"<input type='text' class='otherEntryInput'>";
+                            }else{
+                                SmallTypeOutHtml+="<a href='javascript:void(0);'>"+result[i].tags[j]+"</a>";
+                            }
+                        }
+                        SmallTypeOutHtml+="</div>";
+                    }
+
+
+                    $(".bigType").html(labelHtml);
+                    //$(".bigType").children("a").eq(0).addClass("on");
+                    $(".SmallTypeBox").html(SmallTypeOutHtml);
+                   // $(".SmallTypeBox").children("a").eq(0).addClass("on");
+                    //点击标签
+                    $(".bigType a").each(function (index,element){
+                        var _index=index;
+                        $(".bigType a").eq(_index).on("click",function () {
+                            main_label=$(this).text();
+                            $(".SmallTypeBox").show();
+                            $(this).addClass("on").siblings("a").removeClass("on");
+                            $(".tipSmallType").show();
+                            $(".SmallTypeBox .SmallTypeOut").eq(_index).show().siblings().hide().children("a").removeClass("on");
+                            smallType="";
+                        })
+                    })
+                    //展示小标签；
+                    $(".SmallTypeBox").on("click",".SmallTypeOut a",function () {
+                        $(this).addClass("on").siblings("a").removeClass("on");
+                        if($(this).hasClass("otherEntry")){
+                            $(this).hide();
+                            $(".otherEntryInput").show().focus();
+                        }else{
+                            $(".otherEntryInput").val("");
+                            smallType=$(this).text();
+                            $(".otherEntry").text("其他");
+                            getRespons();
+                            //console.log(smallType);
+                        }
+                    })
+
+                    //关于文学中其他的小标签的
+                    $(".otherEntryInput").blur(function(){
+                        otherEntryInput=$(".otherEntryInput").val();
+                        //.log(otherEntryInput)
+                        if(otherEntryInput==""){
+                            $(".otherEntry").show().removeClass("on").text("其他");
+                            $(this).hide();
+                            smallType="";
+                        }else{
+                            $(".otherEntry").show().text(otherEntryInput);
+                            $(this).hide();
+                            //console.log(otherEntryInput,"ol");
+                            smallType=otherEntryInput;
+                            getRespons();
+                        }
+                    })
+
+                }
+            }
+        })
+
+        function addentry() {
+            //获取作品其他的填写标签
+            var true2;
+            $(".add_entry").click(function(){
+                $(".input_label").show().focus().val("");
+            })
+            $(".input_label").blur(function(){
+                other_label=$(this).val();
+                if(other_label==""){
+                    $hint.open("输入内容不能为空");
+                }else{
+                    var htmlContent='<span class="addE"><b>'+other_label+'</b><img class="removeImg" src="../images/icon_sct.png" onclick="clickFunction(this)"/></span>'
+                    $(".add_creatBox").attr("style","display:inline-block");
+                    $(".add_creatBox").append(htmlContent);
+                    arr.push(other_label);
+                    $(this).hide();
+                    //console.log(other_label);
+                }
+            })
+
+            $(".word_name").blur(function () {
+                word_name=$(this).val();
+                getRespons();
+            })
+            $(".changeColor").blur(function(){
+                $(this).attr("style","color:#333");
+            })
+
+            $(".changeColor").focus(function(){
+                $(this).attr("style","color:#999");
+            })
+            //subtitle=$(".subtitle").val();
+            $(".subtitle").blur(function () {
+                subtitle=$(this).val();
+                //console.log(subtitle);
+                if(subtitle.length<100){
+                    subtitleTrue2=true;
+                }else{
+                    subtitleTrue2=false;
+                    $hint.open("填入内容已超过限制");
+                }
+            })
+            //封面
+
+            /*var api_domain = "http://tmpfs.banquanjia.com.cn/",*/
+            var api_domain = "http://tmpfs.banquanbaike.com.cn/",//线上
+                chunkSize = 4*1024*1024,
+                $list = $("#file"),
+                check_url = api_domain+"file/upload/check",
+                // 缩略图大小
+                ratio = window.devicePixelRatio || 1,
+                thumbnailWidth = 120 * ratio,
+                thumbnailHeight = 120 * ratio;
+            function generateUUID() {
+                var d = new Date().getTime();
+                var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = (d + Math.random()*16)%16 | 0;
+                    d = Math.floor(d/16);
+                    return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+                });
+                return uuid;
+            };
+
+            function getFileUid(file){
+                return $.md5(file.name+"_"+file.size+"_"+file.lastModifiedDate.getTime()) ;
+            }
+
+            var uploader = WebUploader.create({
+                auto:true,
+                server: api_domain+'file/upload?X-Progress-ID='+generateUUID(),
+                swf: 'http://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf',
+                pick: {id:'#filePicker', multiple: false},
+                resize: false,
+                preserveHeaders: true,
+                accept: {title: 'Images', extensions: 'gif,jpg,jpeg,bmp,png', mimeTypes: 'image/*'}
+            }).on( 'fileQueued', function( file ) {
+                var $li = $('<div id="' + file.id + '" class="item"><img><i class="del-imgBtn"></i><span class="border-item"></span><img src="" alt="" class=""></div>'),
+                    $img = $li.find('img');
+                    fileId= file.id;
+                console.log(file.id,"xiu");
+                $(".loadShow").show();
+                $list.html( $li ); // $list为容器jQuery实例
+                $li.find('.del-imgBtn').click(function () {
+                    uploader.removeFile( file.id,true  );
+                    $li.remove();
+                    $(".upload_fm").attr("style","background:url(/images/icon_zjfm1.png) no-repeat center center/cover!important");
+                    coverValue="";
+                    $(".loadShow").hide();
+                });
+                uploader.makeThumb( file, function( error, src ) {
+                    if ( error ) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+                    $img.attr( 'src', src );
+                }, thumbnailWidth, thumbnailHeight );
+            }).on( 'uploadSuccess', function( file ,data ) {
+                coverImgContent=data.result.sourceId;//得到的值
+                $( '#'+file.id ).addClass('upload-state-done');
+            }).on( 'uploadError', function( file ) {
+                var $li = $( '#'+file.id ),
+                    $error = $li.find('div.error');
+                if ( !$error.length ) { // 避免重复创建
+                    $error = $('<div class="error"></div>').appendTo( $li );
+                }
+                $error.text('上传失败');
+            }).on( 'uploadComplete', function( file ) {
+            });
+            uploader.on("uploadFinished",function() {
+                if (coverImgContent!== " "&&coverImgContent!=undefined) {
+                    coverValue=coverImgContent;
+                    $(".loadShow").hide();
+                    console.log(coverValue+"图片的地址");
+                } else {
+                    $(".loadShow").hide();
+                    $(".upload_fm").attr("style","background:url(/images/icon_zjfm1.png) no-repeat center center/cover!important");
+                    /*$("#file").children(".item").remove();
+                    $("#filePicker").children().remove();*/
+                    $hint.open("图片上传不成功");
+                }
+            })
+        }
+        addentry();
+
+        //是否已经存在刚刚输入的词条
+        function getRespons() {
+            if (word_name && main_label && smallType) {
+                var url = "api/work/add";
+                var datan;
+                datan = {name: word_name, type: main_label, smallType: smallType};
+                $.ajax({
+                    type: "get",
+                    url: '/api/work/whether/exist?name=' + word_name + '&type=' + main_label + '&smallType=' + smallType,
+                    success: function (data) {
+                        var _data = data.data;
+                        if (_data.resultCode == 200) {
+                            var data0 = _data.result;
+                            if (data0.status) {
+                                $(".isBeingEntry").show();
+                                $("#EntryContentImg").attr("src", data0.work.cover);
+                                $("#headings").text(data0.work.name);
+                                $("#submitX").text(data0.work.workTitle)
+                                $("#one").text(data0.work.tags[0]);
+                                $("#two").text(data0.work.tags[1]);
+                                $("#perfectWorkA").attr("href", "/item/" + data0.work.seqNo);
+                            } else {
+                                $(".isBeingEntry").hide();
+                            }
+                        }
+                    }
+                })
+            }
+        }
+        //创建词条
+        $("#add_creatEntry_a").click(function(){
+           if(word_name==""){
+               $hint.open("请填写完整带*内容——作品名称");
+           }else if(main_label==""){
+               $hint.open("请填写完整带*内容——作品主标签");
+           }else if(smallType==""){
+               $hint.open("请填写完整带*内容——作品子标签");
+           }else if((coverValue==""||coverValue==undefined)&&(!fileId)){
+               $hint.open("请填写完整带*内容——作品封面");
+           }else if((coverValue==""||coverValue==undefined)&&fileId){
+               $hint.open("作品封面未上传成功");
+           }else{
+               if((subtitle&&subtitleTrue2)||(subtitle=="")){
+                   var url="/api/work/add";
+                   var arr1=arr.toString();
+                   var datan={name:word_name,workTitle:subtitle,url:coverValue,type:main_label,tags:arr1,smallType:smallType};
+                   console.log(word_name,subtitle,coverValue,main_label,arr1,smallType);
+                   ajax(url,datan,function (data) {
+                        $(".word_name").val("");
+                       window.location.href="item/"+data.result.seqno;
+                       $hint.open(data.resultMsg);
+                   },function (data) {
+                       $hint.open(data.resultMsg);
+                   });
+               }else{
+                   $hint.open("填入内容已超过限制");
+               }
+           }
+        })
+
+        var ajax_flag=false;
+        function ajax(url,data,succCallback,errorCallback){
+            if(ajax_flag){
+                return
+            }
+            ajax_flag=true;
+            $.ajax({
+                url:url,
+                type:"post",
+                data:data,
+                success:function(data){
+                    if(data.status){
+                        if(data.data.resultCode==200){
+                            if(succCallback){
+                                succCallback(data.data);
+                            }
+                        }else{
+                            if(errorCallback){
+                                errorCallback(data.data)
+                            }
+                        }
+                        ajax_flag =false;
+                    }else{
+                        $hint.open(data.resultMsg);
+                        ajax_flag =false;
+                    }
+                }
+            })
+        }
+    })
+</script>
+<script>
+  /*  $(function () {
+        var _height=parseInt(window.innerHeight);
+        if(_height-80<document.getElementById("warp_height").offsetHeight){
+            $('.bottom ').removeClass('pc_fixed')
+        }*/
+//            document.getElementsByClassName("index_footer")[0].style.display="block";
+   /* })*/
+</script>
+</body>
+</html>

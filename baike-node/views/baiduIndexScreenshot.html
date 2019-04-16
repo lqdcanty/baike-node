@@ -1,0 +1,1283 @@
+<% var workDetail=data.workDetail %>
+<% var workStatus=data.status %>
+<% var hasMonitor=data.hasMonitor %>
+<% var monitorStatus=workDetail.monitorStatus %>
+<input type="hidden" class="workDetailType" value="<%=workDetail.type%>">
+<% if(workDetail.isSubscribe) {%>
+<input type="hidden" class="isSubscribe" value="0">
+<%}else{%>
+<input type="hidden" class="isSubscribe" value="1">
+<%}%>
+<input type="hidden" class="monitorStatus" value="<%=monitorStatus%>">
+<input type="hidden" class="formWeb" value="<%=formWeb%>">
+<%if(hasMonitor){%>
+<input type="hidden" class="hasMonitor" value="1">
+<%}%>
+<%if(workDetail.type=='电影' || workDetail.type=='卡通电影'){%>
+<div class="play-schedule clearfix">
+    <div class="schedule-l monitorImg icon_tl">预排片</div>
+    <%if(workStatus=='2'){%>
+    <div class="schedule-m monitorImg icon_tz"><div class="schedule-l monitorImg icon_xxia_1 icon-j"></div>电影院线上映</div>
+    <div class="schedule-r monitorImg icon_tr_1"><div class="schedule-l monitorImg icon_xxia_1 icon-j"></div>网络播放上映</div>
+    <%}else if(workStatus=='3'){%>
+    <div class="schedule-m monitorImg icon_tz_1"><div class="schedule-l monitorImg icon_xxia_1 icon-j"></div>电影院线上映</div>
+    <div class="schedule-r monitorImg icon_tr"><div class="schedule-l monitorImg icon_xxia_1 icon-j"></div>网络播放上映</div>
+    <%}else if(workStatus=='23'){%>
+    <div class="schedule-m monitorImg icon_tz"><div class="schedule-l monitorImg icon_xxia_1 icon-j"></div>电影院线上映</div>
+    <div class="schedule-r monitorImg icon_tr"><div class="schedule-l monitorImg icon_xxia_1 icon-j"></div>网络播放上映</div>
+    <%}else{%>
+    <div class="schedule-m monitorImg icon_tz_1"><div class="schedule-l monitorImg icon_xxia_1 icon-j"></div>电影院线上映</div>
+    <div class="schedule-r monitorImg icon_tr_1"><div class="schedule-l monitorImg icon_xxia_1 icon-j"></div>网络播放上映</div>
+    <%}%>
+    <input type="hidden" class="workStatus" value="<%=workStatus%>">
+</div>
+<%}%>
+<ul class="monitor-nav">
+    <%if(workDetail.type=='电影' || workDetail.type=='卡通电影'){%>
+    <li class="active" data-type="cinema"><a>院线票房 <i class="icon iconfont icon-jiazai"></i></a></li>
+    <li data-type="moviePlay"><a name="网络播放">网络播放 <i class="icon iconfont icon-jiazai"></i></a></li>
+    <li data-type="downBt"><a name="种子下载">种子下载 <i class="icon iconfont icon-jiazai"></i></a></li>
+    <li data-type="movieEvaluating"><a>专业评测 <i class="icon iconfont icon-jiazai"></i></a></li>
+    <li data-type="copyRight"><a>版权链<i class="icon iconfont icon-jiazai"></i></a></li>
+
+    <%}else if(workDetail.type=='电视剧' || workDetail.type=='体育赛事' || workDetail.type=='动画片' || workDetail.type=='综艺' || workDetail.type=='短视频' || workDetail.type=='纪录片'){%>
+    <li class="active" data-type="tvPlay"><a name="网络播放">网络播放<i class="icon iconfont icon-jiazai"></i></a></li>
+    <li data-type="tvEvaluating"><a>用户评测<i class="icon iconfont icon-jiazai"></i></a></li>
+    <li data-type="copyRight"><a>版权链<i class="icon iconfont icon-jiazai"></i></a></li>
+
+    <%}else if(workDetail.type=='漫画' || workDetail.type=='小说'){%>
+    <li class="active" data-type="textPlay"><a name="网络阅读">网络阅读<i class="icon iconfont icon-jiazai"></i></a></li>
+    <li data-type="webApp"><a>相关APP<i class="icon iconfont icon-jiazai"></i></a></li>
+    <li data-type="platfromList"><a>平台榜单<i class="icon iconfont icon-jiazai"></i></a></li>
+    <li data-type="copyRight"><a>版权链<i class="icon iconfont icon-jiazai"></i></a></li>
+
+    <%}else if(workDetail.type=='录音制品' || workDetail.type=='MV'){%>
+    <li class="active" data-type="musicPlay"><a name="在线播放">在线播放<i class="icon iconfont icon-jiazai"></i></a></li>
+    <li data-type="platformRanking"><a>平台排行榜<i class="icon iconfont icon-jiazai"></i></a></li>
+    <li data-type="copyRight"><a>版权链<i class="icon iconfont icon-jiazai"></i></a></li>
+
+    <%}else{%>
+    <li data-type="copyRight" class="active"><a>版权链<i class="icon iconfont icon-jiazai"></i></a></li>
+
+    <%}%>
+    <li data-type="sentiment"><a>舆情洞察<i class="icon iconfont icon-jiazai"></i></a></li>
+    <li data-type="trend"><a>搜索指数<i class="icon iconfont icon-jiazai"></i></a></li>
+    <li data-type="crowd"><a>用户画像<i class="icon iconfont icon-jiazai"></i></a></li>
+</ul>
+<div class="monitor-content">
+    <!---------------------电影--------------------->
+    <%if(workDetail.type=='电影' || workDetail.type=='卡通电影'){%>
+    <div class="monitor-wrap active cinema clearfix">
+        <div class="data-wrap" >
+            <div id="cinemaVue" class="clearfix"  v-cloak>
+                <div class="cinema-wrap" style="float: none">
+                    <p class="cinema-Num">{{cinemaNum}}</p>
+                    <p class="cinema-Title">院线票房</p>
+                    <span class="monitorImg img_yxx statusImg"  v-if="cinemaToday=='—'"></span>
+                    <span class="monitorImg img_zzsy statusImg" v-if="cinemaToday!='—'"></span>
+                    <div class="clearfix">
+                        <dl>
+                            <dt>{{cinemaRanking}}</dt>
+                            <dd class="cinema-ranking">票房排名</dd>
+                        </dl>
+                        <dl v-if="cinemaToday!='—'">
+                            <dt>{{cinemaToday}}</dt>
+                            <dd class="cinema-today">今日票房</dd>
+                        </dl>
+                        <dl v-if="cinemaToday=='—'">
+                            <dt>{{audience}}</dt>
+                            <dd class="cinema-today">观影人数</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="mt20">
+                    <table border="0" cellspacing="0" cellpadding="0" class="cinema-table">
+                        <thead>
+                        <tr>
+                            <td>监听日期</td>
+                            <td>上映天数</td>
+                            <td>单日票房排名</td>
+                            <td>单日票房（万）</td>
+                            <td>累计票房（万）</td>
+                            <td>票房占比</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(item,index) in historyList" v-if="index<10">
+                            <td>{{getDate(item.date,1)}}</td>
+                            <td>{{item.releaseDay}}</td>
+                            <td>{{item.oneDayRanking}}</td>
+                            <td>
+                                <a>{{item.oneDayBox}}</a>
+                                <span class="monitorImg icon_xs" v-if="item.whetherRise"></span>
+                                <span class="monitorImg icon_xxi" v-else></span>
+                            </td>
+                            <td>{{item.cumulativeBox}}</td>
+                            <td>{{item.boxProportion}}</td>
+                        </tr>
+                        <tr v-for="(item,index) in historyList" v-if="showStatus">
+                            <td>{{getDate(item.date,1)}}</td>
+                            <td>{{item.releaseDay}}</td>
+                            <td>{{item.oneDayRanking}}</td>
+                            <td>
+                                <a>{{item.oneDayBox}}</a>
+                                <span class="monitorImg icon_xs" v-if="item.whetherRise"></span>
+                                <span class="monitorImg icon_xxi" v-else></span>
+                            </td>
+                            <td>{{item.cumulativeBox}}</td>
+                            <td>{{item.boxProportion}}</td>
+                        </tr>
+                        <tr>
+                            <td v-if="historyList.length>10&&!showStatus"  colspan="6"><a class="relative" @click="changeShow(true)"><i class="icon iconfont icon-spread-up mr5 zhankaiIcon"></i>展开</a></td>
+                            <td v-if="historyList.length>10&&showStatus" colspan="6"><a class="relative"  @click="changeShow(false)"><i class="icon iconfont icon-zhankai mr5 zhankaiIcon"></i>收起</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="cinema-chartWrap">
+                <div id="cinema-chart" class="cinema-chart"></div>
+            </div>
+        </div>
+        <div class="nodata-wrap"></div>
+        <div class="loading-wrap">
+            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+    </div>
+    <div class="monitor-wrap moviePlay">
+        <% workDetail.chapters.forEach(function(x,index){ %>
+        <%if(x.code=='website'){%>
+        <div>
+            <div class="para-top">
+                <span>上架跟踪</span>
+                <a class="add-otherWeb tips-o" data-name="<%=x.name%>" data-id="<%=x.id%>"  data-tipso="版权百科为版权持有者提供版权作品全网监听服务，用户可添加上架跟踪站点并通过百科社群协助对正版或疑似盗版的站点进行标注，被标注的站点我们将大数据跟踪。">标注站点</a>
+            </div>
+            <div class="web-wrap">
+                <% if(x.content&&x.content.length>0) {%>
+                <ul class="clearfix web-list">
+                    <% x.content.forEach(function(u,index){ %>
+                    <%if(u.hasCopy=='true'){%>
+                    <li class="on"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else if(u.hasCopy=='false'){%>
+                    <li class="off"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else if(u.hasCopy=='other'){%>
+                    <li class="other"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else if(u.hasCopy=='lj'){%>
+                    <li class="lj"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else{%>
+                    <li><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}%>
+                    <%})%>
+                </ul>
+                <%}else{%>
+                <p class="no-web">暂未收录监听站点，您可以添加所关注的站点</p>
+                <%}%>
+            </div>
+            <div style="color: #dedede;font-size: 12px;text-align: right">
+                *如果你对以上标注有意见可以发起词条编辑修正
+            </div>
+        </div>
+        <%}%>
+        <%})%>
+        <div class="data-wrap mt20">
+                <div class="para">
+                    <div class="clearfix">
+                        <div class="cinema-wrap play-wrap">
+                            <p class="cinema-Num play">—</p>
+                            <p class="cinema-Title">累计播放</p>
+                            <div>
+                                <dl>
+                                    <dt class="yesterdayPlay play">—</dt>
+                                    <dd >昨日播放</dd>
+                                </dl>
+                                <dl>
+                                    <dt  class="webNum play">—</dt>
+                                    <dd>监控站点</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div style="float: left">
+                            <div class="clearfix">
+                                <div class="date-selWrap">
+                                    <input id="start1" placeholder="年/月/日" class="dateTime-s laydate-icon" style="font-size: 12px;color: #666;">
+                                    至
+                                    <span id="endTime"></span>
+                                    <span class="playChartTitle"></span>
+                                </div>
+                            </div>
+                            <div id="weekNum"></div>
+                            <div class="no-weekNum"></div>
+
+                        </div>
+                    </div>
+                    <div class="mt25">
+                        <table border="0" cellspacing="0" cellpadding="0"  class="palyTable">
+                            <thead>
+                            <tr>
+                                <td>播放平台</td>
+                                <td>监听日期</td>
+                                <td>播放总数（万）</td>
+                                <td>播放占比</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <div class="nodata-wrap"></div>
+        <div class="loading-wrap">
+            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+    </div>
+    <div class="monitor-wrap downBt">
+        <div class="data-wrap" >
+            <div id="downBtVue" class="clearfix"  v-cloak>
+                <p class="sentiment-title">
+                    <span>下载跟踪</span>
+                </p>
+                <div class="cinema-wrap" style="float: none">
+                    <p class="cinema-Num">{{cinemaNum}}</p>
+                    <p class="cinema-Title">累计下载</p>
+                    <span class="monitorImg img_yxx statusImg"  v-if="cinemaToday=='—'"></span>
+                    <span class="monitorImg img_zzsy statusImg" v-if="cinemaToday!='—'"></span>
+                    <div class="clearfix">
+                        <dl>
+                            <dt>{{cinemaRanking}}</dt>
+                            <dd class="cinema-ranking">种子个数</dd>
+                        </dl>
+                        <dl >
+                            <dt>{{cinemaToday}}</dt>
+                            <dd class="cinema-today">分布网站</dd>
+                        </dl>
+
+                    </div>
+                </div>
+                <div class="mt20">
+                    <table border="0" cellspacing="0" cellpadding="0" class="cinema-table">
+                        <thead>
+                        <tr>
+                            <td>分布网站</td>
+                            <td>大小</td>
+                            <td>资源名称</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(item,index) in historyList" v-if="index<10">
+                            <td>{{getDate(item.date,1)}}</td>
+                            <td>{{item.releaseDay}}</td>
+                            <td>{{item.oneDayRanking}}</td>
+                        </tr>
+                        <tr v-for="(item,index) in historyList" v-if="showStatus">
+                            <td>{{getDate(item.date,1)}}</td>
+                            <td>{{item.releaseDay}}</td>
+                            <td>{{item.oneDayRanking}}</td>
+                        </tr>
+                        <tr>
+                            <td v-if="historyList.length>10&&!showStatus"  colspan="6"><a class="relative" @click="changeShow(true)"><i class="icon iconfont icon-spread-up mr5 zhankaiIcon"></i>展开</a></td>
+                            <td v-if="historyList.length>10&&showStatus" colspan="6"><a class="relative"  @click="changeShow(false)"><i class="icon iconfont icon-zhankai mr5 zhankaiIcon"></i>收起</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="cinema-chartWrap">
+                <p class="sentiment-title">
+                    <span>BT下载工具使用分布</span>
+                </p>
+                <div id="downBt-chart" class="downBt-chart"></div>
+            </div>
+        </div>
+        <div class="nodata-wrap"></div>
+        <div class="loading-wrap">
+            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+    </div>
+    <div class="monitor-wrap movieEvaluating" id="movie-evaluating" v-cloak>
+        <div class="data-wrap">
+        <div class="clearfix">
+            <div class="monitorImg movieForm-item card_dbdy" v-if="douban">
+                <p class="movieForm-head">豆瓣评分</p>
+                <div class="clearfix">
+                    <p class="float_left movie-score">{{douban.score}}</p>
+                    <div class="float_left">
+                        <p class="score-img clearfix">
+                            <span class="monitorImg icon_zx" v-for="item in doubanStart1"></span>
+                            <span class="monitorImg icon_bx" v-for="item in doubanStart2"></span>
+                            <span class="monitorImg icon_hx" v-for="item in doubanStart3"></span>
+                        </p>
+                        <p>{{douban.scoreNumber}}人评分</p>
+                    </div>
+                </div>
+                <div class="start-wrap">
+                    <ul>
+                        <li>
+                            <span>5星</span>
+                            <span class="start-line" :style="{width: douban.fiveScale?douban.fiveScale.replace('%','')*140/100 + 'px':0 }"></span>
+                            <span>{{douban.fiveScale}}</span>
+                        </li>
+                        <li>
+                            <span>4星</span>
+                            <span class="start-line" :style="{width: douban.fourScale?douban.fourScale.replace('%','')*140/100 + 'px':0 }"></span>
+                            <span>{{douban.fourScale}}</span>
+                        </li>
+                        <li>
+                            <span>3星</span>
+                            <span class="start-line" :style="{width: douban.threeScale?douban.threeScale.replace('%','')*140/100  + 'px':0 }"></span>
+                            <span>{{douban.threeScale}}</span>
+                        </li>
+                        <li>
+                            <span>2星</span>
+                            <span class="start-line" :style="{width: douban.twoScale?douban.twoScale.replace('%','')*140/100  + 'px':0 }"></span>
+                            <span>{{douban.twoScale}}</span>
+                        </li>
+                        <li>
+                            <span>1星</span>
+                            <span class="start-line" :style="{width: douban.oneScale?douban.oneScale.replace('%','')*140/100  + 'px':0 }"></span>
+                            <span>{{douban.oneScale}}</span>
+                        </li>
+                    </ul>
+                    <ul class="otherScale">
+                        <li v-for="item in douban.otherScale">
+                            好于<span>{{item}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="monitorImg movieForm-item card_mydy maoyan" v-if="maoyan">
+                <p class="movieForm-head">猫眼评分</p>
+                <div class="clearfix">
+                    <p class="float_left movie-score">{{maoyan.score}}</p>
+                    <div class="float_left">
+                        <p class="score-img clearfix">
+                            <span class="monitorImg icon_zx" v-for="item in maoyanStart1"></span>
+                            <span class="monitorImg icon_bx" v-for="item in maoyanStart2"></span>
+                            <span class="monitorImg icon_hx" v-for="item in maoyanStart3"></span>
+                        </p>
+                        <p v-if="maoyan.scoreNumber!=null">{{maoyan.scoreNumber}}人评分</p>
+                        <p v-else="">—人评分</p>
+                    </div>
+                </div>
+                <div class="start-wrap">
+                    <dl>
+                        <dt>专业评分</dt>
+                        <dd v-if="maoyan.majorScore!=null">{{maoyan.majorScore}}</dd>
+                        <dd v-else>—</dd>
+                    </dl>
+                    <dl>
+                        <dt>评论人数</dt>
+                        <dd v-if="maoyan.commentNumber!=null">{{maoyan.commentNumber}}</dd>
+                        <dd v-else>—</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="monitorImg movieForm-item card_sgw shiguang"  v-if="shiguang">
+                <p class="movieForm-head">时光网评分</p>
+                <div class="clearfix">
+                    <p class="float_left movie-score">{{shiguang.score}}</p>
+                    <div class="float_left">
+                        <p class="score-img clearfix">
+                            <span class="monitorImg icon_zx" v-for="item in shiguangStart1"></span>
+                            <span class="monitorImg icon_bx" v-for="item in shiguangStart2"></span>
+                            <span class="monitorImg icon_hx" v-for="item in shiguangStart3"></span>
+                        </p>
+                        <p>{{shiguang.scoreNumber}}人评分</p>
+                    </div>
+                </div>
+                <div class="start-wrap">
+                    <ul>
+                        <li>
+                            <span>音乐</span>
+                            <a class="shiguang-line shiguang-music"><span :style="{width: shiguang.music*8.6 + 'px' }"></span></a>
+                        </li>
+                        <li>
+                            <span>画面</span>
+                            <a class="shiguang-line shiguang-frame"><span :style="{width: shiguang.frame*8.6 + 'px' }"></span></a>
+                        </li>
+                        <li>
+                            <span>导演</span>
+                            <a class="shiguang-line shiguang-director"><span :style="{width: shiguang.director*8.6 + 'px' }"></span></a>
+                        </li>
+                        <li>
+                            <span>故事</span>
+                            <a class="shiguang-line shiguang-story"><span :style="{width: shiguang.story*8.6 + 'px' }"></span></a>
+                        </li>
+                    </ul>
+                    <dl>
+                        <dt>评论人数</dt>
+                        <dd>{{shiguang.commentNumber}}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="monitorImg movieForm-item card_lfq lfq" v-if="lfq">
+                <p class="movieForm-head">烂番茄评分</p>
+                <div class="clearfix">
+                    <p class="float_left movie-score">{{lfq.score}}</p>
+                    <div class="float_left">
+                        <p class="score-img clearfix">
+                            <span class="monitorImg icon_zx" v-for="item in lfqStart1"></span>
+                            <span class="monitorImg icon_bx" v-for="item in lfqStart2"></span>
+                            <span class="monitorImg icon_hx" v-for="item in lfqStart3"></span>
+                        </p>
+                        <p v-if="lfq.scoreNumber!=null">{{lfq.scoreNumber}}人评分</p>
+                        <p v-else="">—人评分</p>
+                    </div>
+                </div>
+                <div class="start-wrap">
+                    <div>
+                        <p v-if="lfq.commentNumber!=null">点评数：{{lfq.commentNumber}}</p>
+                        <p v-else>点评数：—</p>
+                        <p v-if="lfq.fresh!=null">新鲜：{{lfq.fresh}}</p>
+                        <p v-else>新鲜：—</p>
+                        <p v-if="lfq.rotten!=null">烂：{{lfq.rotten}}</p>
+                        <p v-else>烂：—</p>
+                    </div>
+                    <dl class="mt10">
+                        <dt>新鲜度</dt>
+                        <dd v-if="lfq.freshness!=null">{{lfq.freshness}}</dd>
+                        <dd v-else>—</dd>
+                    </dl>
+                    <div>
+                        <p v-if="lfq.grade!=null">平均评级：{{lfq.grade}}</p>
+                        <p v-else>平均评级：—</p>
+                        <p v-if="lfq.reviewNumber!=null">点评数：{{lfq.reviewNumber}}</p>
+                        <p v-else>点评数：—</p>
+                    </div>
+                </div>
+            </div>
+            <div class="monitorImg movieForm-item card_imdb imdb" v-if="imdb">
+                <p class="movieForm-head">IMDB评分</p>
+                <div class="clearfix">
+                    <p class="float_left movie-score">{{imdb.score}}</p>
+                    <div class="float_left">
+                        <p class="score-img clearfix">
+                            <span class="monitorImg icon_zx" v-for="item in imdbStart1"></span>
+                            <span class="monitorImg icon_bx" v-for="item in imdbStart2"></span>
+                            <span class="monitorImg icon_hx" v-for="item in imdbStart3"></span>
+                        </p>
+                        <p v-if="imdb.scoreNumber!=null">{{imdb.scoreNumber}}人评分</p>
+                        <p v-else="">—人评分</p>
+                    </div>
+                </div>
+                <div class="start-wrap">
+                    <div>
+                        <p v-if="imdb.expertComment!=null">专家评论：{{imdb.expertComment}}</p>
+                        <p v-else>专家评论：—</p>
+                        <p v-if="imdb.userEvaluating!=null">用户评测：{{imdb.userEvaluating}}</p>
+                        <p v-else>用户评测：—</p>
+                        <p v-if="imdb.criticEvaluating!=null">评论家评测：{{imdb.criticEvaluating}}</p>
+                        <p v-else>评论家评测：—</p>
+                    </div>
+                    <dl class="mt10">
+                        <dt>评分</dt>
+                        <dd v-if="imdb.prestige!=null">
+                            <span>{{imdb.prestige}}</span>
+                        </dd>
+                        <dd v-else>—</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="nodata-wrap"></div>
+        <div class="loading-wrap">
+            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+    </div>
+    <!---------------------电视剧--------------------->
+    <%}else if(workDetail.type=='电视剧' || workDetail.type=='体育赛事' || workDetail.type=='动画片' || workDetail.type=='综艺' || workDetail.type=='短视频' || workDetail.type=='纪录片'){%>
+    <div class="monitor-wrap active tvPlay">
+        <% workDetail.chapters.forEach(function(x,index){ %>
+        <%if(x.code=='website'){%>
+        <div>
+            <div class="para-top">
+                <span>上架跟踪</span>
+                <a class="add-otherWeb tips-o" data-name="<%=x.name%>" data-id="<%=x.id%>"  data-tipso="版权百科为版权持有者提供版权作品全网监听服务，用户可添加上架跟踪站点并通过百科社群协助对正版或疑似盗版的站点进行标注，被标注的站点我们将大数据跟踪。">标注站点</a>
+            </div>
+            <div class="web-wrap">
+                <% if(x.content&&x.content.length>0) {%>
+                <ul class="clearfix web-list">
+                    <% x.content.forEach(function(u,index){ %>
+                    <%if(u.hasCopy=='true'){%>
+                    <li class="on"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else if(u.hasCopy=='false'){%>
+                    <li class="off"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else if(u.hasCopy=='other'){%>
+                    <li class="other"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else if(u.hasCopy=='lj'){%>
+                    <li class="lj"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else{%>
+                    <li><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}%>
+                    <%})%>
+                </ul>
+                <%}else{%>
+                <p class="no-web">暂未收录监听站点，您可以添加所关注的站点</p>
+                <%}%>
+            </div>
+            <div style="color: #dedede;font-size: 12px;text-align: right">
+                *如果你对以上标注有意见可以发起词条编辑修正
+            </div>
+        </div>
+        <%}%>
+        <%})%>
+        <div class="data-wrap mt20">
+                <div class="para">
+                    <div class="clearfix">
+                        <div class="cinema-wrap play-wrap">
+                            <p class="cinema-Num play">—</p>
+                            <p class="cinema-Title">累计播放</p>
+                            <div>
+                                <dl>
+                                    <dt class="yesterdayPlay play">—</dt>
+                                    <dd>昨日播放</dd>
+                                </dl>
+                                <dl>
+                                    <dt class="webNum play">—</dt>
+                                    <dd>监控站点</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div style="float: left">
+                            <div class="clearfix">
+                                <div class="date-selWrap">
+                                    <input id="start1" placeholder="年/月/日" class="dateTime-s laydate-icon" style="font-size: 12px;color: #666;">
+                                    至
+                                    <span id="endTime"></span>
+                                    <span class="playChartTitle"></span>
+                                </div>
+
+                            </div>
+                            <div id="weekNum"></div>
+                            <div class="no-weekNum"></div>
+                        </div>
+
+                    </div>
+                    <div class="mt25">
+                        <table border="0" cellspacing="0" cellpadding="0" class="palyTable">
+                            <thead>
+                            <tr>
+                                <td>播放平台</td>
+                                <td>监听日期</td>
+                                <td>播放总数（万）</td>
+                                <td>播放占比</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <div class="nodata-wrap"></div>
+        <div class="loading-wrap">
+            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+    </div>
+    <div class="monitor-wrap tvEvaluating">
+        <div class="data-wrap">
+            <p class="f14 mb10">主流播放平台</p>
+            <div id="monitor-wrap" v-cloak>
+                <ul class="platform-list clearfix">
+                    <li class="monitorImg platform-Info img_kp_1">
+                        <p>总评论数<span class="pl-sum"> {{totalComment}}</span></p>
+                        <div class="clearfix">
+                            <dl>
+                                <dt>点赞总数</dt>
+                                <dd><span>{{totalFabulous}}</span></dd>
+                            </dl>
+                            <dl>
+                                <dt>踩总数</dt>
+                                <dd><span>{{totalTread}}</span></dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="monitorImg platform-item" :class="{img_kp_1:youku,img_kp_2:!youku}">
+                        <p class="monitorImg logo_yk"></p>
+                        <div class="clearfix" v-if="youku">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>{{youku.commentCountStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>{{youku.fabulousStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>{{youku.treadsStr}}</dd>
+                            </dl>
+                        </div>
+                        <div class="clearfix" v-else="">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>—</dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="monitorImg platform-item" :class="{img_kp_1:aqy,img_kp_2:!aqy}">
+                        <p class="monitorImg logo_aqy"></p>
+                        <div class="clearfix" v-if="aqy">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>{{aqy.commentCountStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>{{aqy.fabulousStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>{{aqy.treadsStr}}</dd>
+                            </dl>
+                        </div>
+                        <div class="clearfix" v-else="">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>—</dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="monitorImg platform-item" :class="{img_kp_1:tx,img_kp_2:!tx}">
+                        <p class="monitorImg logo_tx"></p>
+                        <div class="clearfix" v-if="tx">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>{{tx.commentCountStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>{{tx.fabulousStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>{{tx.treadsStr}}</dd>
+                            </dl>
+                        </div>
+                        <div class="clearfix" v-else="">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>—</dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="monitorImg platform-item" :class="{img_kp_1:ls,img_kp_2:!ls}">
+                        <p class="monitorImg logo_lsh"></p>
+                        <div class="clearfix" v-if="ls">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>{{ls.commentCountStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>{{ls.fabulousStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>{{ls.treadsStr}}</dd>
+                            </dl>
+                        </div>
+                        <div class="clearfix" v-else="">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>—</dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="monitorImg platform-item" :class="{img_kp_1:sh,img_kp_2:!sh}">
+                        <p class="monitorImg logo_shsp"></p>
+                        <div class="clearfix" v-if="sh">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>{{sh.commentCountStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>{{sh.fabulousStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>{{sh.treadsStr}}</dd>
+                            </dl>
+                        </div>
+                        <div class="clearfix" v-else="">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>—</dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="monitorImg platform-item" :class="{img_kp_1:jl,img_kp_2:!jl}">
+                        <p class="monitorImg logo_jl"></p>
+                        <div class="clearfix" v-if="jl">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>{{jl.commentCountStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>{{jl.fabulousStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>{{jl.treadsStr}}</dd>
+                            </dl>
+                        </div>
+                        <div class="clearfix" v-else="">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>—</dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="monitorImg platform-item" :class="{img_kp_1:xl,img_kp_2:!xl}">
+                        <p class="monitorImg logo_xl"></p>
+                        <div class="clearfix" v-if="xl">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>{{xl.commentCountStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>{{xl.fabulousStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>{{xl.treadsStr}}</dd>
+                            </dl>
+                        </div>
+                        <div class="clearfix" v-else="">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>—</dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="monitorImg platform-item" :class="{img_kp_1:mgtv,img_kp_2:!mgtv}">
+                        <p class="monitorImg logo_mgtv"></p>
+                        <div class="clearfix" v-if="mgtv">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>{{mgtv.commentCountStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>{{mgtv.fabulousStr}}</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>{{mgtv.treadsStr}}</dd>
+                            </dl>
+                        </div>
+                        <div class="clearfix" v-else="">
+                            <dl>
+                                <dt>评论数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>点赞数</dt>
+                                <dd>—</dd>
+                            </dl>
+                            <dl>
+                                <dt>踩</dt>
+                                <dd>—</dd>
+                            </dl>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="nodata-wrap"></div>
+        <div class="loading-wrap">
+            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+    </div>
+    <%}else if(workDetail.type=='录音制品' || workDetail.type=='MV'){%>
+    <div class="monitor-wrap active musicPlay">
+        <% workDetail.chapters.forEach(function(x,index){ %>
+        <%if(x.code=='website'){%>
+        <div>
+            <div class="para-top">
+                <span>上架跟踪</span>
+                <a class="add-otherWeb tips-o" data-name="<%=x.name%>" data-id="<%=x.id%>"  data-tipso="版权百科为版权持有者提供版权作品全网监听服务，用户可添加上架跟踪站点并通过百科社群协助对正版或疑似盗版的站点进行标注，被标注的站点我们将大数据跟踪。">标注站点</a>
+            </div>
+            <div class="web-wrap">
+                <% if(x.content&&x.content.length>0) {%>
+                <ul class="clearfix web-list">
+                    <% x.content.forEach(function(u,index){ %>
+                    <%if(u.hasCopy=='true'){%>
+                    <li class="on"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else if(u.hasCopy=='false'){%>
+                    <li class="off"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else if(u.hasCopy=='other'){%>
+                    <li class="other"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else if(u.hasCopy=='lj'){%>
+                    <li class="lj"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else{%>
+                    <li><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}%>
+                    <%})%>
+                </ul>
+                <%}else{%>
+                <p class="no-web">暂未收录监听站点，您可以添加所关注的站点</p>
+                <%}%>
+            </div>
+            <div style="color: #dedede;font-size: 12px;text-align: right">
+                *如果你对以上标注有意见可以发起词条编辑修正
+            </div>
+        </div>
+        <%}%>
+        <%})%>
+        <div class="data-wrap mt20">
+                <div class="para">
+                <div class="clearfix">
+                    <div class="cinema-wrap play-wrap">
+                        <p class="cinema-Num play">—</p>
+                        <p class="cinema-Title">累计播放</p>
+                        <div>
+                            <dl>
+                                <dt class="yesterdayPlay play">—</dt>
+                                <dd>昨日播放</dd>
+                            </dl>
+                            <dl>
+                                <dt class="webNum play">—</dt>
+                                <dd>监控平台</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div style="float: left">
+                        <div class="clearfix">
+                            <div class="date-selWrap">
+                                <input id="start1" placeholder="年/月/日" class="dateTime-s laydate-icon" style="font-size: 12px;color: #666;">
+                                至
+                                <span id="endTime"></span>
+                                <span class="playChartTitle"></span>
+                            </div>
+
+                        </div>
+                        <div id="weekNum"></div>
+                        <div class="no-weekNum"></div>
+                    </div>
+
+                </div>
+                <div class="mt25">
+                    <table border="0" cellspacing="0" cellpadding="0" class="palyTable">
+                        <thead>
+                        <tr>
+                            <td>播放平台</td>
+                            <td>监听日期</td>
+                            <td>播放总数（万）</td>
+                            <td>播放占比</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+        <div class="nodata-wrap"></div>
+        <div class="loading-wrap">
+            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+    </div>
+    <div class="monitor-wrap platformRanking">
+        <div class="data-wrap clearfix" v-cloak id="music-platform">
+            <div class="music-wrap float_left">
+                <p class="rankNum">{{rankCount}}</p>
+                <p class="rankNum-title">累计上榜个数</p>
+                <div>
+                    <dl>
+                        <dt>{{internetCount}}</dt>
+                        <dd>互联网平台榜单</dd>
+                    </dl>
+                    <dl>
+                        <dt>{{operatorCount}}</dt>
+                        <dd>运营商平台榜单</dd>
+                    </dl>
+                </div>
+
+            </div>
+            <div class="float_left plantform-list">
+                <p class="mb5">主流互联网平台</p>
+                <ul class="clearfix">
+                    <li class="music-plantform" :class="{norinking:!platform.hao123_music}"><a class="monitorImg_1 " :class="{logo_rm:platform.hao123_music,logo_rm_1:!platform.hao123_music}"></a>热门音乐</li>
+                    <li class="music-plantform" :class="{norinking:!platform.baidu_music}"><a class="monitorImg_1 " :class="{logo_bdyy:platform.baidu_music,logo_bdyy_1:!platform.baidu_music}"></a>百度音乐</li>
+                    <li class="music-plantform" :class="{norinking:!platform.qqmusic}"><a class="monitorImg_1 " :class="{logo_qqyy:platform.qqmusic,logo_qqyy_1:!platform.qqmusic}"></a>QQ音乐</li>
+                    <li class="music-plantform" :class="{norinking:!platform.yiting_music}"><a class="monitorImg_1 " :class="{logo_ytyy:platform.yiting_music,logo_ytyy_1:!platform.yiting_music}"></a>一听音乐</li>
+                    <li class="music-plantform" :class="{norinking:!platform.ximalaya_music}"><a class="monitorImg_1 " :class="{logo_xmfm:platform.ximalaya_music,logo_xmfm_1:!platform.ximalaya_music}"></a>喜马拉雅fm</li>
+                    <li class="music-plantform" :class="{norinking:!platform.kugou_music}"><a class="monitorImg_1 " :class="{logo_kg:platform.kugou_music,logo_kg_1:!platform.kugou_music}"></a>酷狗音乐</li>
+                    <li class="music-plantform" :class="{norinking:!platform.kuwo_music}"><a class="monitorImg_1 " :class="{logo_kw:platform.kuwo_music,logo_kw_1:!platform.kuwo_music}"></a>酷我音乐</li>
+                    <li class="music-plantform" :class="{norinking:!platform.xiami_music}"><a class="monitorImg_1 " :class="{logo_xm:platform.xiami_music,logo_xm_1:!platform.xiami_music}"></a>虾米音乐</li>
+                    <li class="music-plantform" :class="{norinking:!platform.yinyuetai_music}"><a class="monitorImg_1 " :class="{logo_yyt:platform.yinyuetai_music,logo_yyt_1:!platform.yinyuetai_music}"></a>音悦台</li>
+                    <li class="music-plantform" :class="{norinking:!platform.douban_music}"><a class="monitorImg_1 " :class="{logo_dbdt:platform.douban_music,logo_dbdt_1:!platform.douban_music}"></a>豆瓣电台</li>
+                    <li class="music-plantform" :class="{norinking:!platform.doumi_music}"><a class="monitorImg_1 " :class="{logo_dmyy:platform.doumi_music,logo_dmyy_1:!platform.doumi_music}"></a>多米音乐</li>
+                    <li class="music-plantform" :class="{norinking:!platform.yue365_music}"><a class="monitorImg_1 " :class="{logo_365:platform.yue365_music,logo_365_1:!platform.yue365_music}"></a>365音乐网</li>
+                    <li class="music-plantform noborder" :class="{norinking:!platform.wangyi_music}"><a class="monitorImg_1 " :class="{logo_wyyy:platform.wangyi_music,logo_wyyy_1:!platform.wangyi_music}"></a>网易云音乐</li>
+                    <li class="music-plantform noborder" :class="{norinking:!platform.xinlang_music}"><a class="monitorImg_1 " :class="{logo_xlyk:platform.xinlang_music,logo_xlyk_1:!platform.xinlang_music}"></a>新浪乐库</li>
+                    <li class="music-plantform noborder" :class="{norinking:!platform.jiuku_music}"><a class="monitorImg_1 " :class="{logo_9k:platform.jiuku_music,logo_9k_1:!platform.jiuku_music}"></a>九酷音乐</li>
+                </ul>
+                <p class="mb5 mt5">电信运营商平台</p>
+                <ul class="clearfix">
+                    <li class="music-plantform noborder" :class="{norinking:!platform.imusic}"><a class="monitorImg_1 " :class="{logo_ayy:platform.imusic,logo_ayy_1:!platform.imusic}"></a>爱音乐</li>
+                    <li class="music-plantform noborder" :class="{norinking:!platform.wo_music}"><a class="monitorImg_1 " :class="{logo_wyy:platform.wo_music,logo_wyy_1:!platform.wo_music}"></a>沃音乐</li>
+                    <li class="music-plantform noborder" :class="{norinking:!platform.migu_music}"><a class="monitorImg_1 " :class="{logo_mgyy:platform.migu_music,logo_mgyy_1:!platform.migu_music}"></a>咪咕音乐</li>
+                </ul>
+            </div>
+            <div>
+                <table border="0" cellspacing="0" cellpadding="0" class="platformTable">
+                    <thead>
+                    <tr>
+                        <td>播放平台</td>
+                        <td>开始上榜日期</td>
+                        <td>榜单</td>
+                        <td>上榜天数</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in tableList">
+                            <td>{{item.platformName}}</td>
+                            <td>{{item.rankDate}}</td>
+                            <td>{{item.topRankName}}</td>
+                            <td>{{item.topRankDays}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="nodata-wrap"></div>
+        <div class="loading-wrap">
+            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+    </div>
+    <%}else if(workDetail.type=='小说' || workDetail.type=='漫画'){%>
+    <div class="monitor-wrap active textPlay">
+        <%if(hasMonitor){%>
+        <% workDetail.chapters.forEach(function(x,index){ %>
+        <%if(x.code=='website'){%>
+        <div>
+            <div class="para-top">
+                <span>上架跟踪</span>
+                <a class="add-otherWeb tips-o" data-name="<%=x.name%>" data-id="<%=x.id%>"  data-tipso="版权百科为版权持有者提供版权作品全网监听服务，用户可添加上架跟踪站点并通过百科社群协助对正版或疑似盗版的站点进行标注，被标注的站点我们将大数据跟踪。">标注站点</a>
+            </div>
+            <div class="web-wrap">
+                <% if(x.content&&x.content.length>0) {%>
+                <ul class="clearfix web-list">
+                    <% x.content.forEach(function(u,index){ %>
+                    <%if(u.hasCopy=='true'){%>
+                    <li class="on"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else if(u.hasCopy=='false'){%>
+                    <li class="off"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else if(u.hasCopy=='other'){%>
+                    <li class="other"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else if(u.hasCopy=='lj'){%>
+                    <li class="lj"><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}else{%>
+                    <li><a href="<%=u.url%>" data-num="<%=index%>" data-copy="<%=u.hasCopy%>" target="_blank"><%=u.webSiteName%></a><i class="icon iconfont icon-xiugai"></i></li>
+                    <%}%>
+                    <%})%>
+                </ul>
+                <%}else{%>
+                <p class="no-web">暂未收录监听站点，您可以添加所关注的站点</p>
+                <%}%>
+            </div>
+            <div style="color: #dedede;font-size: 12px;text-align: right">
+                *如果你对以上标注有意见可以发起词条编辑修正
+            </div>
+        </div>
+        <%}%>
+        <%})%>
+        <div class="data-wrap mt20">
+                <div class="para">
+                    <div class="clearfix">
+                        <div class="cinema-wrap play-wrap">
+                            <p class="cinema-Num play">—</p>
+                            <p class="cinema-Title">累计阅读次数</p>
+                            <div>
+                                <dl>
+                                    <dt class="totalMan-num">—</dt>
+                                    <dd>累计阅读人数</dd>
+                                </dl>
+                                <dl>
+                                    <dt class="yesterdayPlay play">—</dt>
+                                    <dd>昨日阅读次数</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div style="float: left">
+                            <div class="clearfix">
+                                <div class="date-selWrap">
+                                    <input id="start1" placeholder="年/月/日" class="dateTime-s laydate-icon" style="font-size: 12px;color: #666;">
+                                    至
+                                    <span id="endTime"></span>
+                                    <span class="playChartTitle"></span>
+                                </div>
+
+                            </div>
+                            <div id="weekNum"></div>
+                            <div class="no-weekNum"></div>
+                        </div>
+
+                    </div>
+                    <div class="mt25">
+                        <table border="0" cellspacing="0" cellpadding="0" class="palyTable">
+                            <thead>
+                            <tr>
+                                <td>阅读平台</td>
+                                <td>监听日期</td>
+                                <td>阅读总数（万）</td>
+                                <td>阅读占比</td>
+                                <td>评测分数</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <div class="nodata-wrap"></div>
+        <div class="loading-wrap">
+            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+        <%}else{%>
+        <div class="nodata-wrap">
+            <div class="text_center">
+                <div class="monitorImg img_wk"></div>
+            </div>
+            <p>尊敬的用户：</p>
+
+            <p class="noStatusText">版权百科正在尽快整理该作品在线播放监听数据。您可以【关注】该作品，数据整理成功后我们将通过邮件的方式将数据监听报告发送到您的邮箱。</p>
+        </div>
+        <%}%>
+    </div>
+    <div class="monitor-wrap webApp">
+        <div class="data-wrap clearfix" v-cloak id="app-wrap">
+            <div v-if="appList.length>0">
+                <div class="app-list clearfix">
+                    <dl v-for="item in appList">
+                        <dt class="app-img"><a :style="{backgroundImage: 'url(' + item.appImage + ')'}"></a></dt>
+                        <dd class="app-Name">{{item.appName}}</dd>
+                    </dl>
+                </div>
+                <table border="0" cellspacing="0" cellpadding="0" class="appTable">
+                    <thead>
+                    <tr>
+                        <td style="width: 230px">APP名称</td>
+                        <td style="width: 180px">上架平台</td>
+                        <td style="width: 120px">下载量</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="k in appList">
+                        <td valign="top" style="width: 230px">
+                            <div>{{k.appName}}</div>
+                            <div>(下载总量：{{k.downloadTotal}})</div>
+                        </td>
+                        <td valign="top" style="width: 180px">
+                            <div v-for="x in k.shelf">{{x.shelfPlatform}}</div>
+                        </td>
+                        <td valign="top" style="width: 120px">
+                            <div v-for="y in k.shelf">{{y.downloads}}</div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="noStatus" v-else>
+                <div class="text_center">
+                    <div class="monitorImg img_wk"></div>
+                </div>
+                <p>尊敬的用户：</p>
+
+                <p class="noStatusText">未产生相关APP监听数据。
+                    如果您还未关注该作品，请【 关注】 该作品。我们将尽快整理该作品相关监听数据并形成报告文件，通过邮件的方式发送到您的邮箱。</p>
+            </div>
+        </div>
+        <div class="nodata-wrap"></div>
+        <div class="loading-wrap">
+            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+    </div>
+    <div class="monitor-wrap platfromList">
+        <div class="data-wrap">
+            <div class="para">
+                <div class="clearfix">
+                    <div class="cinema-wrap" style="height: 82px;margin-top: 75px">
+                        <p class="cinema-Num" style="border-bottom: none">—</p>
+                        <p class="cinema-Title">累计上榜天数</p>
+
+                    </div>
+                    <div style="float: left">
+                        <div id="platfromChart"></div>
+                        <div class="platfromListTitle text_center">上榜天数</div>
+                    </div>
+
+                </div>
+                <div class="mt25">
+                    <table border="0" cellspacing="0" cellpadding="0" class="palyTable platfromTable">
+                        <thead>
+                        <tr>
+                            <td>阅读平台</td>
+                            <td>上榜日期</td>
+                            <td>榜单名称</td>
+                            <td>上榜天数</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="nodata-wrap"></div>
+        <div class="loading-wrap">
+            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+    </div>
+    <%}%>
+    <div class="monitor-wrap copyRight" style="padding: 0">
+        <a href="/copyRight/bql/<%=workID%>" target="_blank" style="display: block;cursor: pointer">
+            <div id="copyRight"></div>
+        </a>
+    </div>
+    <div class="monitor-wrap trend layer-photos-demo" id="layer-photos-demo1">
+        <div class="data-wrap">
+            <img src="" style="border: none;">
+        </div>
+        <div class="nodata-wrap"></div>
+        <div class="loading-wrap">
+            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+    </div>
+    <div class="monitor-wrap sentiment">
+        <div class="data-wrap">
+            <div class="clearfix" id="sentimentVue">
+                <div class="cinema-wrap float_left" style="margin-right: 30px;padding-top: 25px;height: 180px">
+                    <p class="cinema-Num">{{emotionValue}}</p>
+                    <p class="cinema-Title">目前情感偏向</p>
+                    <div>
+                        <dl>
+                            <dt>{{unitConversion(effectCount)}}</dt>
+                            <dd>影响用户</dd>
+                        </dl>
+                        <dl>
+                            <dt class="webNum">{{unitConversion(totalInfoCount)}}</dt>
+                            <dd>相关资讯</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="sentiment-news float_left">
+                    <p class="sentiment-title">
+                        <span>重点资讯</span>
+                        <a class="float_right" @click="changeNews" v-if="newsList.length>0"><i class="icon iconfont icon-forabatch"></i>换一批</a>
+                    </p>
+                    <ul v-if="newsList.length>0">
+                        <li v-for="item in newsList">
+                            <a :href="item.newsUrl" target="_blank">{{item.newsTitle}}</a>
+                            <span class="float_right">{{item.publishTime}}</span>
+                        </li>
+                    </ul>
+                    <p class="noNews" v-else>
+                        暂无重点资讯
+                    </p>
+                </div>
+            </div>
+            <div class="clearfix mt30">
+                <div class="float_left gauge-wrap">
+                    <p class="sentiment-title">
+                        <span>情感偏向</span>
+                    </p>
+                    <div id="gauge-chart"></div>
+                    <div class="gauge-text">
+                        正面情感指数：<span class="positiveEmotion">—</span>    负面情感指数：<span class="negativeEmotion">—</span>
+                    </div>
+                </div>
+                <div class="float_left">
+                    <p class="sentiment-title">
+                        <span>影响力分布</span>
+                    </p>
+                    <div class="news-chart" id="news-chart"></div>
+                </div>
+            </div>
+            <div>
+                <p class="sentiment-title">
+                    <span>情感趋势</span>
+                </p>
+                <div class="k-chart" id="k-chart">
+
+                </div>
+            </div>
+        </div>
+        <div  class="nodata-wrap"></div>
+        <div class="loading-wrap">
+            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+    </div>
+    <div class="monitor-wrap crowd layer-photos-demo" id="layer-photos-demo2">
+        <div class="data-wrap">
+            <img src="">
+        </div>
+        <div class="nodata-wrap"></div>
+        <div class="loading-wrap">
+            <div id="preloader_1"><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+    </div>
+</div>

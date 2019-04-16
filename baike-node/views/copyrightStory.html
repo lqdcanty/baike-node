@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>版权百科</title>
+    <link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="lib/swiper/swiper-3.4.2.min.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/common.css"/>
+    <link rel="stylesheet" href="lib/layer/skin/default/layer.css">
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style1.css"/>
+    <!--[if lt IE 9]>
+    <script src="lib/html5shiv.min.js"></script>
+    <![endif]-->
+    <% include('common/baidu_tj') %>
+</head>
+<body>
+<% include('common/header') %>
+<% var result=data.result%>
+<div class="search_content custom_width copyrightStory clearfix mt103" id="search_content">
+    <div class="left_content">
+        <div class="data_show">
+            【声明】：<span class="color_main">版权故事</span>来源于网友提供，仅代表作者个人观点，并不代表本网站证实或赞成其描述。如其他媒体、网站或个人转载使用，需保留本网站注明的"稿件来源"，并自负版权等法律责任。对于不当转载或引用本网内容而引起的民事纷争、行政处理或其他损失，本网不承担责任。
+        </div>
+        <div class="storyList">
+            <% if(result.list.length>0){ %>
+            <%for(i=0;i<result.list.length;i++){%>
+            <div class="works_information">
+                <div class="works_top clearfix">
+                    <a class="works_img" href="<%=result.list[i].sourceUrl%>" style="background-image: url(<%=result.list[i].storyCover%>);"></a>
+                    <div class="works_describe">
+                        <p class="works_name">
+                            <a href="<%=result.list[i].sourceUrl%>"  target="_blank"><%=result.list[i].storyTitle%></a>
+                        </p>
+                        <p class="works_content mt10"><%=result.list[i].synopsis%></p>
+                        <p class="payment clearfix">
+                            <span>稿件来源：</span>
+                            <span><%=result.list[i].storySource%></span>
+                            <span class="ml50"><%=result.list[i].submissionTime%></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <%}%>
+            <%}%>
+        </div>
+        <div class="hhiddenPage">
+            <span class="html_totalPage"><%=result.totalPage%></span>
+            <span class="html_currentPage"><%=result.currentPage%></span>
+        </div>
+        <div class="page" id="page1"></div>
+    </div>
+    <div class="aside_content" style="margin-top: 20px;">
+        <div class="copyright_rightTop ">
+            <a href="#">
+                <img src="images/img_ggw.png" alt="">
+            </a>
+        </div>
+        <div class="aside_item">
+            <p class="title_t">投稿须知</p>
+            <p class="aside_txt">1、投稿人必须保证所有投稿是原创首发稿件，且是稿件的版权所有人；</p>
+            <p class="aside_txt">2、稿件一经录用，本网站拥有该稿件版权的独家使用权，有权根据运营需要修改稿件和稿件营销；</p>
+            <p class="aside_txt">3、文章要求：标题自主发挥，类型关于版权故事，观点与案例结合，尽量配图，投稿请注意排版，不能从其他编辑器直接拷贝内容粘贴。</p>
+            <a class="show_mycopy" id="contribute">我要投稿</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+<%include ('common/bottom')%>
+<%include ('common/foot_script')%>
+
+
+</body>
+<script>
+    $(function () {
+        var _height=parseInt(window.innerHeight);
+        console.log(document.getElementById("search_content").offsetHeight);
+        console.log(_height);
+        if(_height-80-60>document.getElementById("search_content").offsetHeight){
+            $('.bottom ').css({
+                'position':'fixed',
+                'bottom':0,
+                'left':0
+            })
+        }
+//            document.getElementsByClassName("index_footer")[0].style.display="block";
+    })
+</script>
+<script src="lib/shade_layer/shadeLayer.js"></script>
+<script type="text/javascript" src="/lib/laypage.js"></script>
+<script type="text/javascript" src="javascripts/copyrightStory.js"></script>
+</body>
+<script type="text/javascript" src="javascripts/copyrightStory.js"></script>
+</body>
+
+<script>
+    $(function () {
+        laypage({
+            cont: $('#page1'), //容器。值支持id名、原生dom对象，jquery对象。
+            pages:$('.html_totalPage').html(), //通过后台拿到的总页数
+            curr: $('.html_currentPage').html(), //当前页
+            jump: function(obj, first){ //触发分页后的回调
+                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                    location.href = '?currentPage='+obj.curr+'&pageSize=10';
+                }
+            }
+        });
+    })
+</script>
+</html>

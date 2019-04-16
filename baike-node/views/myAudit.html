@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>版权百科</title>
+    <link rel="icon" href="/images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="lib/swiper/swiper-3.4.2.min.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/common.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/person_center.css"/>
+    <link rel="stylesheet" href="lib/layer/skin/default/layer.css">
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <!--[if lt IE 9]>
+    <script src="lib/html5shiv.min.js"></script>
+    <![endif]-->
+    <% include('common/baidu_tj') %>
+</head>
+<body>
+<% include('common/header') %>
+<% var result=data.result%>
+<div class="wrap" id="warp_height">
+    <div class="person_center text_center">
+        <div class="pc_out">
+            <ul class="pc_nav inline_block">
+                <li class="inline_block">
+                    <a href="person_set">个人设置</a>
+                </li>
+                <li class="inline_block">
+                    <a href="entry">词条任务</a>
+                <li class="inline_block">
+                    <a href="my_editor">我的编辑</a>
+                </li>
+                <li class="inline_block">
+                    <a href="javascript:void(0)">消息通知</a>
+                </li>
+                <li class="inline_block">
+                    <a href="creatEntry">创建词条</a>
+                </li>
+                <li class="inline_block">
+                    <a href="workAudit">作品词条审核</a>
+                </li>
+                <li class="inline_block on">
+                    <a href="myAudit">我的审核</a>
+                </li>
+                <li class="inline_block">
+                    <a href="attentionWork">关注作品</a>
+                </li>
+            </ul>
+        </div>
+        <div class="pc_w950">
+            <div class="auditContent">
+                <div class="auditSearch clearfix">
+                    <input class="float_left" type="text" placeholder="输入作品名称可查询相关信息" id="AuditSearchName">
+                    <button class="float_left" id="AuditSearchBtn">查询</button>
+                </div>
+                <div class="pc_w950_audit">
+                    <span class="action" style="width:140px">审核时间</span>
+                    <span class="action" style="width:160px">作品名称</span>
+                    <span class="action" style="width:80px">作品类型</span>
+                    <span class="action" style="width:150px">修改描述</span>
+                    <span class="action" style="width:140px">修改时间</span>
+                    <span class="action" style="width:60px">状态</span>
+                    <span class="action" style="">修改用户</span>
+                </div>
+                <div class="allNews_audit">
+                    <table class="message_audit my_audit" id="mgAudit">
+                        <%if(result.list.length>0){%>
+                            <%for(i=0;i<result.list.length;i++){%>
+                                <tr>
+                                    <td style="display: none"><%=result.list[i].id%></td>
+                                    <td><%=result.list[i].auditTime%></td>
+                                    <td><a class="aColor" href="/item/<%=result.list[i].workSeqNo%>" target="_blank"><%=result.list[i].workName%></a> </td>
+                                    <td><%=result.list[i].workType%></td>
+                                    <td><%=result.list[i].remark%></td>
+                                    <td><%=result.list[i].datetime%></td>
+                                    <td><%=result.list[i].auditStatus%></td>
+                                    <td><%=result.list[i].userName%></td>
+                                </tr>
+                            <%}%>
+                        <%}%>
+                    </table>
+                    <div class="newRegisterId" style="display: none"><%=useInfo.loginUser.useid%></div>
+                    <div class="hhiddenPage">
+                        <span class="html_totalPage"><%=result.totalPage%></span>
+                        <span class="html_currentPage"><%=result.currentPage%></span>
+                    </div>
+                    <div class="page text_center pd60" id="page1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%include ('common/bottom')%>
+<%include ('common/foot_script')%>
+<script>
+    var share = {
+        title:"版权百科",
+        imgUrl:"http://"+location.host+"/app/images/img_fm.png",
+        link:location.href,
+        desc:"版权数据服务专家",
+        success:function(){
+            //$(".share").hide();
+        },
+        cancel:function(){
+
+        }
+    };
+</script>
+<script type="text/javascript" src="/app/lib/wx.js"></script>
+<script type="text/javascript" src="/app/lib/wx.util.js"></script>
+<script src="lib/swiper/swiper-3.4.2.jquery.min.js"></script>
+<script type="text/javascript" src="/lib/laypage.js"></script>
+<script type="text/javascript" src="lib/layer/layer.js"></script>
+<script type="text/javascript" src="javascripts/person_center.js"></script>
+<script type="text/javascript" src="javascripts/myAudit.js"></script>
+<script src="lib/shade_layer/shadeLayer.js"></script>
+<script id="test1" type="text/html">
+    <%include ('common/person_baseNews')%>
+</script>
+<script id="test2" type="text/html">
+    <%include ('common/refuse')%>
+</script>
+</body>
+</html>
+
+

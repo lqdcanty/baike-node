@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/common.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/swiper/swiper-3.4.2.min.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/person_center.css"/>
+    <link rel="stylesheet" type="text/css" href="/font/iconfont.css"/>
+    <% include('common/baidu_tj') %>
+</head>
+<body>
+<% include('common/header') %>
+<div class="wrap">
+    <div class="detailContent">
+        <div class="swiper-container" id="detailTime">
+            <div class="swiper-wrapper clickpicture">
+                <div class="swiper-slide on">
+                    <a href="#" class="picture_outDiv">
+                        <div class="picture">
+                            <img src="images/icon_sjmr.png" alt="">
+                            <img src="images/icon_sjz.png" alt="">
+                        </div>
+                        <b class="listTime">2015.12.21</b>
+                        <span class="listMail">2932895@qq.com</span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" class="picture_outDiv">
+                        <div class="picture">
+                            <img src="images/icon_sjmr.png" alt="">
+                            <img src="images/icon_sjz.png" alt="">
+                        </div>
+                        <b class="listTime">2015.12.21</b>
+                        <span class="listMail">2932895@qq.com</span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" class="picture_outDiv">
+                        <div class="picture">
+                            <img src="images/icon_sjmr.png" alt="">
+                            <img src="images/icon_sjz.png" alt="">
+                        </div>
+                        <b class="listTime">2015.12.21</b>
+                        <span class="listMail">2932895@qq.com</span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" class="picture_outDiv">
+                        <div class="picture">
+                            <img src="images/icon_sjmr.png" alt="">
+                            <img src="images/icon_sjz.png" alt="">
+                        </div>
+                        <b class="listTime">2015.12.21</b>
+                        <span class="listMail">2932895@qq.com</span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" class="picture_outDiv">
+                        <div class="picture">
+                            <img src="images/icon_sjmr.png" alt="">
+                            <img src="images/icon_sjz.png" alt="">
+                        </div>
+                        <b class="listTime">2015.12.21</b>
+                        <span class="listMail">2932895@qq.com</span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" class="picture_outDiv">
+                        <div class="picture">
+                            <img src="images/icon_sjmr.png" alt="">
+                            <img src="images/icon_sjz.png" alt="">
+                        </div>
+                        <b class="listTime">2015.12.21</b>
+                        <span class="listMail">2932895@qq.com</span>
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#" class="picture_outDiv">
+                        <div class="picture">
+                            <img src="images/icon_sjmr.png" alt="">
+                            <img src="images/icon_sjz.png" alt="">
+                        </div>
+                        <b class="listTime">2015.12.21</b>
+                        <span class="listMail">2932895@qq.com</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+    <div class="midify_word">
+        <h1 class="word_title">作品简介</h1>
+        <div class="word_content">鬼吹灯是一个系列形式的文字冒险故事，以一本家传的秘书残卷为引。 小说中作者首创历史上四大盗墓门派——摸金、卸岭、发丘、搬山，其中摸金是技术含量最高，规矩最多的门派。“人点烛，鬼吹灯”是传说中摸金派的不传之秘，意为进入古墓之中先在东南角点燃一支蜡烛才能开棺，如果蜡烛熄灭，须速速退出，不可取一物。相传这是祖师爷所定的一条活人与死人的契约，千年传承，不得破。 有谚为证： 发丘印，摸金符，搬山卸岭寻龙诀； 人点烛，鬼吹灯，勘舆倒斗觅星峰； 水银斑，养明器，龙楼宝殿去无数； 窨沉棺，青铜椁，八字不硬莫近前。 竖葬坑，匣子坟，搬山卸岭绕着走； 赤衣凶，笑面尸，鬼笑莫如听鬼哭。</div>
+    </div>
+</div>
+<%include ('common/bottom')%>
+<%include ('common/foot_script')%>
+<script type="text/javascript" src="lib/person_center.js"></script>
+<script src="lib/swiper/swiper-3.4.2.jquery.min.js"></script>
+<script>
+    $(function(){
+        $("#detailTime").on("click",".clickpicture .swiper-slide", function(){
+           $(this).addClass("on").siblings(".swiper-slide").removeClass("on");
+        });
+        var pictureSwiper = new Swiper ('#detailTime', {
+            slidesPerView : '6',
+            spaceBetween : 0,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev'
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>版权百科</title>
+    <link rel="icon" href="../../images/font-logoIcon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="../../stylesheets/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../font/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="../../stylesheets/copyright.css"/>
+    <% include('../common/baidu_tj') %>
+
+</head>
+<% include('../common/header') %>
+<% var copyrightDetail=data.result.copyrightDetail %>
+<!-- content -->
+<div class="content-nav1">
+    <div><div><a href="/item/<%=copyrightDetail.workSeqNo%>"><%=copyrightDetail.name%></a>> <a href="/copyRight/bql/<%=copyrightDetail.workSeqNo%>">版权链</a>>  版权详情</div></div>
+</div>
+<div class="copyRight-wrap">
+    <div class="wrap">
+        <div class="copy-item">
+            <div class="copy-title">
+                <h2><%=copyrightDetail.name%><span>（版权授权使用）</span></h2>
+            </div>
+            <div class="copy copy-synopsis">
+                作品版权授权使用指著作权转授该作品的使用权利。著作权转授的合同受到原授权合同的制约。原授权合同未约定受托人具有转授权的权利的，受托人不得再向第三人转授权。如确需要 转授权，应当取得原授权人同意。未经同意，即为非法转授权。
+            </div>
+            <form action="" medthod="post" class="xg_form">
+                <input type="hidden" name="id" value="<%=workSeqNo%>">
+                <div class="copy-basicInfo clearfix">
+                    <dl class="basicInfo-block basicInfo-left leftwiddth100">
+                        <div class="xg_div">
+                            <dt class="basicInfo-item name">授权方:</dt>
+                            <dd class="basicInfo-item value" id="grant_dd">
+                                <span class="old1_value"><%=copyrightDetail.grant%></span>
+                                <input type="text" value="<%=copyrightDetail.grant%>" class="new1_value" name="grant">
+                            </dd>
+                        </div>
+                        <div class="xg_div">
+                            <dt class="basicInfo-item name" id="time_dt">授权使用时间:</dt>
+                            <dd class="basicInfo-item value" id="time_dd">
+                                <span class="old1_value">
+                                    <%if(copyrightDetail.contractEnd && copyrightDetail.contractStart){%>
+                                        <%=copyrightDetail.contractStart%>-<%=copyrightDetail.contractEnd%>
+                                    <%}else if(copyrightDetail.rightValidity=="forever"){%>
+                                        永久
+                                    <%}else if(copyrightDetail.rightValidity=="other"){%>
+                                    未知
+                                    <%}%>
+                                </span>
+                                <a class="new1_value" id="modify_time_value">点击修改时间</a>
+                                <div class="modle-wrap time_xg">
+                                    <div class="modle-container">
+                                        <div class="clearfix mt10 tance">
+                                            <label class="tance_label">版权质押时间</label>
+                                            <div class="float_left select-btn">
+                                                <a class="copyType-btn"  data-time="forever"><i></i></a>
+                                                <span>永久</span>
+                                            </div>
+                                            <div class="float_left select-btn">
+                                                <a class="copyType-btn on"  data-time="other"><i></i></a>
+                                                <span>未知</span>
+                                            </div>
+                                            <input type="hidden" value="other" name="validity">
+                                            <div class="float_left time-wrap">
+                                                <input placeholder="年/月/日" name="contractStart" id="pledge-startTime"  class="dateTime-s">
+                                                <span>至</span>
+                                                <input placeholder="年/月/日" name="contractEnd" id="pledge-endTime"  class="dateTime-s">
+                                            </div>
+                                            <img src="../../images/icon_x.png" alt="" class="close_xg">
+                                        </div>
+                                    </div>
+                                </div>
+                            </dd>
+                        </div>
+                        <div class="xg_div">
+                            <dt class="basicInfo-item name" id="tag_dt">授权方式:</dt>
+                            <dd class="basicInfo-item value" id="tag_dd">
+                                <span class="old1_value"><%=copyrightDetail.tag%></span>
+                                <select name="tag" id="" class="old_select new1_value">
+                                    <option value="独家授权" selected="selected">独家授权</option>
+                                    <option value="非独家授权">非独家授权</option>
+                                </select>
+                            </dd>
+                        </div>
+                    </dl>
+                    <dl class="basicInfo-block basicInfo-right">
+                        <div class="xg_div">
+                            <dt class="basicInfo-item name">被授权方:</dt>
+                            <dd class="basicInfo-item value" id="obllige_dd">
+                                <span class="old1_value"><%=copyrightDetail.obllige%></span>
+                                <input type="text" value="<%=copyrightDetail.obllige%>" class="new1_value" name="obllige">
+                            </dd>
+                        </div>
+                        <div class="xg_div">
+                            <dt class="basicInfo-item name">授权使用涉及金额:</dt>
+                            <dd class="basicInfo-item value" id="amount_dd">
+                                <span class="old1_value"><%=copyrightDetail.authorizedAmount%></span>
+                                <input type="text" value="<%=copyrightDetail.authorizedAmount%>" class="new1_value" name="amount">
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+                <dl class="border_dl leftwiddth100">
+                    <div class="xg_div clearfix">
+                        <dt class="basicInfo-item name" style="vertical-align: top">版权信息备注:</dt>
+                        <dd class="basicInfo-item value" id="remark_dd">
+                            <span class="old1_value" style="width:100%;"><%=copyrightDetail.remark%></span>
+                            <textarea type="text" value="" class="new1_value new_textarea" name="remark"><%=copyrightDetail.remark%></textarea>
+
+                        </dd>
+                    </div>
+                </dl>
+                <div class="save_sq_div">
+                    <input type="button" class="save_sq" value="保存">
+                </div>
+            </form>
+            <div class="update-Info use">＊该版权信息<%=copyrightDetail.editTime%>前，由<span class="use_a" ><%=copyrightDetail.userName%>编辑</span>
+                <%if(copyrightDetail.isCorrection){%>
+                ，我要 <a   href="#" class="use_a xgxx">纠正和完善</a>该版权信息
+                <%}%>
+            </div>
+            <div class="clearfix">
+                <div class="float_left copy-para" style="width: 355px;height: 445px;">
+                    <div class="para-title left">
+                        官方版权机构认证
+                    </div>
+                    <div class="para-txt">
+                        <%if(copyrightDetail.cerfUrl==null||copyrightDetail.cerfUrl==""){%>
+                        该版权还未上传全球任何官方版权机构颁发的版权认证证书，您可以上传版权证书。
+                        <%}else{%>
+                        证书信息错误，我是真实原始著作权人，我可以
+                        <%if(copyrightDetail.isCorrection){%>
+                        <a class="UploadAgain" id="re_filePickerCertificate">重新上传</a>或
+                        <%}%>
+                        去<a class="CopyrightProtectionCenter" href="/copyright/biaoju?id=<%=copyrightDetail.id%>" target="_blank" >中国版权保护中心登记</a>
+                        <%}%>
+                    </div>
+                    <div class="text_center">
+                        <%if(copyrightDetail.cerfUrl==null||copyrightDetail.cerfUrl==""){%>
+                        <div class="upload-btn1 lqd" id="uploadCertificate" style="width: 260px;height: 182px!important;">
+                            <div class="id_photo1 use_upload"  id="fileCertificate" style="width: 260px;height: 182px!important;">
+                                <img class="" alt="点击图片上传" src="../../images/banquanlian/img_sfzd.png">
+                            </div>
+                            <label class="filePickerCertificate" id="filePickerCertificate" style="width: 260px;height: 182px!important;"></label>
+                        </div>
+                        <p class="f14 color_666 mb10 mt20">权利人如何获取版权证书？</p>
+                        <a class="copy-btn1 white" id="protect_registration" href="/copyright/biaoju?id=<%=copyrightDetail.id%>" target="_blank" >中国版权保护中心登记</a>
+                        <%}else{%>
+                        <div class="id_photo2 width315"  id="re_fileCertificate" class="width260" style="width: 315px;height: 220px!important;">
+                            <img src="<%=copyrightDetail.cerfUrl%>" class="width260" style="width: 315px;height: 220px!important;">
+                        </div>
+                        <%}%>
+                    </div>
+                </div>
+
+                <div class="float_right copy-para" style="width: 755px;height: 445px;">
+                    <div class="para-title right">
+                        权利人声明
+                    </div>
+                    <div class="para-txt">
+                        权利人可以通过版权声明的方式，主张自己的权利。版权百科平台将会尽最大的努力保护您的版权和提高您的版权收益。
+                    </div>
+                    <div class="para-body clearfix">
+                        <textarea class="empower-text float_left textarea_styled" <%if(copyrightDetail.hasGrantStaments){%>style="color:#666"<%}%> placeholder="请输入被授权方声明信息......（最多200字）" <%if(copyrightDetail.statement!=""){%><%for(i=0;i<copyrightDetail.statement.length;i++){%><%if(copyrightDetail.statement[i].identify=="grant"){%>disabled="disabled"<%}%><%}%><%}%>><%if(copyrightDetail.statement!=""){%><%for(i=0;i<copyrightDetail.statement.length;i++){%><%if(copyrightDetail.statement[i].identify=="grant"){%><%=copyrightDetail.statement[i].statement%><%}%><%}%><%}%></textarea>
+                        <textarea class="empower-text float_right textarea_style" <%if(copyrightDetail.hasObbligeStaments){%>style="color:#666"<%}%> placeholder="请输入被授权方声明信息......（最多200字）" <%if(copyrightDetail.statement!=""){%><%for(i=0;i<copyrightDetail.statement.length;i++){%><%if(copyrightDetail.statement[i].identify=="obblige"){%>disabled="disabled"<%}%><%}%><%}%>><%if(copyrightDetail.statement!=""){%><%for(i=0;i<copyrightDetail.statement.length;i++){%><%if(copyrightDetail.statement[i].identify=="obblige"){%><%=copyrightDetail.statement[i].statement%><%}%><%}%><%}%></textarea>
+                    </div>
+                    <div class="para-btn text_center width200 celarfix">
+                        <div class="wi50">
+                            <%if(copyrightDetail.hasGrantStaments){%>
+                                <a class="unopen" id="" style="background:#fff;color:#1A8CDC;">授权方侵权声明</a>
+                            <%}else{%>
+                                <a id="state_copyrighted">授权方声明该版权</a>
+                            <%}%>
+                        </div>
+                        <div class="wi50">
+                            <%if(copyrightDetail.hasObbligeStaments){%>
+                                <a class="unopen" id="" style="background:#fff;color:#1A8CDC;">被授权方侵权申诉</a>
+                            <%}else{%>
+                                <a id="state_copyright">被授权方声明该版权</a>
+                            <%}%>
+                        </div>
+                    </div>
+                    <div class="workSeqNoId" style="display:none"><%=workSeqNo%></div>
+                    <div class="workSeqNoStyle" style="display:none"><%=copyrightDetail.category%></div>
+                    <%if(!useInfo.islogin){%>
+                    <div class="workSeqNoId1" style="display:none">false</div>
+                    <%}else{%>
+                    <div class="workSeqNoId1" style="display:none">true</div>
+                    <%}%>
+                    <div class="detailPage_message sm">
+                        尊敬的用户，您可以核对您的版权信息，如果信息有误您可以点击纠正和完善该版权信息；如果确认无误，请发表您的版权声明内容。如果您的版权声明信息核对无误，您将获得该作品词条社群协作编辑审核身份
+                        <a href="javascript:void(0)">知道了</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%if(copyrightDetail.history.length>=1){%>
+        <div class="copy-title mt40">
+            <h2>授权历史记录</h2>
+        </div>
+        <div class="empower-history">
+            <table border="0" cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <td>授权时间</td>
+                    <td>授权方式</td>
+                    <td>授权方</td>
+                    <td>被授权方</td>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                <%for( i=0;i < copyrightDetail.history.length;i++){%>
+                <tr>
+                    <td>
+                        <%if(copyrightDetail.history[i].rightValidity=='notforerver'){%>
+                        <%=copyrightDetail.history[i].contractStart%>-<%=copyrightDetail.history[i].contractEnd%>
+                        <%}else if(copyrightDetail.history[i].rightValidity=='forerver'){%>
+                        永久
+                        <%}else if(copyrightDetail.history[i].rightValidity=='other'){%>
+                        未知
+                        <%}%>
+                    </td>
+                    <td><%=copyrightDetail.history[i].tag%></td>
+                    <td><%=copyrightDetail.history[i].grant%></td>
+                    <td><%=copyrightDetail.history[i].obllige%></td>
+                    <td><a class="click_see" href="/copyRight/detail/<%=copyrightDetail.history[i].id%>">查看详情</a></td>
+                </tr>
+                <%}%>
+                </tbody>
+            </table>
+        </div>
+        <%}%>
+    </div>
+</div>
+</div>
+
+<% include('../common/bottom') %>
+<% include('../common/foot_script') %>
+<input type="hidden" class="share_name" value="<%=copyrightDetail.name%>_版权详情_版权百科">
+<script>
+    var share = {
+        title:$('.share_name').val(),
+        imgUrl:"http://"+location.host+"/app/images/img_fm.png",
+        link:location.href,
+        desc:"版权数据服务专家",
+        success:function(){
+            //$(".share").hide();
+        },
+        cancel:function(){
+
+        }
+    };
+</script>
+<script type="text/javascript" src="/app/lib/wx.js"></script>
+<script type="text/javascript" src="/app/lib/wx.util.js"></script>
+<script src="../../lib/webuploader.js"></script>
+<script src="../../lib/laydate/laydate.js"></script>
+<script type="text/javascript" src="../../javascripts/copyrightDetail.js"></script>
+<script src="../../lib/shade_layer/shadeLayer.js"></script>
+</body>
+</html>
